@@ -1,23 +1,21 @@
 # Note: In a yml each level is padded by 2 spaces
-name: Flutter
+name: Flutter CI
 
 on:
-  # Runs this action when you push on master
+  # Runs on pushes to main
   push:
     branches: [ "main" ]
-  # Runs this when a PR against master is created
+  # Runs on pull requests targeting main
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  flutter_job:
-
-    # The machine, we can also use windows-latest or ubuntu-latest
-    # We are choosing macos-latest because we will be also building for iOS
-    runs-on: macos-latest
+  validate:
+    name: Validate
+    # Use ubuntu-latest for faster startup and execution
+    runs-on: ubuntu-latest
 
     steps:
-
       # Clones the project on the machine
       - uses: actions/checkout@v4
 
@@ -26,29 +24,50 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          # flutter-version: '3.16.8'
-          # ^ If you want to use a specific version of flutter
+          cache: true # Enables caching for pub dependencies
 
-      # Fetches proj dependencies from pub
+      # Fetches project dependencies from pub
       - name: Install dependencies
         run: flutter pub get
-        # ^ If you want to use a specific version of flutter
 
       # Verifies if the dart code is formatted well
       - name: Verify formatting
-        run: dart format --output=none .
-        # --output=none prints files which needs to be formatted
-        # --set-exit-if-changed stops execution if the any code is not well formatted
+        run: dart format --output=none --set-exit-if-changed .
 
       # Checks for Semantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
         run: flutter analyze
-        # optionally use --fatal-warnings to stop execution if any warnings are found
 
       # Runs unit test
       - name: Run tests
         run: flutter test
 
-      # Create android apk
+  build:
+    name: Build APK
+    # This job runs only on a push to the main branch, after the validate job is successful
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    # We are choosing macos-latest because we will be also building for iOS in the future
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Build apk
         run: flutter build apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
