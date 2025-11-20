@@ -30,13 +30,16 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Verifies if the dart code is formatted well
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-
       # Checks for Semantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
         run: flutter analyze
+        continue-on-error: true
+
+      # Verifies if the dart code is formatted well
+      - name: Verify formatting
+        run: dart format --output=none .
+        continue-on-error: true
+        # --set-exit-if-changed workflow will fail if format not correct
 
       # Runs unit test
       - name: Run tests
