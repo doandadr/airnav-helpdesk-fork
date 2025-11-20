@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'main_controller.dart';
+import 'modules/dashboard/dashboard_page.dart';
 
 
 class MainPage extends GetView<MainController> {
   const MainPage({super.key});
 
-  List<Widget> _screens() => const [
-    APage(),
-    BPage(),
+  List<Widget> _screens() => [
+    const APage(),
+    const BPage(),
+    DashboardPage()
   ];
 
   List<PersistentBottomNavBarItem> _items() => [
@@ -21,6 +23,10 @@ class MainPage extends GetView<MainController> {
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.abc_rounded),
       title: 'B',
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Icons.dashboard),
+      title: 'Dashboard',
     ),
   ];
 
