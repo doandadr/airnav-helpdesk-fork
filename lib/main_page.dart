@@ -1,3 +1,4 @@
+import 'package:airnav_helpdesk/modules/faq/faq_page.dart';
 import 'package:airnav_helpdesk/modules/ticket/add_ticket_page.dart';
 import 'package:airnav_helpdesk/modules/ticket/detail/detail_ticket_page.dart';
 import 'package:airnav_helpdesk/placeholder_page.dart';
@@ -15,7 +16,8 @@ class MainPage extends GetView<MainController> {
     const APage(),
     const BPage(),
     DashboardPage(),
-    AddTicketPage()
+    AddTicketPage(),
+    FaqPage()
   ];
 
   List<PersistentBottomNavBarItem> _items() => [
@@ -34,6 +36,10 @@ class MainPage extends GetView<MainController> {
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.details),
       title: 'Add Ticket',
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Icons.question_mark),
+      title: 'FAQ',
     ),
   ];
 

@@ -5,6 +5,7 @@ abstract class Routes {
   static const DASHBOARD = _Path.DASHBOARD;
   static const TICKET_DETAIL = _Path.TICKET_DETAIL;
   static const ADD_TICKET = _Path.ADD_TICKET;
+  static const FAQ = _Path.FAQ;
 }
 
 abstract class _Path {
@@ -12,4 +13,5 @@ abstract class _Path {
   static const DASHBOARD = '/dashboard';
   static const TICKET_DETAIL = '/ticket/detail';
   static const ADD_TICKET = '/ticket/add';
+  static const FAQ = '/faq';
 }
