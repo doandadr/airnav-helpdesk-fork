@@ -7,7 +7,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'main_controller.dart';
 import 'modules/dashboard/dashboard_page.dart';
-
+import 'modules/menu/menu_page.dart';
 
 class MainPage extends GetView<MainController> {
   const MainPage({super.key});
@@ -15,9 +15,10 @@ class MainPage extends GetView<MainController> {
   List<Widget> _screens() => [
     const APage(),
     const BPage(),
-    DashboardPage(),
+    MenuPage(),
     AddTicketPage(),
-    FaqPage()
+    // FaqPage(),
+
   ];
 
   List<PersistentBottomNavBarItem> _items() => [
@@ -30,17 +31,17 @@ class MainPage extends GetView<MainController> {
       title: 'B',
     ),
     PersistentBottomNavBarItem(
-      icon: const Icon(Icons.dashboard),
-      title: 'Dashboard',
+      icon: const Icon(Icons.menu),
+      title: 'Menu',
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.details),
       title: 'Add Ticket',
     ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.question_mark),
-      title: 'FAQ',
-    ),
+    // PersistentBottomNavBarItem(
+    //   icon: const Icon(Icons.question_mark),
+    //   title: 'FAQ',
+    // ),
   ];
 
   @override
