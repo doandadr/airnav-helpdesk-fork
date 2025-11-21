@@ -13,7 +13,7 @@ class MainPage extends GetView<MainController> {
   const MainPage({super.key});
 
   List<Widget> _screens() => [
-    const APage(),
+    DashboardPage(),
     const BPage(),
     MenuPage(),
     AddTicketPage(),
