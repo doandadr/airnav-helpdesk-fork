@@ -8,11 +8,11 @@ class TicketCard extends StatelessWidget {
 
   Color _statusColor(String status) {
     switch (status) {
-      case 'SOLVED':
+      case 'DONE':
         return Colors.green.shade100;
       case 'ON PROCESS':
         return Colors.blue.shade100;
-      case 'WAITING':
+      case 'ASSIGNED':
         return Colors.yellow.shade100;
       default:
         return Colors.grey.shade200;
@@ -58,18 +58,9 @@ class TicketCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(ticket.code,
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 2),
-                    Text(ticket.date,
-                        style: TextStyle(
-                            fontSize: 11, color: Colors.grey.shade600)),
-                  ],
-                ),
+                child: Text(ticket.code,
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.w600)),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -106,7 +97,7 @@ class TicketCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Category',
+                  const Text('Kategori',
                       style: TextStyle(fontSize: 10, color: Colors.grey)),
                   Text(ticket.category,
                       style: const TextStyle(fontSize: 12)),
@@ -116,7 +107,7 @@ class TicketCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Sub Category',
+                  const Text('Sub Kategori',
                       style: TextStyle(fontSize: 10, color: Colors.grey)),
                   Text(ticket.subCategory,
                       style: const TextStyle(fontSize: 12)),
@@ -129,7 +120,7 @@ class TicketCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Progress',
+              const Text('Progres',
                   style: TextStyle(fontSize: 10, color: Colors.grey)),
               Text('${ticket.progress}%',
                   style: const TextStyle(fontSize: 12)),
@@ -164,13 +155,6 @@ class TicketCard extends StatelessWidget {
               Text(ticket.lastUpdate,
                   style:
                   TextStyle(fontSize: 10, color: Colors.grey.shade600)),
-              const Spacer(),
-              Icon(Icons.location_on,
-                  size: 14, color: Colors.grey.shade600),
-              const SizedBox(width: 4),
-              Text(ticket.lastUpdateStatus,
-                  style:
-                  TextStyle(fontSize: 10, color: Colors.grey.shade600)),
             ],
           ),
 
@@ -185,7 +169,8 @@ class TicketCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
               ),
               onPressed: () {},
-              child: const Text('View Details'),
+              child: const Text('Lihat Detail',
+                  style: TextStyle(color: Colors.white)),
             ),
           )
         ],
