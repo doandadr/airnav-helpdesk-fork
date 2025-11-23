@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324039190836",
+    "project_id": "airnav-helpdesk",
+    "storage_bucket": "airnav-helpdesk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324039190836:android:782fa62850b2d3ca351d61",
+        "android_client_info": {
+          "package_name": "id.co.airnavindonesia.airnav_helpdesk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdRi-iKiNDgMNHuoCKS5X_hwMKNZwj-MI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "airnav-helpdesk",
+                    "appId": "1:324039190836:android:782fa62850b2d3ca351d61",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "airnav-helpdesk",
+                    "configurations": {
+                        "android": "1:324039190836:android:782fa62850b2d3ca351d61",
+                        "ios": "1:324039190836:ios:9e9c50fb6f333d93351d61"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -6,6 +6,7 @@ class HelpRequest {
   final List<String> tags;
   final String status;
   final String highlight; // e.g., NEW or OVERDUE
+  final String? description;
 
   HelpRequest({
     required this.name,
@@ -15,5 +16,6 @@ class HelpRequest {
     required this.tags,
     required this.status,
     required this.highlight,
+    this.description,
   });
 }
