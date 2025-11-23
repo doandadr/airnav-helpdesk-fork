@@ -17,6 +17,8 @@ class TicketListPage extends GetView<TicketListController> {
       body: Column(
         children: [
           const SizedBox(height: 8),
+          _buildTabs(),
+          const SizedBox(height: 8),
           SearchField(
             onChanged: controller.onSearch,
             hintText: 'Cari tiket...',
@@ -29,7 +31,10 @@ class TicketListPage extends GetView<TicketListController> {
               return ListView.builder(
                 padding: const EdgeInsets.all(12),
                 itemCount: list.length,
-                itemBuilder: (_, i) => TicketCard(ticket: list[i]),
+                itemBuilder: (_, i) => TicketCard(
+                  ticket: list[i],
+                  activeTab: controller.activeTab.value,
+                ),
               );
             }),
           ),
@@ -55,7 +60,7 @@ class TicketListPage extends GetView<TicketListController> {
           _filterDropdown(
             label: "Status",
             value: controller.statusFilter.value,
-            items: const ['', 'DONE', 'ON PROCESS', 'WAITING', 'NEW'],
+            items: const ['', 'Done', 'In Progress', 'Assigned', 'New'],
             onChanged: controller.setStatusFilter,
           ),
           const SizedBox(width: 10),
@@ -121,5 +126,52 @@ class TicketListPage extends GetView<TicketListController> {
         onChanged: (val) => onChanged(val ?? ''),
       );
     }));
+  }
+
+  Widget _buildTabs() {
+    return Obx(() => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: controller.tabs
+                  .map((tab) => _tabItem(
+                        tab,
+                        controller.activeTab.value == tab,
+                        () => controller.changeTab(tab),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ));
+  }
+
+  Widget _tabItem(String text, bool active, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 14,
+                color: active ? const Color(0xFF135CA1) : const Color(0xFF475569),
+                fontWeight: active ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+            const SizedBox(height: 4),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              height: 2,
+              width: active ? 30 : 0, // Stretches under the active text
+              color: const Color(0xFF135CA1),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

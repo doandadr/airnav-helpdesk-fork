@@ -1,3 +1,4 @@
+import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'chatbot_controller.dart';
@@ -10,7 +11,11 @@ class ChatbotPage extends GetView<ChatbotController> {
     final TextEditingController _inputController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Assistant'), elevation: 1),
+      appBar: AppBarWidget(titleText: 'Chatbot', leading: IconButton(
+        splashRadius: 24,
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => Get.back(),
+      ),),
       body: Column(
         children: [
           Expanded(
@@ -77,7 +82,7 @@ class ChatbotPage extends GetView<ChatbotController> {
             child: TextField(
               controller: controller,
               decoration: const InputDecoration(
-                hintText: 'Type a message...',
+                hintText: 'Ketik pesan...',
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),

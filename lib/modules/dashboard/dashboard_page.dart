@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../core/widgets/app_bar_widget.dart';
 import 'dashboard_controller.dart';
 
@@ -13,8 +14,9 @@ class DashboardPage extends GetView<DashboardController> {
       appBar: AppBarWidget(titleText: 'Beranda'),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/chatbot'),
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.chat_bubble_outline),
+        backgroundColor: const Color(0xFF0D47A1),
+        shape: const CircleBorder(),
+        child: const Icon(LucideIcons.messageCircle, color: Colors.white),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -38,40 +40,40 @@ class DashboardPage extends GetView<DashboardController> {
       mainAxisSpacing: 16,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 1.1,
+      childAspectRatio: 1,
       children: [
         _buildStatCard(
-          title: 'Tickets Solved',
+          title: 'Tiket Selesai',
           value: '12',
-          subtitle: 'dari 18 ticket',
-          status: 'Solved',
+          subtitle: 'dari 18 total tiket',
+          status: 'Selesai',
           icon: Icons.check_circle_outline,
           statusIcon: Icons.trending_up,
           color: Colors.green,
         ),
         _buildStatCard(
-          title: 'On Process',
+          title: 'Sedang Diproses',
           value: '3',
-          subtitle: 'dikerjakan',
-          status: 'Process',
+          subtitle: 'tiket dalam pengerjaan',
+          status: 'Proses',
           icon: Icons.analytics_outlined,
           statusIcon: Icons.trending_up,
           color: Colors.blue,
         ),
         _buildStatCard(
-          title: 'Waiting Approval Internal',
+          title: 'Menunggu Penugasan',
           value: '1',
-          subtitle: 'approval internal',
-          status: 'Pending',
-          icon: Icons.hourglass_empty_outlined,
+          subtitle: 'menunggu assigner',
+          status: 'Tertunda',
+          icon: Icons.person_search_outlined,
           statusIcon: Icons.trending_flat,
           color: Colors.orange,
         ),
         _buildStatCard(
-          title: 'Waiting Approval Teknisi',
+          title: 'Menunggu Teknisi',
           value: '2',
-          subtitle: 'approval teknisi',
-          status: 'Teknisi',
+          subtitle: 'menunggu konfirmasi',
+          status: 'Menunggu',
           icon: Icons.error_outline,
           statusIcon: Icons.trending_up,
           color: Colors.purple,
@@ -140,6 +142,7 @@ class DashboardPage extends GetView<DashboardController> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(title, style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
               const SizedBox(height: 4),
@@ -186,19 +189,19 @@ class DashboardPage extends GetView<DashboardController> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildSummaryItem(
-                  Icons.confirmation_number_outlined, 'Total Ticket', '18', Colors.blue, true),
+                  Icons.confirmation_number_outlined, 'Total Tiket', '18', Colors.blue, true),
               _buildSummaryItem(
-                  Icons.groups_outlined, 'Total Teknisi', '9', Colors.blueGrey, true),
+                  Icons.groups_outlined, 'Total Assignee', '9', Colors.blueGrey, true),
             ],
           ),
           const SizedBox(height: 16),
           const Divider(height: 1),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                _buildSummaryItem(
                   Icons.thumb_up_outlined, 'Feedback Positif', '95%', Colors.green, false),
@@ -225,19 +228,21 @@ class DashboardPage extends GetView<DashboardController> {
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  value,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           )
         ],
       ),
@@ -261,7 +266,7 @@ class DashboardPage extends GetView<DashboardController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Quick Actions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('Aksi Cepat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -269,7 +274,7 @@ class DashboardPage extends GetView<DashboardController> {
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.confirmation_number_outlined, size: 18),
-                  label: const Text('New Ticket'),
+                  label: const Text('Tiket Baru'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D47A1),
                     foregroundColor: Colors.white,
@@ -283,7 +288,7 @@ class DashboardPage extends GetView<DashboardController> {
                 child: OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.history, size: 20),
-                  label: const Text('My Tickets'),
+                  label: const Text('Tiket Saya'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF0D47A1),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

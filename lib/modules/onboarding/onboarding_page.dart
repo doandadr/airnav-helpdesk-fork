@@ -111,8 +111,8 @@ class OnboardingPage extends GetView<OnboardingController> {
                           child: Text(
                             controller.currentPage.value ==
                                 controller.items.length - 1
-                                ? 'Get Started'
-                                : 'Next',
+                                ? 'Mulai'
+                                : 'Lanjut',
                           ),
                         ),
                       ),
@@ -132,7 +132,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                             width: double.infinity,
                             child: ShadButton.ghost(
                               onPressed: controller.skip,
-                              child: const Text('Skip'),
+                              child: const Text('Lewati'),
                             ),
                           ),
                         ),

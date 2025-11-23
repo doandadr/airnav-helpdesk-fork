@@ -1,5 +1,7 @@
+import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'detail_ticket_controller.dart';
 
 class DetailTicketPage extends GetView<DetailTicketController> {
@@ -9,42 +11,16 @@ class DetailTicketPage extends GetView<DetailTicketController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        title: const Text('Ticket Detail', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
-        automaticallyImplyLeading: false, // Removes the default back button
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.black87),
-            onPressed: () {},
-          ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications_none, color: Colors.black87, size: 28),
-                onPressed: () {},
-              ),
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  height: 8,
-                  width: 8,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ],
+      appBar: AppBarWidget(
+          titleText: 'Detail Tiket',
+        leading: IconButton(
+          splashRadius: 24,
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Get.back(),
+        ),
       ),
       body: Column(
         children: [
-          _buildSubHeader(),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -62,43 +38,6 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSubHeader() {
-    return Container(
-      color: const Color(0xFF0D47A1),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => Get.back(),
-            child: const Icon(Icons.arrow_back, color: Colors.white),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Ticket Details',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 2),
-              Text(
-                'T20250311W079', // Placeholder
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ],
           ),
         ],
       ),
@@ -280,7 +219,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                   children: [
                     _buildFooterChip(Icons.calendar_today_outlined, 'Due Date', '16 Mar 2025, 12.17', Colors.blue.shade700),
                     const SizedBox(width: 16),
-                    _buildFooterChip(Icons.location_on_outlined, 'Stage', 'On Process', Colors.purple.shade700),
+                    _buildFooterChip(LucideIcons.hourglass, 'Stage', 'On Process', Colors.purple.shade700),
                   ],
                 )
               ],
@@ -344,7 +283,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
             child: Column(
               children: [
                 _buildTimelineStep('Ticket Created', 'Ticket berhasil dibuat', '2025-03-13 12:17:31', isFirst: true),
-                _buildTimelineStep('Approved', 'Ticket disetujui oleh Manager', '2025-03-13 12:30:15'),
+                // _buildTimelineStep('Approved', 'Ticket disetujui oleh Manager', '2025-03-13 12:30:15'),
                 _buildTimelineStep('Assigned', 'Ticket ditugaskan ke Teknisi: Ahmad Fauzi', '2025-03-13 13:00:00'),
                 _buildTimelineStep('On Process', 'Teknisi sedang mengerjakan ticket', '2025-03-13 14:30:00', isLast: true, isActive: true),
               ],
