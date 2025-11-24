@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../bindings/main_binding.dart';
+import '../../main_binding.dart';
 import '../../main_page.dart';
 import '../../modules/chatbot/chatbot_binding.dart';
 import '../../modules/chatbot/chatbot_page.dart';
@@ -12,6 +12,8 @@ import '../../modules/login/login_page.dart';
 import '../../modules/onboarding/onboarding_page.dart';
 import '../../modules/ticket/add/add_ticket_binding.dart';
 import '../../modules/ticket/add/add_ticket_page.dart';
+import '../../modules/ticket/assign/assign_ticket_binding.dart';
+import '../../modules/ticket/assign/assign_ticket_page.dart';
 import '../../modules/ticket/detail/detail_ticket_binding.dart';
 import '../../modules/ticket/detail/detail_ticket_page.dart';
 import '../../modules/ticket/list/ticket_list_binding.dart';
@@ -61,6 +63,11 @@ class AppPages {
       name: _Path.CHATBOT,
       page: () => const ChatbotPage(),
       binding: ChatbotBinding(),
+    ),
+    GetPage(
+      name: _Path.ASSIGN_TICKET,
+      page: () => const AssignTicketPage(),
+      binding: AssignTicketBinding(),
     ),
   ];
 }

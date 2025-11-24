@@ -1,3 +1,4 @@
+import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -402,11 +403,7 @@ class TicketCard extends StatelessWidget {
                 icon: const Icon(Icons.people_alt_outlined, size: 16),
                 label: const Text('Tugaskan'),
                 onPressed: () {
-                  Get.snackbar(
-                    'Go to Assign Ticket Page',
-                    'Navigating to the assign ticket page.',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
+                  Get.toNamed(Routes.ASSIGN_TICKET);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF175fa4),
