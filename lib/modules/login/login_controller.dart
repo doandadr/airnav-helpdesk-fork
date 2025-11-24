@@ -1,4 +1,6 @@
 import 'package:airnav_helpdesk/core/config/app_pages.dart';
+import 'package:airnav_helpdesk/modules/dashboard/dashboard_controller.dart';
+import 'package:airnav_helpdesk/modules/ticket/list/ticket_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:airnav_helpdesk/main_page.dart';
@@ -15,20 +17,19 @@ class LoginController extends GetxController {
   }
 
   void login() async {
-    if (personnelNumberController.text.isEmpty || passwordController.text.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please enter email and password',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      Get.toNamed('/main');
-      return;
-    }
+    // if (personnelNumberController.text.isEmpty || passwordController.text.isEmpty) {
+    //   Get.snackbar(
+    //     'Error',
+    //     'Please enter email and password',
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+    //   return;
+    // }
 
     isLoading.value = true;
 
     // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     isLoading.value = false;
 
@@ -37,6 +38,9 @@ class LoginController extends GetxController {
       () => const MainPage(),
       binding: BindingsBuilder(() {
         Get.put(MainController());
+        Get.put(DashboardController());
+        Get.put(TicketListController());
+        Get.put(MenuController());
       }),
     );
   }
