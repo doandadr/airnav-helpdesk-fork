@@ -19,17 +19,15 @@ class AddTicketPage extends GetView<AddTicketController> {
           onPressed: () => Get.back(),
         ),
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              _buildReporterCard(),
-              const SizedBox(height: 16),
-              _buildDescriptionCard(),
-            ],
-          ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            _buildReporterCard(),
+            const SizedBox(height: 16),
+            _buildDescriptionCard(),
+          ],
         ),
       ),
     );
