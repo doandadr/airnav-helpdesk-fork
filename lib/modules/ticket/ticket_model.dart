@@ -1,51 +1,44 @@
-// lib/modules/ticket/ticket_model.dart
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'ticket_model.g.dart';
-
-@JsonSerializable()
 class TicketModel extends Equatable {
-  final int id;
-
-  // code shown in UI: T20250311W079
-  @JsonKey(name: 'code')
   final String code;
-
-  @JsonKey(name: 'created_at')
-  final String createdAt; // keep as string for prototype
+  final String title;
+  final String date;
 
   final String category;
-  @JsonKey(name: 'sub_category')
-  final String? subCategory;
+  final String subCategory;
 
-  // 0..100
-  final int progress;
+  final int progress;               // 0–100
+  final String status;              // SOLVED, ON PROCESS, WAITING, etc.
+  final String priority;            // Low, Medium, High, Critical
 
-  // one of: new, assigned, in_progress, solved, waiting
-  final String status;
+  final String lastUpdate;          // formatted date: “16 Mar 2025, 12.17”
+  final String lastUpdateStatus;    // Done, Assigned, New, In Progress
 
-  // small textual status shown right of card ("done", "in progress", "assigned", "new")
-  @JsonKey(name: 'status_text')
-  final String statusText;
-
-  TicketModel({
-    required this.id,
+  const TicketModel({
     required this.code,
-    required this.createdAt,
+    required this.title,
+    required this.date,
     required this.category,
-    this.subCategory,
+    required this.subCategory,
     required this.progress,
     required this.status,
-    required this.statusText,
+    required this.priority,
+    required this.lastUpdate,
+    required this.lastUpdateStatus,
   });
 
-  factory TicketModel.fromJson(Map<String, dynamic> json) =>
-      _$TicketModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TicketModelToJson(this);
-
   @override
-  List<Object?> get props =>
-      [id, code, createdAt, category, subCategory, progress, status, statusText];
+  List<Object?> get props => [
+    code,
+    title,
+    date,
+    category,
+    subCategory,
+    progress,
+    status,
+    priority,
+    lastUpdate,
+    lastUpdateStatus,
+  ];
 }

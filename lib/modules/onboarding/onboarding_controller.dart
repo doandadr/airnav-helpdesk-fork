@@ -9,21 +9,21 @@ class OnboardingController extends GetxController {
 
   final List<OnboardingItem> items = [
     OnboardingItem(
-      title: 'Easy Ticketing',
+      title: 'Lapor Kendala Lebih Mudah',
       description:
-          'Create and manage support tickets with ease. Get your issues resolved faster.',
+      'Buat tiket untuk kendala teknis atau administratif, lampirkan foto, dan kirim langsung dari genggaman Anda.',
       icon: Icons.confirmation_number_outlined,
     ),
     OnboardingItem(
-      title: 'Track Progress',
+      title: 'Pantau Status Tiket Real-Time',
       description:
-          'Monitor the status of your requests in real-time. Stay informed every step of the way.',
+      'Dapatkan notifikasi instan dan lihat progres penyelesaian tiket Anda, mulai dari penugasan hingga selesai.',
       icon: Icons.timeline,
     ),
     OnboardingItem(
-      title: 'Quick Support',
+      title: 'Pusat Bantuan Terintegrasi',
       description:
-          'Access our FAQ or contact support directly. We are here to help you.',
+      'Temukan jawaban cepat melalui FAQ atau berkomunikasi langsung dengan asisten AI melalui fitur chat.',
       icon: Icons.support_agent,
     ),
   ];
@@ -50,7 +50,7 @@ class OnboardingController extends GetxController {
   void finishOnboarding() {
     // Navigate to Login Page
     Get.off(
-      () => const LoginPage(),
+          () => const LoginPage(),
       binding: BindingsBuilder(() {
         Get.put(LoginController());
       }),

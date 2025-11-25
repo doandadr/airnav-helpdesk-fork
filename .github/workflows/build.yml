@@ -37,9 +37,8 @@ jobs:
 
       # Verifies if the dart code is formatted well
       - name: Verify formatting
-        run: dart format --output=none .
+        run: dart format --output=none --set-exit-if-changed .
         continue-on-error: true
-        # --set-exit-if-changed workflow will fail if format not correct
 
       # Runs unit test
       - name: Run tests
@@ -51,11 +50,17 @@ jobs:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
-    # We are choosing macos-latest because we will be also building for iOS in the future
-    runs-on: macos-latest
+    # Choose macos-latest to build for iOS
+    runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -67,7 +72,7 @@ jobs:
         run: flutter pub get
 
       - name: Build apk
-        run: flutter build apk
+        run: flutter build apk --release
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4

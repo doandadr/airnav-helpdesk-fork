@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../core/widgets/app_bar_widget.dart';
 import 'dashboard_controller.dart';
 
 class DashboardPage extends GetView<DashboardController> {
@@ -10,43 +11,12 @@ class DashboardPage extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0D47A1),
-        elevation: 0,
-        toolbarHeight: 80,
-        title: Row(
-          children: [
-            // Assuming you have a logo in your assets
-            // Image.asset('assets/logo.png', height: 40),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Helpdesk AIRNAV',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 2),
-                Text(
-                  'Dashboard Overview',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBarWidget(titleText: 'Beranda'),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/chatbot'),
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.chat_bubble_outline),
+        backgroundColor: const Color(0xFF0D47A1),
+        shape: const CircleBorder(),
+        child: const Icon(LucideIcons.messageCircle, color: Colors.white),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -70,40 +40,40 @@ class DashboardPage extends GetView<DashboardController> {
       mainAxisSpacing: 16,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 1.1,
+      childAspectRatio: 1,
       children: [
         _buildStatCard(
-          title: 'Tickets Solved',
+          title: 'Tiket Selesai',
           value: '12',
-          subtitle: 'dari 18 ticket',
-          status: 'Solved',
+          subtitle: 'dari 18 total tiket',
+          status: 'Selesai',
           icon: Icons.check_circle_outline,
           statusIcon: Icons.trending_up,
           color: Colors.green,
         ),
         _buildStatCard(
-          title: 'On Process',
+          title: 'Sedang Diproses',
           value: '3',
-          subtitle: 'dikerjakan',
-          status: 'Process',
+          subtitle: 'tiket dalam pengerjaan',
+          status: 'Proses',
           icon: Icons.analytics_outlined,
           statusIcon: Icons.trending_up,
           color: Colors.blue,
         ),
         _buildStatCard(
-          title: 'Waiting Approval Internal',
+          title: 'Menunggu Penugasan',
           value: '1',
-          subtitle: 'approval internal',
-          status: 'Pending',
-          icon: Icons.hourglass_empty_outlined,
+          subtitle: 'menunggu assigner',
+          status: 'Tertunda',
+          icon: Icons.person_search_outlined,
           statusIcon: Icons.trending_flat,
           color: Colors.orange,
         ),
         _buildStatCard(
-          title: 'Waiting Approval Teknisi',
+          title: 'Menunggu Teknisi',
           value: '2',
-          subtitle: 'approval teknisi',
-          status: 'Teknisi',
+          subtitle: 'menunggu konfirmasi',
+          status: 'Menunggu',
           icon: Icons.error_outline,
           statusIcon: Icons.trending_up,
           color: Colors.purple,
@@ -172,15 +142,16 @@ class DashboardPage extends GetView<DashboardController> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(title, style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
               const SizedBox(height: 4),
               Text(
                 value,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    color: color),
+                    color: Colors.black87),
               ),
               const SizedBox(height: 4),
               Container(
@@ -203,38 +174,39 @@ class DashboardPage extends GetView<DashboardController> {
 
   Widget _buildSummaryCard() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
-            blurRadius: 10,
+            blurRadius: 5,
           )
         ],
       ),
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildSummaryItem(
-                  Icons.confirmation_number_outlined, 'Total Ticket', '18', Colors.blue.shade700, true),
+                  Icons.confirmation_number_outlined, 'Total Tiket', '18', Colors.blue, true),
               _buildSummaryItem(
-                  Icons.groups_outlined, 'Total Teknisi', '9', Colors.blue.shade700, true),
+                  Icons.groups_outlined, 'Total Assignee', '9', Colors.blueGrey, true),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Divider(height: 1),
-          ),
+          const SizedBox(height: 16),
+          const Divider(height: 1),
+          const SizedBox(height: 16),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                _buildSummaryItem(
-                  Icons.thumb_up_outlined, 'Feedback Positif', '95%', Colors.green.shade600, false),
+                  Icons.thumb_up_outlined, 'Feedback Positif', '95%', Colors.green, false),
               _buildSummaryItem(
-                  Icons.thumb_down_outlined, 'Feedback Negatif', '5%', Colors.red.shade600, false),
+                  Icons.thumb_down_outlined, 'Feedback Negatif', '5%', Colors.red, false),
             ],
           ),
         ],
@@ -244,44 +216,42 @@ class DashboardPage extends GetView<DashboardController> {
 
   Widget _buildSummaryItem(IconData icon, String label, String value, Color color, bool isTopRow) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8)
-              ),
-              child: Icon(icon, color: color, size: 18),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(8)
             ),
-            const SizedBox(width: 12),
-            Column(
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
-
+  
   Widget _buildQuickActionsCard() {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -296,7 +266,7 @@ class DashboardPage extends GetView<DashboardController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Quick Actions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('Aksi Cepat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -304,7 +274,7 @@ class DashboardPage extends GetView<DashboardController> {
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.confirmation_number_outlined, size: 18),
-                  label: const Text('New Ticket'),
+                  label: const Text('Tiket Baru'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D47A1),
                     foregroundColor: Colors.white,
@@ -313,12 +283,12 @@ class DashboardPage extends GetView<DashboardController> {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.history, size: 20),
-                  label: const Text('My Tickets'),
+                  label: const Text('Tiket Saya'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF0D47A1),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -373,3 +343,4 @@ class DashboardPage extends GetView<DashboardController> {
     );
   }
 }
+

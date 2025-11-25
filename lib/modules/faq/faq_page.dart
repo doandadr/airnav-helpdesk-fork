@@ -1,7 +1,8 @@
+import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../core/widgets/search_field.dart';
 import 'faq_controller.dart';
 
 class FaqPage extends GetView<FaqController> {
@@ -11,24 +12,22 @@ class FaqPage extends GetView<FaqController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
+      appBar: AppBarWidget(
+        titleText: 'FAQ',
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          splashRadius: 24,
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Get.back(),
-        ),
-        title: const Text(
-          'FAQ',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
         ),
       ),
       body: Column(
         children: [
+          SizedBox(height: 16,),
+          // Search Bar
+          SearchField(
+            onChanged: controller.onSearch,
+            hintText: 'Cari FAQ...',
+          ),
           // Filter Tabs
           Container(
             color: Colors.white,
@@ -78,13 +77,16 @@ class FaqPage extends GetView<FaqController> {
                   }
                 },
                 backgroundColor: Colors.grey[200],
-                selectedColor: Colors.blue,
+                selectedColor: Color(0xFF0D47A1),
                 checkmarkColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    color: isSelected ? Colors.blue : Colors.transparent,
+                    color: isSelected ? Color(0xFF0D47A1) : Colors.transparent,
                   ),
                 ),
               ),
@@ -101,10 +103,7 @@ class FaqPage extends GetView<FaqController> {
       decoration: BoxDecoration(
         color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1.5,
-        ),
+        border: Border.all(color: Colors.grey[200]!, width: 1.5),
       ),
       child: Theme(
         data: ThemeData().copyWith(
@@ -126,7 +125,7 @@ class FaqPage extends GetView<FaqController> {
             ),
           ),
           trailing: Icon(
-            item.isExpanded 
+            item.isExpanded
                 ? Icons.keyboard_arrow_up_rounded
                 : Icons.keyboard_arrow_down_rounded,
             color: Colors.teal[400],

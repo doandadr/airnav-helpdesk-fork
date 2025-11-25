@@ -1,16 +1,17 @@
+import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../core/config/app_pages.dart';
 import 'menu_controller.dart' as menu_ctrl;
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends GetView<menu_ctrl.MenuController> {
   const MenuPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Inject controller langsung di sini untuk menghindari error "not found"
-    final controller = Get.put(menu_ctrl.MenuController());
-    
+
     return Scaffold(
+      appBar: AppBarWidget(titleText: 'Menu'),
       backgroundColor: Colors.grey[50],
       body: SingleChildScrollView(
         child: Column(
@@ -59,7 +60,7 @@ class MenuPage extends StatelessWidget {
   Widget _buildProfileHeader(menu_ctrl.MenuController controller) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF135CA1),
+        color: const Color(0xFF0D47A1),
         border: Border(
           bottom: BorderSide(
             color: const Color(0xFF0F3C5C),
@@ -67,7 +68,7 @@ class MenuPage extends StatelessWidget {
           ),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
       child: Row(
         children: [
           // Avatar
@@ -310,7 +311,7 @@ class MenuPage extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // TODO: Implement logout logic
+          Get.offAllNamed(Routes.LOGIN);
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(

@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 
 class FaqController extends GetxController {
   final RxString selectedCategory = 'IT'.obs;
-  
+  final RxString searchQuery = ''.obs; // To store the search query
+
   final List<String> categories = [
     'IT',
     'SDM',
@@ -140,43 +141,43 @@ class FaqController extends GetxController {
     ),
   ].obs;
 
-  // List<FaqItem> get filteredItems {
-  //   return allFaqItems.where((item) {
-  //     final matchesSearch =
-  //         item.question.toLowerCase().contains(
-  //           searchQuery.value.toLowerCase(),
-  //         ) ||
-  //         item.answer.toLowerCase().contains(searchQuery.value.toLowerCase());
-  //     final matchesCategory =
-  //         selectedCategory.value == 'All' ||
-  //         item.category == selectedCategory.value;
-  //     return matchesSearch && matchesCategory;
-  //   }).toList();
-  // }
-  //
-  // void setSearchQuery(String query) {
-  //   searchQuery.value = query;
-  // }
-
-  void setCategory(String category) {
-    selectedCategory.value = category;
-  }
-
   @override
   void onInit() {
     super.onInit();
+    // Reset expansion state on init
     for (var item in allFaqItems) {
       item.isExpanded = false;
     }
   }
 
+  // Method to update the search query
+  void onSearch(String query) {
+    searchQuery.value = query;
+  }
+
   List<FaqItem> get filteredFaqItems {
-    return allFaqItems.where((item) => item.category == selectedCategory.value).toList();
+    // Start with items of the selected category
+    var filtered = allFaqItems
+        .where((item) => item.category == selectedCategory.value)
+        .toList();
+
+    // If there is a search query, filter further
+    if (searchQuery.value.isNotEmpty) {
+      final queryLower = searchQuery.value.toLowerCase();
+      filtered = filtered.where((item) {
+        final questionLower = item.question.toLowerCase();
+        final answerLower = item.answer.toLowerCase();
+        // Return true if either question or answer contains the query
+        return questionLower.contains(queryLower) ||
+            answerLower.contains(queryLower);
+      }).toList();
+    }
+    return filtered;
   }
 
   void selectCategory(String category) {
     selectedCategory.value = category;
-    // Tutup semua panel saat ganti kategori
+    // Close all panels when category changes
     for (var item in allFaqItems) {
       item.isExpanded = false;
     }
@@ -186,7 +187,7 @@ class FaqController extends GetxController {
     final filtered = filteredFaqItems;
     if (index < filtered.length) {
       filtered[index].isExpanded = !filtered[index].isExpanded;
-      allFaqItems.refresh();
+      allFaqItems.refresh(); // Use refresh() to update the UI
     }
   }
 }
