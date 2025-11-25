@@ -28,4 +28,7 @@ abstract class EnvConfig {
 
   @EnviedField(varName: 'FIREBASE_IOS_BUNDLE_ID', obfuscate: true)
   static final String firebaseIosBundleId = _EnvConfig.firebaseIosBundleId;
+
+  @EnviedField(varName: 'BASE_URL', obfuscate: true)
+  static final String baseUrl = _EnvConfig.baseUrl;
 }
