@@ -5,10 +5,15 @@ import 'package:get/get.dart';
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;
   final Widget? leading;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
+
   const AppBarWidget({
     super.key,
     required this.titleText,
     this.leading,
+    this.actions,
+    this.bottom,
   });
 
   @override
@@ -24,7 +29,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Text(
+              Text(
                 titleText,
                 style: const TextStyle(
                   fontSize: 20,
@@ -44,25 +49,28 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: IconButton(
-              splashRadius: 24,
-              icon: const Icon(
-                Icons.notifications_none,
-                color: Colors.black54,
+      actions: actions ??
+          [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: IconButton(
+                  splashRadius: 24,
+                  icon: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.black54,
+                  ),
+                  onPressed: () => Get.to(() => const NotificationPage()),
+                ),
               ),
-              onPressed: () => Get.to(() => const NotificationPage()),
             ),
-          ),
-        ),
-      ],
+          ],
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize =>
+      Size.fromHeight(80 + (bottom?.preferredSize.height ?? 0.0));
 }
