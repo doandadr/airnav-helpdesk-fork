@@ -12,7 +12,7 @@ class TicketListPage extends GetView<TicketListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(titleText: 'Tiket Saya'),
       body: Column(
         children: [
@@ -89,61 +89,76 @@ class TicketListPage extends GetView<TicketListController> {
     required Function(String) onChanged,
   }) {
     return Expanded(
-        child: Obx(() {
-      final reactiveValue = (label == "Status")
-          ? controller.statusFilter.value
-          : (label == "Priority")
-              ? controller.priorityFilter.value
-              : controller.sortOption.value;
+      child: Obx(() {
+        final reactiveValue = (label == "Status")
+            ? controller.statusFilter.value
+            : (label == "Priority")
+            ? controller.priorityFilter.value
+            : controller.sortOption.value;
 
-      return DropdownButtonFormField<String>(
-        isExpanded: true,
-        value: reactiveValue.isEmpty ? null : reactiveValue,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: const TextStyle(fontSize: 12),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+        return DropdownButtonFormField<String>(
+          isExpanded: true,
+          value: reactiveValue.isEmpty ? null : reactiveValue,
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: const TextStyle(fontSize: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                color: Color(0xFF135CA1),
+                width: 1.5,
+              ),
+            ),
+            filled: true,
+            fillColor: Get.theme.cardColor,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xFF135CA1), width: 1.5),
-          ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
-        icon: const Icon(Icons.arrow_drop_down, size: 20),
-        items: items
-            .map((e) => DropdownMenuItem(value: e, child: Text(e.isEmpty ? 'All' : e)))
-            .toList(),
-        onChanged: (val) => onChanged(val ?? ''),
-      );
-    }));
+          icon: const Icon(Icons.arrow_drop_down, size: 20),
+          items: items
+              .map(
+                (e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.isEmpty ? 'All' : e),
+                ),
+              )
+              .toList(),
+          onChanged: (val) => onChanged(val ?? ''),
+        );
+      }),
+    );
   }
 
   Widget _buildTabs() {
-    return Obx(() => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: controller.tabs
-                  .map((tab) => _tabItem(
-                        tab,
-                        controller.activeTab.value == tab,
-                        () => controller.changeTab(tab),
-                      ))
-                  .toList(),
-            ),
+    return Obx(
+      () => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: controller.tabs
+                .map(
+                  (tab) => _tabItem(
+                    tab,
+                    controller.activeTab.value == tab,
+                    () => controller.changeTab(tab),
+                  ),
+                )
+                .toList(),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _tabItem(String text, bool active, VoidCallback onTap) {
@@ -158,7 +173,9 @@ class TicketListPage extends GetView<TicketListController> {
               text,
               style: TextStyle(
                 fontSize: 14,
-                color: active ? const Color(0xFF135CA1) : const Color(0xFF475569),
+                color: active
+                    ? const Color(0xFF135CA1)
+                    : const Color(0xFF475569),
                 fontWeight: active ? FontWeight.bold : FontWeight.normal,
               ),
             ),

@@ -10,6 +10,7 @@ class AddTicketController extends GetxController {
   final Rxn<String> selectedCategory = Rxn<String>();
   final Rxn<String> selectedSubCategory = Rxn<String>();
   final Rxn<String> selectedPriority = Rxn<String>();
+  final Rxn<String> selectedSource = Rxn<String>();
 
   // Text Controllers
   final TextEditingController subjectController = TextEditingController();
@@ -21,6 +22,7 @@ class AddTicketController extends GetxController {
   final List<String> categories = ['Permintaan', 'Insiden'];
   final List<String> subCategories = ['Akses Wifi', 'Kerusakan Printer'];
   final List<String> priorities = ['Low', 'Medium', 'High', 'Urgent'];
+  final List<String> sources = ['Portal', 'Email', 'Phone', 'Direct'];
 
   void onDepartmentChanged(String? value) {
     selectedDepartment.value = value;
@@ -44,6 +46,10 @@ class AddTicketController extends GetxController {
 
   void onPriorityChanged(String? value) {
     selectedPriority.value = value;
+  }
+
+  void onSourceChanged(String? value) {
+    selectedSource.value = value;
   }
 
   void submitTicket() {
@@ -109,6 +115,7 @@ class AddTicketController extends GetxController {
     selectedCategory.value = null;
     selectedSubCategory.value = null;
     selectedPriority.value = null;
+    selectedSource.value = null;
     subjectController.clear();
     descriptionController.clear();
   }

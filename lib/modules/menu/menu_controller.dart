@@ -1,9 +1,21 @@
+import 'package:airnav_helpdesk/core/services/theme_service.dart';
+
 import 'package:get/get.dart';
+
 class MenuController extends GetxController {
   // User Info (bisa diambil dari auth service atau local storage)
   final RxString userName = 'Budi'.obs;
   final RxString userId = '10014377'.obs;
   final RxString userCompany = 'AIRNAV INDONESIA'.obs;
+
+  final ThemeService _themeService = Get.find<ThemeService>();
+
+  bool get isDarkMode => _themeService.isDarkMode;
+
+  void toggleTheme() {
+    _themeService.switchTheme();
+    update(); // Force update to refresh UI if needed
+  }
 
   // Bisa ditambahkan method untuk fetch user data dari API
   void fetchUserData() {
@@ -33,8 +45,7 @@ class MenuController extends GetxController {
 
   void navigateToFAQ() {
     // TODO: Navigate to FAQ page
-    // Get.toNamed('/faq');
-     Get.toNamed('/faq');
+    Get.toNamed('/faq');
   }
 
   void navigateToSettings() {

@@ -11,11 +11,14 @@ class ChatbotPage extends GetView<ChatbotController> {
     final TextEditingController _inputController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBarWidget(titleText: 'Chatbot', leading: IconButton(
-        splashRadius: 24,
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Get.back(),
-      ),),
+      appBar: AppBarWidget(
+        titleText: 'Chatbot',
+        leading: IconButton(
+          splashRadius: 24,
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Get.back(),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -49,7 +52,9 @@ class ChatbotPage extends GetView<ChatbotController> {
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: message.isUser ? Colors.blue : Colors.grey[200],
+          color: message.isUser
+              ? Get.theme.colorScheme.primary
+              : (Get.isDarkMode ? Colors.grey[800] : Colors.grey[200]),
           borderRadius: BorderRadius.circular(12),
         ),
         constraints: BoxConstraints(
@@ -57,7 +62,11 @@ class ChatbotPage extends GetView<ChatbotController> {
         ),
         child: Text(
           message.text,
-          style: TextStyle(color: message.isUser ? Colors.white : Colors.black),
+          style: TextStyle(
+            color: message.isUser
+                ? Colors.white
+                : Get.theme.textTheme.bodyLarge?.color,
+          ),
         ),
       ),
     );
@@ -67,7 +76,7 @@ class ChatbotPage extends GetView<ChatbotController> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -94,7 +103,7 @@ class ChatbotPage extends GetView<ChatbotController> {
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            color: Colors.blue,
+            color: Get.theme.colorScheme.primary,
             onPressed: () {
               this.controller.sendMessage(controller.text);
               controller.clear();

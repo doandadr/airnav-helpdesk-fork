@@ -14,18 +14,20 @@ class LoginPage extends GetView<LoginController> {
 
     return ShadTheme(
       data: ShadThemeData(
-        brightness: Brightness.light,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
       ),
       // Use a Builder to get a context that is a descendant of ShadTheme
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: ShadTheme.of(context).colorScheme.background,
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
             body: SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,14 +35,14 @@ class LoginPage extends GetView<LoginController> {
                       Icon(
                         Icons.airplanemode_active_rounded,
                         size: 64,
-                        color: Color(0xFF0D47A1),
+                        color: Get.theme.colorScheme.primary,
                       ),
                       const SizedBox(height: 32),
                       Text(
                         'Airnav Helpdesk',
                         style: ShadTheme.of(context).textTheme.h2.copyWith(
-                              color: Color(0xFF0D47A1),
-                            ),
+                          color: Get.theme.colorScheme.primary,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
@@ -60,7 +62,7 @@ class LoginPage extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 16),
                       Obx(
-                            () => ShadInput(
+                        () => ShadInput(
                           controller: controller.passwordController,
                           placeholder: const Text('Password'),
                           leading: const Padding(
@@ -72,7 +74,7 @@ class LoginPage extends GetView<LoginController> {
                             width: 32,
                             height: 32,
                             leading: Icon(
-                              color: Color(0xFF0D47A1),
+                              color: Get.theme.colorScheme.primary,
                               controller.isObscure.value
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
@@ -94,23 +96,26 @@ class LoginPage extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 32),
                       Obx(
-                            () => ShadButton(
-                          onPressed:
-                          controller.isLoading.value ? null : controller.login,
+                        () => ShadButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : controller.login,
                           width: double.infinity,
                           height: 48,
-                          backgroundColor: Color(0xFF0D47A1),
+                          backgroundColor: Get.theme.colorScheme.primary,
                           child: controller.isLoading.value
                               ? const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              // The theme will color this appropriately
-                            ),
-                          )
-                              : const Text('Login',
-                              style: TextStyle(fontSize: 16)),
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    // The theme will color this appropriately
+                                  ),
+                                )
+                              : const Text(
+                                  'Login',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                         ),
                       ),
                     ],

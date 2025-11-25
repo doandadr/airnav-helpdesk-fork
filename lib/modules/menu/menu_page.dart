@@ -2,6 +2,7 @@ import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/config/app_pages.dart';
+import '../../core/services/theme_service.dart';
 import 'menu_controller.dart' as menu_ctrl;
 
 class MenuPage extends GetView<menu_ctrl.MenuController> {
@@ -9,16 +10,15 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBarWidget(titleText: 'Menu'),
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Header Profile Section
             _buildProfileHeader(controller),
-            
+
             // Content Section
             Padding(
               padding: const EdgeInsets.all(16),
@@ -29,24 +29,24 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
                   _buildSectionTitle('INFORMASI & BANTUAN'),
                   const SizedBox(height: 12),
                   _buildInfoCard(controller),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Pengaturan Section
                   _buildSectionTitle('PENGATURAN'),
                   const SizedBox(height: 12),
                   _buildSettingsCard(controller),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Logout Button
                   _buildLogoutButton(),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Footer
                   _buildFooter(),
-                  
+
                   const SizedBox(height: 80), // Space for bottom navigation
                 ],
               ),
@@ -62,10 +62,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
       decoration: BoxDecoration(
         color: const Color(0xFF0D47A1),
         border: Border(
-          bottom: BorderSide(
-            color: const Color(0xFF0F3C5C),
-            width: 2,
-          ),
+          bottom: BorderSide(color: const Color(0xFF0F3C5C), width: 2),
         ),
       ),
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -88,34 +85,30 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           const SizedBox(width: 16),
           // User Info
           Expanded(
-            child: Obx(() => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  controller.userName.value,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.userName.value,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  controller.userId.value,
-                  style: TextStyle(
-                    color: Colors.blue[100],
-                    fontSize: 12,
+                  const SizedBox(height: 4),
+                  Text(
+                    controller.userId.value,
+                    style: TextStyle(color: Colors.blue[100], fontSize: 12),
                   ),
-                ),
-                Text(
-                  controller.userCompany.value,
-                  style: TextStyle(
-                    color: Colors.blue[100],
-                    fontSize: 12,
+                  Text(
+                    controller.userCompany.value,
+                    style: TextStyle(color: Colors.blue[100], fontSize: 12),
                   ),
-                ),
-              ],
-            )),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -140,12 +133,9 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
   Widget _buildInfoCard(menu_ctrl.MenuController controller) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1,
-        ),
+        border: Border.all(color: Get.theme.colorScheme.outline, width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -198,12 +188,9 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
   Widget _buildSettingsCard(menu_ctrl.MenuController controller) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1,
-        ),
+        border: Border.all(color: Get.theme.colorScheme.outline, width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -221,11 +208,59 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
             onTap: controller.navigateToSettings,
           ),
           _buildDivider(),
+          _buildThemeToggle(controller),
+          _buildDivider(),
           _buildMenuItem(
             icon: Icons.shield_outlined,
             iconColor: Colors.grey[700]!,
             title: 'Privacy & Security',
             onTap: controller.navigateToPrivacySecurity,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildThemeToggle(menu_ctrl.MenuController controller) {
+    final themeService = Get.find<ThemeService>();
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Obx(() {
+            final isDark = themeService.isDarkModeRx.value;
+            return Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey[800] : Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                Icons.dark_mode_outlined,
+                color: isDark ? Colors.white : Colors.grey[600],
+                size: 20,
+              ),
+            );
+          }),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Dark Mode',
+              style: TextStyle(
+                color: Get.theme.textTheme.bodyLarge?.color,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Obx(
+            () => Switch(
+              value: themeService.isDarkModeRx.value,
+              onChanged: (val) => controller.toggleTheme(),
+              activeColor: const Color(0xFF0D47A1),
+            ),
           ),
         ],
       ),
@@ -252,11 +287,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
                 color: iconColor,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 20,
-              ),
+              child: Icon(icon, color: Colors.white, size: 20),
             ),
             const SizedBox(width: 12),
             // Title
@@ -264,18 +295,14 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: Colors.grey[900],
+                  color: Get.theme.textTheme.bodyLarge?.color,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
               ),
             ),
             // Arrow
-            Icon(
-              Icons.chevron_right,
-              color: Colors.grey[400],
-              size: 20,
-            ),
+            Icon(Icons.chevron_right, color: Colors.grey[400], size: 20),
           ],
         ),
       ),
@@ -286,7 +313,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
     return Divider(
       height: 1,
       thickness: 1,
-      color: Colors.grey[100],
+      color: Get.theme.dividerColor,
       indent: 16,
       endIndent: 16,
     );
@@ -295,12 +322,9 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
   Widget _buildLogoutButton() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1,
-        ),
+        border: Border.all(color: Get.theme.colorScheme.outline, width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -319,11 +343,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.logout,
-                color: Colors.red[600],
-                size: 20,
-              ),
+              Icon(Icons.logout, color: Colors.red[600], size: 20),
               const SizedBox(width: 8),
               Text(
                 'Logout',
@@ -346,18 +366,12 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
         children: [
           Text(
             'Helpdesk System v1.0.0',
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 11,
-            ),
+            style: TextStyle(color: Colors.grey[400], fontSize: 11),
           ),
           const SizedBox(height: 4),
           Text(
             '© 2025 AIRNAV Indonesia',
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 11,
-            ),
+            style: TextStyle(color: Colors.grey[400], fontSize: 11),
           ),
         ],
       ),

@@ -1,6 +1,5 @@
-import 'package:airnav_helpdesk/modules/ticket/add/add_ticket_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'main_controller.dart';
@@ -11,14 +10,9 @@ import 'modules/ticket/list/ticket_list_page.dart';
 class MainPage extends GetView<MainController> {
   const MainPage({super.key});
 
-  List<Widget> _screens() => [
-    DashboardPage(),
-    TicketListPage(),
-    MenuPage(),
-  ];
+  List<Widget> _screens() => [DashboardPage(), TicketListPage(), MenuPage()];
 
   List<PersistentBottomNavBarItem> _items() => [
-
     PersistentBottomNavBarItem(
       icon: const Icon(Icons.dashboard),
       title: 'Beranda',
@@ -27,10 +21,7 @@ class MainPage extends GetView<MainController> {
       icon: const Icon(LucideIcons.ticket), // TODO change to lucide ticket
       title: 'Tiket',
     ),
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.menu),
-      title: 'Menu',
-    ),
+    PersistentBottomNavBarItem(icon: const Icon(Icons.menu), title: 'Menu'),
   ];
 
   @override
@@ -41,11 +32,11 @@ class MainPage extends GetView<MainController> {
       screens: _screens(),
       items: _items(),
       navBarStyle: NavBarStyle.style3,
-      backgroundColor: Colors.white,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(0),
-        colorBehindNavBar: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
+        colorBehindNavBar: Get.theme.scaffoldBackgroundColor,
+        border: Border(top: BorderSide(color: Get.theme.dividerColor)),
       ),
       stateManagement: false,
       handleAndroidBackButtonPress: true,

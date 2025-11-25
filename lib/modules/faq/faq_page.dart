@@ -11,7 +11,7 @@ class FaqPage extends GetView<FaqController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
         titleText: 'FAQ',
         leading: IconButton(
@@ -22,15 +22,12 @@ class FaqPage extends GetView<FaqController> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 16,),
+          SizedBox(height: 16),
           // Search Bar
-          SearchField(
-            onChanged: controller.onSearch,
-            hintText: 'Cari FAQ...',
-          ),
+          SearchField(onChanged: controller.onSearch, hintText: 'Cari FAQ...'),
           // Filter Tabs
           Container(
-            color: Colors.white,
+            color: Get.theme.cardColor,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: _buildFilterTabs(),
           ),
@@ -65,7 +62,9 @@ class FaqPage extends GetView<FaqController> {
                 label: Text(
                   category,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black87,
+                    color: isSelected
+                        ? Get.theme.colorScheme.onPrimary
+                        : Get.theme.textTheme.bodyLarge?.color,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                     fontSize: 14,
                   ),
@@ -76,8 +75,10 @@ class FaqPage extends GetView<FaqController> {
                     controller.selectCategory(category);
                   }
                 },
-                backgroundColor: Colors.grey[200],
-                selectedColor: Color(0xFF0D47A1),
+                backgroundColor: Get.isDarkMode
+                    ? Colors.grey[800]
+                    : Colors.grey[200],
+                selectedColor: Get.theme.colorScheme.primary,
                 checkmarkColor: Colors.white,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -86,7 +87,9 @@ class FaqPage extends GetView<FaqController> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    color: isSelected ? Color(0xFF0D47A1) : Colors.transparent,
+                    color: isSelected
+                        ? Get.theme.colorScheme.primary
+                        : Colors.transparent,
                   ),
                 ),
               ),
@@ -101,9 +104,9 @@ class FaqPage extends GetView<FaqController> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!, width: 1.5),
+        border: Border.all(color: Get.theme.dividerColor, width: 1.5),
       ),
       child: Theme(
         data: ThemeData().copyWith(
@@ -120,7 +123,7 @@ class FaqPage extends GetView<FaqController> {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[800],
+              color: Get.theme.textTheme.bodyLarge?.color,
               height: 1.4,
             ),
           ),
@@ -143,7 +146,7 @@ class FaqPage extends GetView<FaqController> {
                 item.answer,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey[600],
+                  color: Get.theme.textTheme.bodyMedium?.color,
                   height: 1.6,
                 ),
               ),

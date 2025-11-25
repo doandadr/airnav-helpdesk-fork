@@ -10,7 +10,7 @@ class AddTicketPage extends GetView<AddTicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
         titleText: 'Tiket Baru',
         leading: IconButton(
@@ -33,48 +33,14 @@ class AddTicketPage extends GetView<AddTicketController> {
     );
   }
 
-  Widget _buildSubHeader() {
-    return Container(
-      color: const Color(0xFF0D47A1),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          const Icon(Icons.arrow_back, color: Colors.white),
-          const SizedBox(width: 16),
-          const CircleAvatar(
-            backgroundColor: Colors.white24,
-            child: Icon(Icons.person_outline, color: Colors.white),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Create New Ticket',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 2),
-              Text(
-                'Lengkapi form untuk membuat tiket',
-                style: TextStyle(fontSize: 12, color: Colors.white70),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildSectionHeader(String title) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFFEEBEE),
+        color: Get.isDarkMode
+            ? Colors.red[900]!.withOpacity(0.3)
+            : const Color(0xFFFEEBEE),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
@@ -82,9 +48,9 @@ class AddTicketPage extends GetView<AddTicketController> {
       ),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Color(0xFFC62828),
+          color: Get.isDarkMode ? Colors.red[100] : const Color(0xFFC62828),
           fontSize: 14,
         ),
       ),
@@ -94,7 +60,7 @@ class AddTicketPage extends GetView<AddTicketController> {
   Widget _buildCard(Widget child) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -178,20 +144,22 @@ class AddTicketPage extends GetView<AddTicketController> {
                 const SizedBox(height: 16),
                 _buildDropdown(
                   'Source',
-                  controller.selectedPriority,
-                  controller.priorities,
-                  controller.onPriorityChanged,
+                  controller.selectedSource,
+                  controller.sources,
+                  controller.onSourceChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
                   label: 'Subject Masalah',
                   hint: 'problem_summary',
+                  controller: controller.subjectController,
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
                   label: 'Deskripsi Masalah',
                   hint: 'Jelaskan masalah Anda secara detail...',
                   maxLines: 4,
+                  controller: controller.descriptionController,
                 ),
                 const SizedBox(height: 16),
                 _buildDueDatePicker(),
@@ -235,7 +203,8 @@ class AddTicketPage extends GetView<AddTicketController> {
           style: const TextStyle(fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor:
+                Get.theme.inputDecorationTheme.fillColor ?? Get.theme.cardColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide.none,
@@ -266,7 +235,9 @@ class AddTicketPage extends GetView<AddTicketController> {
             value: value.value,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor:
+                  Get.theme.inputDecorationTheme.fillColor ??
+                  Get.theme.cardColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: Colors.grey.shade300),
@@ -278,7 +249,7 @@ class AddTicketPage extends GetView<AddTicketController> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(
-                  color: Theme.of(Get.context!).primaryColor,
+                  color: Get.theme.colorScheme.primary,
                   width: 1.5,
                 ),
               ),
@@ -308,6 +279,7 @@ class AddTicketPage extends GetView<AddTicketController> {
   Widget _buildTextField({
     required String label,
     required String hint,
+    required TextEditingController controller,
     int maxLines = 1,
   }) {
     return Column(
@@ -316,12 +288,14 @@ class AddTicketPage extends GetView<AddTicketController> {
         _buildLabel(label),
         const SizedBox(height: 8),
         TextFormField(
+          controller: controller,
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
             filled: true,
-            fillColor: Colors.white,
+            fillColor:
+                Get.theme.inputDecorationTheme.fillColor ?? Get.theme.cardColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: Colors.grey.shade300),
@@ -333,7 +307,7 @@ class AddTicketPage extends GetView<AddTicketController> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
-                color: Theme.of(Get.context!).primaryColor,
+                color: Get.theme.colorScheme.primary,
                 width: 1.5,
               ),
             ),
@@ -356,7 +330,7 @@ class AddTicketPage extends GetView<AddTicketController> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Get.theme.cardColor,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.grey.shade300),
           ),
@@ -394,7 +368,7 @@ class AddTicketPage extends GetView<AddTicketController> {
           height: 110,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Get.theme.cardColor,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey.shade300),
           ),
@@ -403,14 +377,14 @@ class AddTicketPage extends GetView<AddTicketController> {
             children: [
               Icon(
                 Icons.cloud_upload_outlined,
-                color: const Color(0xFF0D47A1),
+                color: Get.theme.colorScheme.primary,
                 size: 32,
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Klik untuk upload',
                 style: TextStyle(
-                  color: Color(0xFF0D47A1),
+                  color: Get.theme.colorScheme.primary,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
@@ -434,7 +408,7 @@ class AddTicketPage extends GetView<AddTicketController> {
           child: ElevatedButton(
             onPressed: controller.submitTicket,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF0D47A1),
+              backgroundColor: Get.theme.colorScheme.primary,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

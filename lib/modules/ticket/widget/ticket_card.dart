@@ -76,19 +76,23 @@ class TicketCard extends StatelessWidget {
   }
 
   // --- Bottom Sheet Action ---
-  void _showActionBottomSheet(BuildContext context,
-      {required String title, required String hint}) {
+  void _showActionBottomSheet(
+    BuildContext context, {
+    required String title,
+    required String hint,
+  }) {
     Get.bottomSheet(
       // Prevents keyboard from covering the content
       SingleChildScrollView(
         child: Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: Container(
             padding: const EdgeInsets.all(24),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Get.theme.cardColor,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
               ),
@@ -99,50 +103,83 @@ class TicketCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Get.theme.textTheme.bodyLarge?.color,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: Get.isDarkMode
+                        ? Colors.grey[800]
+                        : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Kode Tiket',
-                          style: TextStyle(color: Colors.grey, fontSize: 12)),
+                      Text(
+                        'Kode Tiket',
+                        style: TextStyle(
+                          color: Get.theme.textTheme.bodySmall?.color,
+                          fontSize: 12,
+                        ),
+                      ),
                       const SizedBox(height: 2),
-                      Text(ticket.code,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        ticket.code,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Get.theme.textTheme.bodyLarge?.color,
+                        ),
+                      ),
                       const SizedBox(height: 8),
-                      Text(ticket.title),
+                      Text(
+                        ticket.title,
+                        style: TextStyle(
+                          color: Get.theme.textTheme.bodyLarge?.color,
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text('Nota (Opsional)',
-                    style: TextStyle(color: Colors.grey, fontSize: 12)),
+                Text(
+                  'Nota (Opsional)',
+                  style: TextStyle(
+                    color: Get.theme.textTheme.bodySmall?.color,
+                    fontSize: 12,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 TextField(
                   maxLines: 3,
                   decoration: InputDecoration(
                     hintText: hint,
+                    hintStyle: TextStyle(
+                      color: Get.theme.textTheme.bodySmall?.color,
+                    ),
+                    filled: true,
+                    fillColor:
+                        Get.theme.inputDecorationTheme.fillColor ??
+                        Get.theme.cardColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: Get.theme.dividerColor),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: Get.theme.dividerColor),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).primaryColor),
+                      borderSide: BorderSide(
+                        color: Get.theme.colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -179,9 +216,9 @@ class TicketCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: Get.theme.dividerColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -200,15 +237,15 @@ class TicketCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   ticket.code,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
+                    color: Get.theme.textTheme.bodyLarge?.color,
                   ),
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: _statusColor(ticket.status),
                   borderRadius: BorderRadius.circular(8),
@@ -216,13 +253,14 @@ class TicketCard extends StatelessWidget {
                 child: Text(
                   ticket.status,
                   style: TextStyle(
-                      fontSize: 10, color: _statusTextColor(ticket.status)),
+                    fontSize: 10,
+                    color: _statusTextColor(ticket.status),
+                  ),
                 ),
               ),
               const SizedBox(width: 6),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: _priorityColor(ticket.priority),
                   borderRadius: BorderRadius.circular(8),
@@ -241,7 +279,11 @@ class TicketCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             ticket.title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Get.theme.textTheme.bodyLarge?.color,
+            ),
           ),
 
           const SizedBox(height: 12),
@@ -251,24 +293,39 @@ class TicketCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Kategori',
-                    style: TextStyle(fontSize: 10, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Get.theme.textTheme.bodySmall?.color,
+                    ),
                   ),
-                  Text(ticket.category, style: const TextStyle(fontSize: 12)),
+                  Text(
+                    ticket.category,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
                 ],
               ),
               const Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Sub Kategori',
-                    style: TextStyle(fontSize: 10, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Get.theme.textTheme.bodySmall?.color,
+                    ),
                   ),
                   Text(
                     ticket.subCategory,
-                    style: const TextStyle(fontSize: 12),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.textTheme.bodyMedium?.color,
+                    ),
                   ),
                 ],
               ),
@@ -280,11 +337,20 @@ class TicketCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Progres',
-                style: TextStyle(fontSize: 10, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Get.theme.textTheme.bodySmall?.color,
+                ),
               ),
-              Text('${ticket.progress}%', style: const TextStyle(fontSize: 12)),
+              Text(
+                '${ticket.progress}%',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Get.theme.textTheme.bodyMedium?.color,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 4),
@@ -310,11 +376,18 @@ class TicketCard extends StatelessWidget {
           // --- Last Update ---
           Row(
             children: [
-              Icon(Icons.access_time, size: 14, color: Colors.grey.shade600),
+              Icon(
+                Icons.access_time,
+                size: 14,
+                color: Get.theme.textTheme.bodySmall?.color,
+              ),
               const SizedBox(width: 4),
               Text(
                 ticket.lastUpdate,
-                style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Get.theme.textTheme.bodySmall?.color,
+                ),
               ),
             ],
           ),

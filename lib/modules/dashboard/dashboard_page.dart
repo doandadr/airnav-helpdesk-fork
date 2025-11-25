@@ -10,7 +10,7 @@ class DashboardPage extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(titleText: 'Beranda'),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/chatbot'),
@@ -94,14 +94,14 @@ class DashboardPage extends GetView<DashboardController> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-          )
+          ),
         ],
       ),
       child: Column(
@@ -118,8 +118,7 @@ class DashboardPage extends GetView<DashboardController> {
                 child: Icon(icon, color: color, size: 20),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: color.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(12),
@@ -131,9 +130,10 @@ class DashboardPage extends GetView<DashboardController> {
                     Text(
                       status,
                       style: TextStyle(
-                          color: color,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold),
+                        color: color,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -144,14 +144,18 @@ class DashboardPage extends GetView<DashboardController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(title, style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
+              Text(
+                title,
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+              ),
               const SizedBox(height: 4),
               Text(
                 value,
                 style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87),
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 4),
               Container(
@@ -176,14 +180,14 @@ class DashboardPage extends GetView<DashboardController> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-          )
+          ),
         ],
       ),
       child: Column(
@@ -192,9 +196,19 @@ class DashboardPage extends GetView<DashboardController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildSummaryItem(
-                  Icons.confirmation_number_outlined, 'Total Tiket', '18', Colors.blue, true),
+                Icons.confirmation_number_outlined,
+                'Total Tiket',
+                '18',
+                Colors.blue,
+                true,
+              ),
               _buildSummaryItem(
-                  Icons.groups_outlined, 'Total Assignee', '9', Colors.blueGrey, true),
+                Icons.groups_outlined,
+                'Total Assignee',
+                '9',
+                Colors.blueGrey,
+                true,
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -203,10 +217,20 @@ class DashboardPage extends GetView<DashboardController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               _buildSummaryItem(
-                  Icons.thumb_up_outlined, 'Feedback Positif', '95%', Colors.green, false),
               _buildSummaryItem(
-                  Icons.thumb_down_outlined, 'Feedback Negatif', '5%', Colors.red, false),
+                Icons.thumb_up_outlined,
+                'Feedback Positif',
+                '95%',
+                Colors.green,
+                false,
+              ),
+              _buildSummaryItem(
+                Icons.thumb_down_outlined,
+                'Feedback Negatif',
+                '5%',
+                Colors.red,
+                false,
+              ),
             ],
           ),
         ],
@@ -214,7 +238,13 @@ class DashboardPage extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildSummaryItem(IconData icon, String label, String value, Color color, bool isTopRow) {
+  Widget _buildSummaryItem(
+    IconData icon,
+    String label,
+    String value,
+    Color color,
+    bool isTopRow,
+  ) {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +253,7 @@ class DashboardPage extends GetView<DashboardController> {
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: color.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8)
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 20),
           ),
@@ -239,46 +269,57 @@ class DashboardPage extends GetView<DashboardController> {
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
-  
+
   Widget _buildQuickActionsCard() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-          )
+          ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Aksi Cepat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text(
+            'Aksi Cepat',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
           const SizedBox(height: 16),
           Row(
             children: [
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.confirmation_number_outlined, size: 18),
+                  icon: const Icon(
+                    Icons.confirmation_number_outlined,
+                    size: 18,
+                  ),
                   label: const Text('Tiket Baru'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D47A1),
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
@@ -291,9 +332,14 @@ class DashboardPage extends GetView<DashboardController> {
                   label: const Text('Tiket Saya'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF0D47A1),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    side: const BorderSide(width: 1.5, color: Color(0xFF0D47A1)),
+                    side: const BorderSide(
+                      width: 1.5,
+                      color: Color(0xFF0D47A1),
+                    ),
                   ),
                 ),
               ),
@@ -316,7 +362,11 @@ class DashboardPage extends GetView<DashboardController> {
         children: [
           const Text(
             'Butuh Bantuan?',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
           const SizedBox(height: 4),
           const Text(
@@ -331,16 +381,19 @@ class DashboardPage extends GetView<DashboardController> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: const Color(0xFF0D47A1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              child: const Text('Hubungi Support', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text(
+                'Hubungi Support',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
       ),
-
     );
   }
 }
-

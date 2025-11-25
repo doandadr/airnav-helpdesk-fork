@@ -12,14 +12,14 @@ class OnboardingPage extends GetView<OnboardingController> {
       Get.put(OnboardingController());
     }
 
-    const primaryColor = Color(0xFF0D47A1);
+    final primaryColor = Get.theme.colorScheme.primary;
 
     return ShadTheme(
       data: ShadThemeData(
-        brightness: Brightness.light,
+        brightness: Get.isDarkMode ? Brightness.dark : Brightness.light,
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -50,10 +50,10 @@ class OnboardingPage extends GetView<OnboardingController> {
                           const SizedBox(height: 48),
                           Text(
                             item.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF1E293B), // Darker text
+                              color: Get.theme.textTheme.headlineMedium?.color,
                               letterSpacing: -0.5,
                             ),
                             textAlign: TextAlign.center,
@@ -63,7 +63,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                             item.description,
                             style: TextStyle(
                               fontSize: 15,
-                              color: Colors.grey.shade600,
+                              color: Get.theme.textTheme.bodyMedium?.color,
                               height: 1.5,
                             ),
                             textAlign: TextAlign.center,
@@ -80,15 +80,17 @@ class OnboardingPage extends GetView<OnboardingController> {
                   children: [
                     // Page Indicators
                     Obx(
-                          () => Row(
+                      () => Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           controller.items.length,
-                              (index) => AnimatedContainer(
+                          (index) => AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             height: 8,
-                            width: controller.currentPage.value == index ? 24 : 8,
+                            width: controller.currentPage.value == index
+                                ? 24
+                                : 8,
                             decoration: BoxDecoration(
                               color: controller.currentPage.value == index
                                   ? primaryColor
@@ -102,7 +104,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                     const SizedBox(height: 40),
                     // Buttons
                     Obx(
-                          () => SizedBox(
+                      () => SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ShadButton(
@@ -110,7 +112,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                           onPressed: controller.nextPage,
                           child: Text(
                             controller.currentPage.value ==
-                                controller.items.length - 1
+                                    controller.items.length - 1
                                 ? 'Mulai'
                                 : 'Lanjut',
                           ),
@@ -119,11 +121,11 @@ class OnboardingPage extends GetView<OnboardingController> {
                     ),
                     const SizedBox(height: 16),
                     Obx(
-                          () => SizedBox(
+                      () => SizedBox(
                         height: 50,
                         child: Visibility(
                           visible:
-                          controller.currentPage.value !=
+                              controller.currentPage.value !=
                               controller.items.length - 1,
                           maintainSize: true,
                           maintainAnimation: true,

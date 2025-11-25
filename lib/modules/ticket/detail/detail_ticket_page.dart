@@ -10,9 +10,9 @@ class DetailTicketPage extends GetView<DetailTicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
-          titleText: 'Detail Tiket',
+        titleText: 'Detail Tiket',
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -48,14 +48,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 10,
-          )
+          ),
         ],
       ),
       child: child,
@@ -71,16 +71,30 @@ class DetailTicketPage extends GetView<DetailTicketController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildChip('ON PROCESS', Colors.blue.shade100, Colors.blue.shade800),
-              _buildChip('High Priority', Colors.orange.shade100, Colors.orange.shade800),
+              _buildChip(
+                'ON PROCESS',
+                Colors.blue.shade100,
+                Colors.blue.shade800,
+              ),
+              _buildChip(
+                'High Priority',
+                Colors.orange.shade100,
+                Colors.orange.shade800,
+              ),
             ],
           ),
           const SizedBox(height: 12),
           Row(
-            children: [              
-              const Text('Progress', style: TextStyle(color: Colors.grey, fontSize: 13)),
+            children: [
+              const Text(
+                'Progress',
+                style: TextStyle(color: Colors.grey, fontSize: 13),
+              ),
               const Spacer(),
-              const Text('75%', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              const Text(
+                '75%',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -107,7 +121,11 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       ),
       child: Text(
         label,
-        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11),
+        style: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 11,
+        ),
       ),
     );
   }
@@ -129,7 +147,11 @@ class DetailTicketPage extends GetView<DetailTicketController> {
           const SizedBox(width: 8),
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 15),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: 15,
+            ),
           ),
         ],
       ),
@@ -140,7 +162,11 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     return _buildCard(
       child: Column(
         children: [
-          _buildSectionHeader('Pelapor Masalah', Icons.person_outline, Colors.blue.shade700),
+          _buildSectionHeader(
+            'Pelapor Masalah',
+            Icons.person_outline,
+            Colors.blue.shade700,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: Column(
@@ -152,7 +178,10 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 const SizedBox(height: 16),
                 _buildReadOnlyField('Departemen', 'AIRNAV INDONESIA'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Bagian Departemen', 'CORPORATE SERVICES DIVISION'),
+                _buildReadOnlyField(
+                  'Bagian Departemen',
+                  'CORPORATE SERVICES DIVISION',
+                ),
               ],
             ),
           ),
@@ -167,7 +196,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       children: [
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87)),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: Get.theme.textTheme.bodyLarge?.color,
+          ),
+        ),
       ],
     );
   }
@@ -177,7 +213,11 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader('Deskripsi Masalah', Icons.description_outlined, Colors.red.shade700),
+          _buildSectionHeader(
+            'Deskripsi Masalah',
+            Icons.description_outlined,
+            Colors.red.shade700,
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -186,8 +226,12 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildReadOnlyField('Kategori', 'Jaringan')),
-                    Expanded(child: _buildReadOnlyField('Sub Kategori', 'WIFI')),
+                    Expanded(
+                      child: _buildReadOnlyField('Kategori', 'Jaringan'),
+                    ),
+                    Expanded(
+                      child: _buildReadOnlyField('Sub Kategori', 'WIFI'),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -195,7 +239,9 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _buildReadOnlyField('Channel', 'IT')),
-                    Expanded(child: _buildReadOnlyField('Pipeline', 'Tiket untuk IT')),
+                    Expanded(
+                      child: _buildReadOnlyField('Pipeline', 'Tiket untuk IT'),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -206,22 +252,38 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                     Expanded(child: _buildReadOnlyField('Assignee', 'BUDI')),
                   ],
                 ),
-                 const SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildReadOnlyField('SLA Policy', 'SLA untuk IT'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Subject Masalah', 'Tidak bisa connect ke WIFI kantor'),
+                _buildReadOnlyField(
+                  'Subject Masalah',
+                  'Tidak bisa connect ke WIFI kantor',
+                ),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Deskripsi Detail', 'Saya mengalami masalah ketika mencoba connect ke WIFI kantor. Sudah mencoba beberapa kali restart device tapi tetap tidak bisa connect. Mohon bantuan segera karena pekerjaan saya memerlukan akses internet.'),
+                _buildReadOnlyField(
+                  'Deskripsi Detail',
+                  'Saya mengalami masalah ketika mencoba connect ke WIFI kantor. Sudah mencoba beberapa kali restart device tapi tetap tidak bisa connect. Mohon bantuan segera karena pekerjaan saya memerlukan akses internet.',
+                ),
                 const SizedBox(height: 16),
                 _buildAttachmentChip(),
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    _buildFooterChip(Icons.calendar_today_outlined, 'Due Date', '16 Mar 2025, 12.17', Colors.blue.shade700),
+                    _buildFooterChip(
+                      Icons.calendar_today_outlined,
+                      'Due Date',
+                      '16 Mar 2025, 12.17',
+                      Colors.blue.shade700,
+                    ),
                     const SizedBox(width: 16),
-                    _buildFooterChip(LucideIcons.hourglass, 'Stage', 'On Process', Colors.purple.shade700),
+                    _buildFooterChip(
+                      LucideIcons.hourglass,
+                      'Stage',
+                      'On Process',
+                      Colors.purple.shade700,
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -234,22 +296,33 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Get.isDarkMode ? Colors.grey[800] : Colors.grey.shade100,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200)
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.link, color: Colors.grey.shade600, size: 18),
           const SizedBox(width: 8),
-          Text('screenshot_wifi_error.png', style: TextStyle(color: Colors.grey.shade800, fontWeight: FontWeight.w500)),
+          Text(
+            'screenshot_wifi_error.png',
+            style: TextStyle(
+              color: Colors.grey.shade800,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildFooterChip(IconData icon, String label, String value, Color color) {
+  Widget _buildFooterChip(
+    IconData icon,
+    String label,
+    String value,
+    Color color,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -263,11 +336,25 @@ class DetailTicketPage extends GetView<DetailTicketController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.bold)),
+              Text(
+                label,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 2),
-              Text(value, style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.bold)),
+              Text(
+                value,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -277,15 +364,34 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     return _buildCard(
       child: Column(
         children: [
-          _buildSectionHeader('Timeline Ticket', Icons.timeline, Colors.green.shade700),
+          _buildSectionHeader(
+            'Timeline Ticket',
+            Icons.timeline,
+            Colors.green.shade700,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
             child: Column(
               children: [
-                _buildTimelineStep('Ticket Created', 'Ticket berhasil dibuat', '2025-03-13 12:17:31', isFirst: true),
+                _buildTimelineStep(
+                  'Ticket Created',
+                  'Ticket berhasil dibuat',
+                  '2025-03-13 12:17:31',
+                  isFirst: true,
+                ),
                 // _buildTimelineStep('Approved', 'Ticket disetujui oleh Manager', '2025-03-13 12:30:15'),
-                _buildTimelineStep('Assigned', 'Ticket ditugaskan ke Teknisi: Ahmad Fauzi', '2025-03-13 13:00:00'),
-                _buildTimelineStep('On Process', 'Teknisi sedang mengerjakan ticket', '2025-03-13 14:30:00', isLast: true, isActive: true),
+                _buildTimelineStep(
+                  'Assigned',
+                  'Ticket ditugaskan ke Teknisi: Ahmad Fauzi',
+                  '2025-03-13 13:00:00',
+                ),
+                _buildTimelineStep(
+                  'On Process',
+                  'Teknisi sedang mengerjakan ticket',
+                  '2025-03-13 14:30:00',
+                  isLast: true,
+                  isActive: true,
+                ),
               ],
             ),
           ),
@@ -294,7 +400,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     );
   }
 
-  Widget _buildTimelineStep(String title, String subtitle, String date, {bool isFirst = false, bool isLast = false, bool isActive = false}) {
+  Widget _buildTimelineStep(
+    String title,
+    String subtitle,
+    String date, {
+    bool isFirst = false,
+    bool isLast = false,
+    bool isActive = false,
+  }) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -328,11 +441,26 @@ class DetailTicketPage extends GetView<DetailTicketController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: isActive ? Colors.blue : Colors.black87, fontSize: 14)),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isActive
+                          ? Colors.blue
+                          : Get.theme.textTheme.bodyLarge?.color,
+                      fontSize: 14,
+                    ),
+                  ),
                   const SizedBox(height: 4),
-                  Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 13)),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
                   const SizedBox(height: 4),
-                  Text(date, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                  Text(
+                    date,
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
                 ],
               ),
             ),
@@ -347,7 +475,11 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader('Informasi Ticket', Icons.info_outline, Colors.blueGrey.shade700),
+          _buildSectionHeader(
+            'Informasi Ticket',
+            Icons.info_outline,
+            Colors.blueGrey.shade700,
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -355,16 +487,34 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text('Ticket ID', style: TextStyle(color: Colors.grey, fontSize: 14)),
-                    Text('T20250311W079', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    Text(
+                      'Ticket ID',
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    ),
+                    Text(
+                      'T20250311W079',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text('Tanggal Dibuat', style: TextStyle(color: Colors.grey, fontSize: 14)),
-                    Text('2025-03-13 12:17:31', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    Text(
+                      'Tanggal Dibuat',
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    ),
+                    Text(
+                      '2025-03-13 12:17:31',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
                   ],
                 ),
               ],
