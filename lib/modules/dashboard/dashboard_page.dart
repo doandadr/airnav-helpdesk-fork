@@ -327,7 +327,7 @@ class DashboardPage extends GetView<DashboardController> {
               const SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {Get.toNamed('/ticket');},
                   icon: const Icon(Icons.history, size: 20),
                   label: const Text('Tiket Saya'),
                   style: OutlinedButton.styleFrom(
