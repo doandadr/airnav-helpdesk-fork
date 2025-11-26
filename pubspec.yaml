@@ -51,6 +51,7 @@ dependencies:
   font_awesome_flutter: ^10.12.0
   google_fonts: ^6.3.2
   image_picker: ^1.2.1
+  file_picker: ^10.3.7
   infinite_scroll_pagination: ^5.1.1
   lottie: ^3.3.2
   shadcn_ui: ^0.39.8
