@@ -1,6 +1,7 @@
 import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'chatbot_controller.dart';
 
 class ChatbotPage extends GetView<ChatbotController> {
@@ -60,12 +61,28 @@ class ChatbotPage extends GetView<ChatbotController> {
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.8,
         ),
-        child: Text(
-          message.text,
-          style: TextStyle(
-            color: message.isUser
-                ? Colors.white
-                : Get.theme.textTheme.bodyLarge?.color,
+        child: MarkdownBody(
+          data: message.text,
+          styleSheet: MarkdownStyleSheet(
+            p: TextStyle(
+              color: message.isUser
+                  ? Colors.white
+                  : Get.theme.textTheme.bodyLarge?.color,
+            ),
+            code: TextStyle(
+              backgroundColor: message.isUser
+                  ? Colors.white.withOpacity(0.1)
+                  : (Get.isDarkMode ? Colors.grey[700] : Colors.grey[300]),
+              color: message.isUser
+                  ? Colors.white
+                  : Get.theme.textTheme.bodyLarge?.color,
+            ),
+            codeblockDecoration: BoxDecoration(
+              color: message.isUser
+                  ? Colors.white.withOpacity(0.1)
+                  : (Get.isDarkMode ? Colors.grey[700] : Colors.grey[300]),
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         ),
       ),
