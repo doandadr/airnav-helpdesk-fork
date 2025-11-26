@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'detail_ticket_controller.dart';
+import 'package:airnav_helpdesk/core/theme/app_theme.dart';
 
 class DetailTicketPage extends GetView<DetailTicketController> {
   const DetailTicketPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ticketColors = Theme.of(context).extension<TicketColors>()!;
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
@@ -26,7 +28,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buildStatusCard(),
+                  _buildStatusCard(ticketColors),
                   const SizedBox(height: 16),
                   _buildReporterCard(),
                   const SizedBox(height: 16),
@@ -62,7 +64,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     );
   }
 
-  Widget _buildStatusCard() {
+  Widget _buildStatusCard(TicketColors ticketColors) {
     return _buildCard(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -72,14 +74,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildChip(
-                'ON PROCESS',
-                Colors.blue.shade100,
-                Colors.blue.shade800,
+                'IN PROCESS',
+                ticketColors.getStatusColor('In Progress'),
+                ticketColors.getStatusTextColor('In Progress'),
               ),
               _buildChip(
-                'High Priority',
-                Colors.orange.shade100,
-                Colors.orange.shade800,
+                'High',
+                ticketColors.getPriorityColor('High'),
+                ticketColors.getPriorityTextColor('High'),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../ticket_model.dart';
+import 'package:airnav_helpdesk/core/theme/app_theme.dart';
 
 class TicketCard extends StatelessWidget {
   final TicketModel ticket;
@@ -13,67 +14,6 @@ class TicketCard extends StatelessWidget {
     required this.ticket,
     required this.activeTab, // Pass the active tab
   });
-
-  // --- Color Helpers ---
-  Color _statusColor(String status) {
-    switch (status) {
-      case 'Done':
-        return Colors.green.shade50;
-      case 'In Progress':
-        return Colors.blue.shade50;
-      case 'Assigned':
-        return Colors.yellow.shade50;
-      case 'New':
-        return Colors.purple.shade50;
-      default:
-        return Colors.grey.shade200;
-    }
-  }
-
-  Color _statusTextColor(String status) {
-    switch (status) {
-      case 'Done':
-        return Colors.green.shade800;
-      case 'In Progress':
-        return Colors.blue.shade800;
-      case 'Assigned':
-        return Colors.yellow.shade800;
-      case 'New':
-        return Colors.purple.shade800;
-      default:
-        return Colors.grey.shade800;
-    }
-  }
-
-  Color _priorityTextColor(String priority) {
-    switch (priority) {
-      case 'Critical':
-        return Colors.red.shade800;
-      case 'High':
-        return Colors.orange.shade800;
-      case 'Medium':
-        return Colors.yellow.shade800;
-      case 'Low':
-        return Colors.green.shade800;
-      default:
-        return Colors.grey.shade800;
-    }
-  }
-
-  Color _priorityColor(String priority) {
-    switch (priority) {
-      case 'Critical':
-        return Colors.red.shade50;
-      case 'High':
-        return Colors.orange.shade50;
-      case 'Medium':
-        return Colors.yellow.shade50;
-      case 'Low':
-        return Colors.green.shade50;
-      default:
-        return Colors.grey.shade200;
-    }
-  }
 
   // --- Bottom Sheet Action ---
   void _showActionBottomSheet(
@@ -212,6 +152,7 @@ class TicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ticketColors = Theme.of(context).extension<TicketColors>()!;
     return InkWell(
       onTap: () {
         // Navigate to detail only for 'Daftar Tiket' tab
@@ -258,14 +199,14 @@ class TicketCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: _statusColor(ticket.status),
+                    color: ticketColors.getStatusColor(ticket.status),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     ticket.status,
                     style: TextStyle(
                       fontSize: 10,
-                      color: _statusTextColor(ticket.status),
+                      color: ticketColors.getStatusTextColor(ticket.status),
                     ),
                   ),
                 ),
@@ -276,14 +217,14 @@ class TicketCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: _priorityColor(ticket.priority),
+                    color: ticketColors.getPriorityColor(ticket.priority),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     ticket.priority,
                     style: TextStyle(
                       fontSize: 10,
-                      color: _priorityTextColor(ticket.priority),
+                      color: ticketColors.getPriorityTextColor(ticket.priority),
                     ),
                   ),
                 ),
