@@ -22,13 +22,13 @@ class FaqPage extends GetView<FaqController> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 5),
           // Search Bar
           SearchField(onChanged: controller.onSearch, hintText: 'Cari FAQ...'),
           // Filter Tabs
           Container(
-            color: Get.theme.cardColor,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            color: Colors.transparent,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             child: _buildFilterTabs(),
           ),
           // FAQ List
@@ -36,7 +36,7 @@ class FaqPage extends GetView<FaqController> {
             child: Obx(() {
               final items = controller.filteredFaqItems;
               return ListView.builder(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(10),
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return _buildFaqItem(items[index], index);
@@ -57,7 +57,7 @@ class FaqPage extends GetView<FaqController> {
           children: controller.categories.map((category) {
             final isSelected = controller.selectedCategory.value == category;
             return Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 5),
               child: FilterChip(
                 label: Text(
                   category,
@@ -66,7 +66,7 @@ class FaqPage extends GetView<FaqController> {
                         ? Get.theme.colorScheme.onPrimary
                         : Get.theme.textTheme.bodyLarge?.color,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
                 selected: isSelected,
@@ -106,52 +106,104 @@ class FaqPage extends GetView<FaqController> {
       decoration: BoxDecoration(
         color: Get.theme.cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Get.theme.dividerColor, width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Theme(
-        data: ThemeData().copyWith(
-          dividerColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: ExpansionTile(
-          key: PageStorageKey<int>(index),
-          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          title: Text(
-            item.question,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: Get.theme.textTheme.bodyLarge?.color,
-              height: 1.4,
-            ),
-          ),
-          trailing: Icon(
-            item.isExpanded
-                ? Icons.keyboard_arrow_up_rounded
-                : Icons.keyboard_arrow_down_rounded,
-            color: Colors.teal[400],
-            size: 28,
-          ),
-          onExpansionChanged: (expanded) {
-            controller.togglePanel(index);
-          },
-          initiallyExpanded: item.isExpanded,
-          children: [
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                item.answer,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Get.theme.textTheme.bodyMedium?.color,
-                  height: 1.6,
-                ),
+      child: InkWell(
+        onTap: () => controller.togglePanel(index),
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: Get.theme.colorScheme.primary.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Q',
+                        style: TextStyle(
+                          color: Get.theme.colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      item.question,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Get.theme.textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Icon(
+                    item.isExpanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded,
+                    color: Colors.grey[600],
+                    size: 28,
+                  ),
+                ],
               ),
-            ),
-          ],
+              if (item.isExpanded) ...[
+                const SizedBox(height: 16),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'A',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        item.answer,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Get.theme.textTheme.bodyMedium?.color,
+                          height: 1.6,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
