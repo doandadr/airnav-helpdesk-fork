@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -45,6 +46,28 @@ class AppTheme {
       textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme),
       dividerTheme: DividerThemeData(color: Colors.grey[800]),
       extensions: const [TicketColors.dark],
+    );
+  }
+
+  static ShadThemeData get shadLight {
+    return ShadThemeData(
+      brightness: Brightness.light,
+      colorScheme: const ShadBlueColorScheme.light(primary: Color(0xFF0D47A1)),
+      primaryButtonTheme: const ShadButtonTheme(
+        backgroundColor: Color(0xFF0D47A1),
+        hoverBackgroundColor: Color(0xFF0A3880), // Slightly darker
+      ),
+    );
+  }
+
+  static ShadThemeData get shadDark {
+    return ShadThemeData(
+      brightness: Brightness.dark,
+      colorScheme: const ShadBlueColorScheme.dark(primary: Color(0xFF0D47A1)),
+      primaryButtonTheme: const ShadButtonTheme(
+        backgroundColor: Color(0xFF0D47A1),
+        hoverBackgroundColor: Color(0xFF0A3880),
+      ),
     );
   }
 }

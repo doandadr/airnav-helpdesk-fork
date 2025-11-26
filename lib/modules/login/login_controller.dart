@@ -3,12 +3,13 @@ import 'package:airnav_helpdesk/modules/ticket/list/ticket_list_controller.dart'
 import 'package:flutter/material.dart' hide MenuController;
 import 'package:get/get.dart';
 import 'package:airnav_helpdesk/main_page.dart';
-import 'package:airnav_helpdesk/main_controller.dart' ;
+import 'package:airnav_helpdesk/main_controller.dart';
 
 import '../menu/menu_controller.dart';
 
 class LoginController extends GetxController {
-  final TextEditingController personnelNumberController = TextEditingController();
+  final TextEditingController personnelNumberController =
+      TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final RxBool isObscure = true.obs;
   final RxBool isLoading = false.obs;
@@ -25,7 +26,10 @@ class LoginController extends GetxController {
     //     snackPosition: SnackPosition.BOTTOM,
     //   );
     //   return;
+    //   return;
     // }
+
+    if (isLoading.value) return;
 
     isLoading.value = true;
 
