@@ -1,4 +1,5 @@
 import 'package:airnav_helpdesk/core/config/app_pages.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:airnav_helpdesk/core/services/theme_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,17 +32,20 @@ class MainApp extends StatelessWidget {
       // Access refreshKey to force rebuild when it changes
       final key = themeService.refreshKey.value;
 
-      return GetMaterialApp(
-        key: ValueKey(key), // Force rebuild when key changes
-        title: 'Helpdesk',
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      return ShadTheme(
+        data: isDark ? AppTheme.shadDark : AppTheme.shadLight,
+        child: GetMaterialApp(
+          key: ValueKey(key), // Force rebuild when key changes
+          title: 'Helpdesk',
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+          onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+        ),
       );
     });
   }

@@ -13,46 +13,48 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
     return Scaffold(
       appBar: AppBarWidget(titleText: 'Menu'),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header Profile Section
-            _buildProfileHeader(controller),
+      body: Column(
+        children: [
+          // Header Profile Section (Fixed)
+          _buildProfileHeader(controller),
 
-            // Content Section
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Informasi & Bantuan Section
-                  _buildSectionTitle('INFORMASI & BANTUAN'),
-                  const SizedBox(height: 12),
-                  _buildInfoCard(controller),
+          // Scrollable Content Section
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Informasi & Bantuan Section
+                    _buildSectionTitle('INFORMASI & BANTUAN'),
+                    const SizedBox(height: 12),
+                    _buildInfoCard(controller),
 
-                  const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-                  // Pengaturan Section
-                  _buildSectionTitle('PENGATURAN'),
-                  const SizedBox(height: 12),
-                  _buildSettingsCard(controller),
+                    // Pengaturan Section
+                    _buildSectionTitle('PENGATURAN'),
+                    const SizedBox(height: 12),
+                    _buildSettingsCard(controller),
 
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  // Logout Button
-                  _buildLogoutButton(),
+                    // Logout Button
+                    _buildLogoutButton(),
 
-                  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  // Footer
-                  _buildFooter(),
+                    // Footer
+                    _buildFooter(),
 
-                  const SizedBox(height: 80), // Space for bottom navigation
-                ],
+                    const SizedBox(height: 80), // Space for bottom navigation
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
