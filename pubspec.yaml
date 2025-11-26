@@ -1,5 +1,5 @@
 name: airnav_helpdesk
-description: "Helpdesk App Built by AirNav Indonesia"
+description: "Helpdesk App Built by AirNav Indonesia (Anak Magang)"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -54,6 +54,7 @@ dependencies:
   lottie: ^3.3.2
   shadcn_ui: ^0.39.8
   lucide_icons_flutter: ^3.1.6
+  flutter_markdown: ^0.7.7+1
 
 dev_dependencies:
   flutter_test:
