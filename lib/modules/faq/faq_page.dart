@@ -160,7 +160,7 @@ class FaqPage extends GetView<FaqController> {
                     item.isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: Colors.grey[600],
+                    color: Colors.green[500],
                     size: 28,
                   ),
                 ],
