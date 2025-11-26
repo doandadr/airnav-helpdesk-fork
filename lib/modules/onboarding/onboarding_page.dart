@@ -41,7 +41,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                         ),
                         const SizedBox(height: 48),
                         Text(
-                          item.title,
+                          item.title.tr,
                           style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          item.description,
+                          item.description.tr,
                           style: TextStyle(
                             fontSize: 15,
                             color: Get.theme.textTheme.bodyMedium?.color,
@@ -103,8 +103,8 @@ class OnboardingPage extends GetView<OnboardingController> {
                         child: Text(
                           controller.currentPage.value ==
                                   controller.items.length - 1
-                              ? 'Mulai'
-                              : 'Lanjut',
+                              ? 'start'.tr
+                              : 'next'.tr,
                         ),
                       ),
                     ),
@@ -124,7 +124,7 @@ class OnboardingPage extends GetView<OnboardingController> {
                           width: double.infinity,
                           child: ShadButton.ghost(
                             onPressed: controller.skip,
-                            child: const Text('Lewati'),
+                            child: Text('skip'.tr),
                           ),
                         ),
                       ),

@@ -11,7 +11,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(titleText: 'Menu'),
+      appBar: AppBarWidget(titleText: 'menu_title'.tr),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       body: Column(
         children: [
@@ -27,14 +27,14 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Informasi & Bantuan Section
-                    _buildSectionTitle('INFORMASI & BANTUAN'),
+                    _buildSectionTitle('info_help'.tr),
                     const SizedBox(height: 12),
                     _buildInfoCard(controller),
 
                     const SizedBox(height: 24),
 
                     // Pengaturan Section
-                    _buildSectionTitle('PENGATURAN'),
+                    _buildSectionTitle('settings'.tr),
                     const SizedBox(height: 12),
                     _buildSettingsCard(controller),
 
@@ -123,7 +123,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
       child: Text(
         title,
         style: TextStyle(
-          color: Colors.grey[600],
+          color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[600],
           fontSize: 11,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,
@@ -151,35 +151,35 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           _buildMenuItem(
             icon: Icons.book_outlined,
             iconColor: const Color(0xFF135CA1),
-            title: 'Panduan Instalasi',
+            title: 'install_guide'.tr,
             onTap: controller.navigateToInstallationGuide,
           ),
           _buildDivider(),
           _buildMenuItem(
             icon: Icons.build_outlined,
             iconColor: const Color(0xFFDA251D),
-            title: 'Perbaikan Perangkat',
+            title: 'device_repair'.tr,
             onTap: controller.navigateToDeviceRepair,
           ),
           _buildDivider(),
           _buildMenuItem(
             icon: Icons.storage_outlined,
             iconColor: const Color(0xFF2980B9),
-            title: 'Data Perbaikan',
+            title: 'repair_data'.tr,
             onTap: controller.navigateToRepairData,
           ),
           _buildDivider(),
           _buildMenuItem(
             icon: Icons.article_outlined,
             iconColor: const Color(0xFF17568A),
-            title: 'News',
+            title: 'news'.tr,
             onTap: controller.navigateToNews,
           ),
           _buildDivider(),
           _buildMenuItem(
             icon: Icons.help_outline,
             iconColor: const Color(0xFF0F3C5C),
-            title: 'FAQ',
+            title: 'faq'.tr,
             onTap: controller.navigateToFAQ,
           ),
         ],
@@ -206,8 +206,15 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           _buildMenuItem(
             icon: Icons.settings_outlined,
             iconColor: Colors.grey[600]!,
-            title: 'Settings',
+            title: 'settings_item'.tr,
             onTap: controller.navigateToSettings,
+          ),
+          _buildDivider(),
+          _buildMenuItem(
+            icon: Icons.language,
+            iconColor: Colors.purple,
+            title: 'language'.tr,
+            onTap: controller.showLanguageBottomSheet,
           ),
           _buildDivider(),
           _buildThemeToggle(controller),
@@ -215,7 +222,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           _buildMenuItem(
             icon: Icons.shield_outlined,
             iconColor: Colors.grey[700]!,
-            title: 'Privacy & Security',
+            title: 'privacy_security'.tr,
             onTap: controller.navigateToPrivacySecurity,
           ),
         ],
@@ -249,7 +256,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Dark Mode',
+              'dark_mode'.tr,
               style: TextStyle(
                 color: Get.theme.textTheme.bodyLarge?.color,
                 fontSize: 14,
@@ -348,7 +355,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
               Icon(Icons.logout, color: Colors.red[600], size: 20),
               const SizedBox(width: 8),
               Text(
-                'Logout',
+                'logout'.tr,
                 style: TextStyle(
                   color: Colors.red[600],
                   fontSize: 14,

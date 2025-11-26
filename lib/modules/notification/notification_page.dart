@@ -14,7 +14,7 @@ class NotificationPage extends GetView<NotificationController> {
       child: Scaffold(
         backgroundColor: Get.theme.scaffoldBackgroundColor,
         appBar: AppBarWidget(
-          titleText: 'Notifikasi',
+          titleText: 'notification_title'.tr,
           leading: IconButton(
             splashRadius: 24,
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -37,7 +37,10 @@ class NotificationPage extends GetView<NotificationController> {
             unselectedLabelColor: Colors.white.withOpacity(0.7),
             indicatorColor: Colors.white,
             indicatorWeight: 3,
-            tabs: [_buildTab('Semua'), _buildTab('Belum Dibaca')],
+            tabs: [
+              _buildTab('notification_all'.tr),
+              _buildTab('notification_unread'.tr),
+            ],
           ),
         ),
         body: TabBarView(
@@ -150,7 +153,7 @@ class NotificationPage extends GetView<NotificationController> {
               ),
               const SizedBox(height: 24),
               Text(
-                'Tidak Ada Notifikasi',
+                'notification_empty_title'.tr,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -159,7 +162,7 @@ class NotificationPage extends GetView<NotificationController> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Saat ini tidak ada notifikasi baru untuk Anda.',
+                'notification_empty_desc'.tr,
                 style: TextStyle(
                   fontSize: 16,
                   color: Get.theme.textTheme.bodyMedium?.color,
@@ -184,12 +187,12 @@ class NotificationPage extends GetView<NotificationController> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       children: [
         if (unreadNotifications.isNotEmpty) ...[
-          _buildDateHeader('Baru'),
+          _buildDateHeader('notification_new'.tr),
           ...unreadNotifications,
           const SizedBox(height: 16),
         ],
         if (readNotifications.isNotEmpty) ...[
-          _buildDateHeader('Sebelumnya'),
+          _buildDateHeader('notification_earlier'.tr),
           ...readNotifications,
         ],
       ],

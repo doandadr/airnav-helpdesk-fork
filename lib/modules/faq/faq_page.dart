@@ -13,7 +13,7 @@ class FaqPage extends GetView<FaqController> {
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
-        titleText: 'FAQ',
+        titleText: 'faq_title'.tr,
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -24,7 +24,10 @@ class FaqPage extends GetView<FaqController> {
         children: [
           const SizedBox(height: 5),
           // Search Bar
-          SearchField(onChanged: controller.onSearch, hintText: 'Cari FAQ...'),
+          SearchField(
+            onChanged: controller.onSearch,
+            hintText: 'search_faq_hint'.tr,
+          ),
           // Filter Tabs
           Container(
             color: Colors.transparent,
@@ -60,7 +63,7 @@ class FaqPage extends GetView<FaqController> {
               padding: const EdgeInsets.only(right: 5),
               child: FilterChip(
                 label: Text(
-                  category,
+                  category.tr,
                   style: TextStyle(
                     color: isSelected
                         ? Get.theme.colorScheme.onPrimary

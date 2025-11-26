@@ -14,7 +14,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
-        titleText: 'Detail Tiket',
+        titleText: 'ticket_detail_title'.tr,
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -165,7 +165,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       child: Column(
         children: [
           _buildSectionHeader(
-            'Pelapor Masalah',
+            'reporter_section'.tr,
             Icons.person_outline,
             Colors.blue.shade700,
           ),
@@ -174,14 +174,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildReadOnlyField('NIK', '10014377'),
+                _buildReadOnlyField('nik_label'.tr, '10014377'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Nama', 'M NABIL AMANI'),
+                _buildReadOnlyField('name_label'.tr, 'M NABIL AMANI'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Departemen', 'AIRNAV INDONESIA'),
+                _buildReadOnlyField('department_label'.tr, 'AIRNAV INDONESIA'),
                 const SizedBox(height: 16),
                 _buildReadOnlyField(
-                  'Bagian Departemen',
+                  'sub_department_label'.tr,
                   'CORPORATE SERVICES DIVISION',
                 ),
               ],
@@ -216,7 +216,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionHeader(
-            'Deskripsi Masalah',
+            'description_section'.tr,
             Icons.description_outlined,
             Colors.red.shade700,
           ),
@@ -229,10 +229,16 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: _buildReadOnlyField('Kategori', 'Jaringan'),
+                      child: _buildReadOnlyField(
+                        'category_label'.tr,
+                        'Jaringan',
+                      ),
                     ),
                     Expanded(
-                      child: _buildReadOnlyField('Sub Kategori', 'WIFI'),
+                      child: _buildReadOnlyField(
+                        'sub_category_label'.tr,
+                        'WIFI',
+                      ),
                     ),
                   ],
                 ),
@@ -240,9 +246,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildReadOnlyField('Channel', 'IT')),
                     Expanded(
-                      child: _buildReadOnlyField('Pipeline', 'Tiket untuk IT'),
+                      child: _buildReadOnlyField('channel_label'.tr, 'IT'),
+                    ),
+                    Expanded(
+                      child: _buildReadOnlyField(
+                        'pipeline_label'.tr,
+                        'Tiket untuk IT',
+                      ),
                     ),
                   ],
                 ),
@@ -250,7 +261,9 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildReadOnlyField('Source', 'Portal')),
+                    Expanded(
+                      child: _buildReadOnlyField('source_label'.tr, 'Portal'),
+                    ),
                     Expanded(child: _buildReadOnlyField('Assignee', 'BUDI')),
                   ],
                 ),
@@ -258,12 +271,12 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 _buildReadOnlyField('SLA Policy', 'SLA untuk IT'),
                 const SizedBox(height: 16),
                 _buildReadOnlyField(
-                  'Subject Masalah',
+                  'subject_label'.tr,
                   'Tidak bisa connect ke WIFI kantor',
                 ),
                 const SizedBox(height: 16),
                 _buildReadOnlyField(
-                  'Deskripsi Detail',
+                  'description_label'.tr,
                   'Saya mengalami masalah ketika mencoba connect ke WIFI kantor. Sudah mencoba beberapa kali restart device tapi tetap tidak bisa connect. Mohon bantuan segera karena pekerjaan saya memerlukan akses internet.',
                 ),
                 const SizedBox(height: 16),
@@ -273,14 +286,14 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                   children: [
                     _buildFooterChip(
                       Icons.calendar_today_outlined,
-                      'Due Date',
+                      'due_date_label'.tr,
                       '16 Mar 2025, 12.17',
                       Colors.blue.shade700,
                     ),
                     const SizedBox(width: 16),
                     _buildFooterChip(
                       LucideIcons.hourglass,
-                      'Stage',
+                      'stage_label'.tr,
                       'On Process',
                       Colors.purple.shade700,
                     ),
@@ -367,7 +380,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
       child: Column(
         children: [
           _buildSectionHeader(
-            'Timeline Ticket',
+            'timeline_section'.tr,
             Icons.timeline,
             Colors.green.shade700,
           ),
@@ -376,20 +389,20 @@ class DetailTicketPage extends GetView<DetailTicketController> {
             child: Column(
               children: [
                 _buildTimelineStep(
-                  'Ticket Created',
-                  'Ticket berhasil dibuat',
+                  'timeline_created'.tr,
+                  'timeline_created_desc'.tr,
                   '2025-03-13 12:17:31',
                   isFirst: true,
                 ),
                 // _buildTimelineStep('Approved', 'Ticket disetujui oleh Manager', '2025-03-13 12:30:15'),
                 _buildTimelineStep(
-                  'Assigned',
-                  'Ticket ditugaskan ke Teknisi: Ahmad Fauzi',
+                  'timeline_assigned'.tr,
+                  'timeline_assigned_desc'.tr,
                   '2025-03-13 13:00:00',
                 ),
                 _buildTimelineStep(
                   'On Process',
-                  'Teknisi sedang mengerjakan ticket',
+                  'timeline_process_desc'.tr,
                   '2025-03-13 14:30:00',
                   isLast: true,
                   isActive: true,
@@ -478,7 +491,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildSectionHeader(
-            'Informasi Ticket',
+            'ticket_info_section'.tr,
             Icons.info_outline,
             Colors.blueGrey.shade700,
           ),
@@ -488,10 +501,10 @@ class DetailTicketPage extends GetView<DetailTicketController> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      'Ticket ID',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      'ticket_id'.tr,
+                      style: const TextStyle(color: Colors.grey, fontSize: 14),
                     ),
                     Text(
                       'T20250311W079',
@@ -505,10 +518,10 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      'Tanggal Dibuat',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      'created_date'.tr,
+                      style: const TextStyle(color: Colors.grey, fontSize: 14),
                     ),
                     Text(
                       '2025-03-13 12:17:31',

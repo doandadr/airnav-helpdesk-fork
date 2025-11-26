@@ -12,7 +12,7 @@ class AddTicketPage extends GetView<AddTicketController> {
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: AppBarWidget(
-        titleText: 'Tiket Baru',
+        titleText: 'new_ticket_title'.tr,
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -78,18 +78,21 @@ class AddTicketPage extends GetView<AddTicketController> {
     return _buildCard(
       Column(
         children: [
-          _buildSectionHeader('Pelapor Masalah'),
+          _buildSectionHeader('reporter_section'.tr),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                _buildReadOnlyField('NIK', '10014377'),
+                _buildReadOnlyField('nik_label'.tr, '10014377'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Nama', 'BUDI'),
+                _buildReadOnlyField('name_label'.tr, 'BUDI'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Departemen', 'IT'),
+                _buildReadOnlyField('department_label'.tr, 'IT'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('Bagian Departemen', 'IT DEVELOPMENT'),
+                _buildReadOnlyField(
+                  'sub_department_label'.tr,
+                  'IT DEVELOPMENT',
+                ),
               ],
             ),
           ),
@@ -102,62 +105,62 @@ class AddTicketPage extends GetView<AddTicketController> {
     return _buildCard(
       Column(
         children: [
-          _buildSectionHeader('Deskripsi Masalah'),
+          _buildSectionHeader('description_section'.tr),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 _buildDropdown(
-                  'Channel',
+                  'channel_label'.tr,
                   controller.selectedDepartment,
                   controller.departments,
                   controller.onDepartmentChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
-                  'Pipeline',
+                  'pipeline_label'.tr,
                   controller.selectedSubDepartment,
                   controller.subDepartments,
                   controller.onSubDepartmentChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
-                  'Kategori Masalah',
+                  'category_label'.tr,
                   controller.selectedCategory,
                   controller.categories,
                   controller.onCategoryChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
-                  'Sub Kategori',
+                  'sub_category_label'.tr,
                   controller.selectedSubCategory,
                   controller.subCategories,
                   controller.onSubCategoryChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
-                  'Prioritas',
+                  'priority_label'.tr,
                   controller.selectedPriority,
                   controller.priorities,
                   controller.onPriorityChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
-                  'Source',
+                  'source_label'.tr,
                   controller.selectedSource,
                   controller.sources,
                   controller.onSourceChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                  label: 'Subject Masalah',
-                  hint: 'problem_summary',
+                  label: 'subject_label'.tr,
+                  hint: 'subject_hint'.tr,
                   controller: controller.subjectController,
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                  label: 'Deskripsi Masalah',
-                  hint: 'Jelaskan masalah Anda secara detail...',
+                  label: 'description_label'.tr,
+                  hint: 'description_hint'.tr,
                   maxLines: 4,
                   controller: controller.descriptionController,
                 ),
@@ -258,9 +261,9 @@ class AddTicketPage extends GetView<AddTicketController> {
                 vertical: 12,
               ),
             ),
-            hint: const Text(
-              '-- PILIH --',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
+            hint: Text(
+              'choose_option'.tr,
+              style: const TextStyle(color: Colors.grey, fontSize: 14),
             ),
             items: items.map((String item) {
               return DropdownMenuItem<String>(
@@ -325,7 +328,7 @@ class AddTicketPage extends GetView<AddTicketController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildLabel('Due Date'),
+        _buildLabel('due_date_label'.tr),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -350,9 +353,9 @@ class AddTicketPage extends GetView<AddTicketController> {
           ),
         ),
         const SizedBox(height: 4),
-        const Text(
-          'Default: 3 hari dari sekarang',
-          style: TextStyle(color: Colors.grey, fontSize: 11),
+        Text(
+          'default_due_date'.tr,
+          style: const TextStyle(color: Colors.grey, fontSize: 11),
         ),
       ],
     );
@@ -362,7 +365,7 @@ class AddTicketPage extends GetView<AddTicketController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildLabel('Lampiran', isRequired: false),
+        _buildLabel('attachment_label'.tr, isRequired: false),
         const SizedBox(height: 8),
         Container(
           height: 110,
@@ -382,7 +385,7 @@ class AddTicketPage extends GetView<AddTicketController> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Klik untuk upload',
+                'click_to_upload'.tr,
                 style: TextStyle(
                   color: Get.theme.colorScheme.primary,
                   fontWeight: FontWeight.bold,
@@ -390,9 +393,9 @@ class AddTicketPage extends GetView<AddTicketController> {
                 ),
               ),
               const SizedBox(height: 4),
-              const Text(
-                'PNG, JPG, PDF, DOC (MAX. 10MB)',
-                style: TextStyle(color: Colors.grey, fontSize: 11),
+              Text(
+                'file_format_hint'.tr,
+                style: const TextStyle(color: Colors.grey, fontSize: 11),
               ),
             ],
           ),
@@ -414,9 +417,9 @@ class AddTicketPage extends GetView<AddTicketController> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text(
-              'Submit Ticket',
-              style: TextStyle(
+            child: Text(
+              'submit_ticket'.tr,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -438,9 +441,9 @@ class AddTicketPage extends GetView<AddTicketController> {
               ),
               side: BorderSide(color: Colors.grey.shade300, width: 1.5),
             ),
-            child: const Text(
-              'Reset Form',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            child: Text(
+              'reset_form'.tr,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
         ),

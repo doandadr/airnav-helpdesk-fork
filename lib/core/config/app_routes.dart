@@ -12,6 +12,9 @@ abstract class Routes {
   static const LOGIN = _Path.LOGIN;
   static const ASSIGN_TICKET = _Path.ASSIGN_TICKET;
   static const MENU = _Path.MENU;
+  static const WELCOME = _Path.WELCOME;
+  static const LANGUAGE_SELECTION = _Path.LANGUAGE_SELECTION;
+  static const NOTIFICATION = _Path.NOTIFICATION;
 }
 
 abstract class _Path {
@@ -26,4 +29,7 @@ abstract class _Path {
   static const LOGIN = '/login';
   static const ASSIGN_TICKET = '/ticket/assign';
   static const MENU = '/menu';
+  static const WELCOME = '/welcome';
+  static const LANGUAGE_SELECTION = '/language-selection';
+  static const NOTIFICATION = '/notification';
 }

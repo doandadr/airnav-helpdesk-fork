@@ -11,7 +11,7 @@ class DashboardPage extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
-      appBar: AppBarWidget(titleText: 'Beranda'),
+      appBar: AppBarWidget(titleText: 'dashboard_title'.tr),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed('/chatbot'),
         backgroundColor: const Color(0xFF0D47A1),
@@ -43,37 +43,37 @@ class DashboardPage extends GetView<DashboardController> {
       childAspectRatio: 1,
       children: [
         _buildStatCard(
-          title: 'Tiket Selesai',
+          title: 'ticket_done'.tr,
           value: '12',
-          subtitle: 'dari 18 total tiket',
-          status: 'Selesai',
+          subtitle: 'ticket_total_suffix'.tr,
+          status: 'status_done'.tr,
           icon: Icons.check_circle_outline,
           statusIcon: Icons.trending_up,
           color: Colors.green,
         ),
         _buildStatCard(
-          title: 'Sedang Diproses',
+          title: 'ticket_processing'.tr,
           value: '3',
-          subtitle: 'tiket dalam pengerjaan',
-          status: 'Proses',
+          subtitle: 'ticket_processing_suffix'.tr,
+          status: 'status_process'.tr,
           icon: Icons.analytics_outlined,
           statusIcon: Icons.trending_up,
           color: Colors.blue,
         ),
         _buildStatCard(
-          title: 'Menunggu Penugasan',
+          title: 'ticket_waiting_assign'.tr,
           value: '1',
-          subtitle: 'menunggu assigner',
-          status: 'Tertunda',
+          subtitle: 'ticket_waiting_assign_suffix'.tr,
+          status: 'status_pending'.tr,
           icon: Icons.person_search_outlined,
           statusIcon: Icons.trending_flat,
           color: Colors.orange,
         ),
         _buildStatCard(
-          title: 'Menunggu Teknisi',
+          title: 'ticket_waiting_tech'.tr,
           value: '2',
-          subtitle: 'menunggu konfirmasi',
-          status: 'Menunggu',
+          subtitle: 'ticket_waiting_tech_suffix'.tr,
+          status: 'status_waiting'.tr,
           icon: Icons.error_outline,
           statusIcon: Icons.trending_up,
           color: Colors.purple,
@@ -196,14 +196,14 @@ class DashboardPage extends GetView<DashboardController> {
             children: [
               _buildSummaryItem(
                 Icons.confirmation_number_outlined,
-                'Total Tiket',
+                'total_ticket'.tr,
                 '18',
                 Colors.blue,
                 true,
               ),
               _buildSummaryItem(
                 Icons.groups_outlined,
-                'Total Assignee',
+                'total_assignee'.tr,
                 '9',
                 Colors.blueGrey,
                 true,
@@ -218,14 +218,14 @@ class DashboardPage extends GetView<DashboardController> {
             children: [
               _buildSummaryItem(
                 Icons.thumb_up_outlined,
-                'Feedback Positif',
+                'positive_feedback'.tr,
                 '95%',
                 Colors.green,
                 false,
               ),
               _buildSummaryItem(
                 Icons.thumb_down_outlined,
-                'Feedback Negatif',
+                'negative_feedback'.tr,
                 '5%',
                 Colors.red,
                 false,
@@ -298,9 +298,9 @@ class DashboardPage extends GetView<DashboardController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Aksi Cepat',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            'quick_actions'.tr,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 16),
           Row(
@@ -312,7 +312,7 @@ class DashboardPage extends GetView<DashboardController> {
                     Icons.confirmation_number_outlined,
                     size: 18,
                   ),
-                  label: const Text('Tiket Baru'),
+                  label: Text('new_ticket'.tr),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D47A1),
                     foregroundColor: Colors.white,
@@ -328,7 +328,7 @@ class DashboardPage extends GetView<DashboardController> {
                 child: OutlinedButton.icon(
                   onPressed: () {Get.toNamed('/ticket');},
                   icon: const Icon(Icons.history, size: 20),
-                  label: const Text('Tiket Saya'),
+                  label: Text('my_ticket'.tr),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF0D47A1),
                     shape: RoundedRectangleBorder(
@@ -359,18 +359,18 @@ class DashboardPage extends GetView<DashboardController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Butuh Bantuan?',
-            style: TextStyle(
+          Text(
+            'need_help'.tr,
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'Tim support kami siap membantu Anda 24/7',
-            style: TextStyle(color: Colors.white70, fontSize: 14),
+          Text(
+            'support_desc'.tr,
+            style: const TextStyle(color: Colors.white70, fontSize: 14),
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -385,9 +385,9 @@ class DashboardPage extends GetView<DashboardController> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              child: const Text(
-                'Hubungi Support',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Text(
+                'contact_support'.tr,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),

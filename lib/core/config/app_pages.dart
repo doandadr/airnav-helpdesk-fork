@@ -1,5 +1,7 @@
 import 'package:airnav_helpdesk/modules/menu/menu.binding.dart';
 import 'package:airnav_helpdesk/modules/menu/menu_page.dart';
+import 'package:airnav_helpdesk/modules/onboarding/language_selection_page.dart';
+import 'package:airnav_helpdesk/modules/onboarding/welcome_page.dart';
 import 'package:get/get.dart';
 
 import '../../main_binding.dart';
@@ -12,6 +14,8 @@ import '../../modules/faq/faq_binding.dart';
 import '../../modules/faq/faq_page.dart';
 import '../../modules/login/login_page.dart';
 import '../../modules/onboarding/onboarding_page.dart';
+import '../../modules/notification/notification_binding.dart';
+import '../../modules/notification/notification_page.dart';
 import '../../modules/ticket/add/add_ticket_binding.dart';
 import '../../modules/ticket/add/add_ticket_page.dart';
 import '../../modules/ticket/assign/assign_ticket_binding.dart';
@@ -26,7 +30,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static final INITIAL = Routes.ONBOARDING;
+  static final INITIAL = Routes.LANGUAGE_SELECTION;
 
   static final routes = [
     GetPage(
@@ -75,6 +79,16 @@ class AppPages {
       name: _Path.ASSIGN_TICKET,
       page: () => const AssignTicketPage(),
       binding: AssignTicketBinding(),
+    ),
+    GetPage(name: _Path.WELCOME, page: () => const WelcomePage()),
+    GetPage(
+      name: _Path.LANGUAGE_SELECTION,
+      page: () => const LanguageSelectionPage(),
+    ),
+    GetPage(
+      name: _Path.NOTIFICATION,
+      page: () => const NotificationPage(),
+      binding: NotificationBinding(),
     ),
   ];
 }

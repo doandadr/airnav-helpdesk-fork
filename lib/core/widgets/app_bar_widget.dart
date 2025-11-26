@@ -1,4 +1,4 @@
-import 'package:airnav_helpdesk/modules/notification/notification_page.dart';
+import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +59,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                     Icons.notifications_none,
                     color: Colors.black54,
                   ),
-                  onPressed: () => Get.to(() => const NotificationPage()),
+                  onPressed: () => Get.toNamed(Routes.NOTIFICATION),
                 ),
               ),
             ),

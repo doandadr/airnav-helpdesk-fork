@@ -8,17 +8,18 @@ class TicketListController extends GetxController {
 
   // Tabs
   final List<String> tabs = [
-    'Daftar Tiket',
-    'Menunggu Konfirmasi',
-    'Menunggu Penugasan'
+    'ticket_tab_list',
+    'ticket_tab_waiting_confirm',
+    'ticket_tab_waiting_assign',
   ];
-  RxString activeTab = 'Daftar Tiket'.obs;
+  RxString activeTab = 'ticket_tab_list'.obs;
 
   // Search & filters
   RxString keyword = ''.obs;
   RxString statusFilter = ''.obs; // Done, In Progress, Assigned, New
   RxString priorityFilter = ''.obs; // Critical, High, Medium, Low
-  RxString sortOption = 'date_desc'.obs; // date_desc, date_asc, priority, progress
+  RxString sortOption =
+      'date_desc'.obs; // date_desc, date_asc, priority, progress
 
   @override
   void onInit() {
@@ -199,13 +200,13 @@ class TicketListController extends GetxController {
 
     // --- TAB FILTER ---
     switch (activeTab.value) {
-      case 'Menunggu Konfirmasi':
+      case 'ticket_tab_waiting_confirm':
         result = result.where((t) => t.status == 'Assigned').toList();
         break;
-      case 'Menunggu Penugasan':
+      case 'ticket_tab_waiting_assign':
         result = result.where((t) => t.status == 'New').toList();
         break;
-      case 'Daftar Tiket':
+      case 'ticket_tab_list':
       default:
         // No additional filtering
         break;
@@ -246,13 +247,10 @@ class TicketListController extends GetxController {
         result.sort((a, b) => b.progress.compareTo(a.progress));
         break;
       case 'priority':
-        const prioOrder = {
-          'Critical': 4,
-          'High': 3,
-          'Medium': 2,
-          'Low': 1,
-        };
-        result.sort((a, b) => prioOrder[b.priority]!.compareTo(prioOrder[a.priority]!));
+        const prioOrder = {'Critical': 4, 'High': 3, 'Medium': 2, 'Low': 1};
+        result.sort(
+          (a, b) => prioOrder[b.priority]!.compareTo(prioOrder[a.priority]!),
+        );
         break;
     }
 

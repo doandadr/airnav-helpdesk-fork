@@ -15,6 +15,36 @@ class TicketCard extends StatelessWidget {
     required this.activeTab, // Pass the active tab
   });
 
+  String _statusText(String status) {
+    switch (status) {
+      case 'Done':
+        return 'status_done'.tr;
+      case 'In Progress':
+        return 'status_in_progress'.tr;
+      case 'Assigned':
+        return 'status_assigned'.tr;
+      case 'New':
+        return 'status_new'.tr;
+      default:
+        return status;
+    }
+  }
+
+  String _priorityText(String priority) {
+    switch (priority) {
+      case 'Critical':
+        return 'priority_critical'.tr;
+      case 'High':
+        return 'priority_high'.tr;
+      case 'Medium':
+        return 'priority_medium'.tr;
+      case 'Low':
+        return 'priority_low'.tr;
+      default:
+        return priority;
+    }
+  }
+
   // --- Bottom Sheet Action ---
   void _showActionBottomSheet(
     BuildContext context, {
@@ -63,7 +93,7 @@ class TicketCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Kode Tiket',
+                        'label_ticket_code'.tr,
                         style: TextStyle(
                           color: Get.theme.textTheme.bodySmall?.color,
                           fontSize: 12,
@@ -89,7 +119,7 @@ class TicketCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Nota (Opsional)',
+                  'label_note_optional'.tr,
                   style: TextStyle(
                     color: Get.theme.textTheme.bodySmall?.color,
                     fontSize: 12,
@@ -156,7 +186,7 @@ class TicketCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Navigate to detail only for 'Daftar Tiket' tab
-        if (activeTab == 'Daftar Tiket') {
+        if (activeTab == 'ticket_tab_list') {
           Get.toNamed('/ticket/detail');
         }
       },
@@ -203,7 +233,7 @@ class TicketCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    ticket.status,
+                    _statusText(ticket.status),
                     style: TextStyle(
                       fontSize: 10,
                       color: ticketColors.getStatusTextColor(ticket.status),
@@ -221,7 +251,7 @@ class TicketCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    ticket.priority,
+                    _priorityText(ticket.priority),
                     style: TextStyle(
                       fontSize: 10,
                       color: ticketColors.getPriorityTextColor(ticket.priority),
@@ -249,7 +279,7 @@ class TicketCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kategori',
+                      'label_category'.tr,
                       style: TextStyle(
                         fontSize: 10,
                         color: Get.theme.textTheme.bodySmall?.color,
@@ -269,7 +299,7 @@ class TicketCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Sub Kategori',
+                      'label_subcategory'.tr,
                       style: TextStyle(
                         fontSize: 10,
                         color: Get.theme.textTheme.bodySmall?.color,
@@ -293,7 +323,7 @@ class TicketCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Progres',
+                  'label_progress'.tr,
                   style: TextStyle(
                     fontSize: 10,
                     color: Get.theme.textTheme.bodySmall?.color,
@@ -358,17 +388,17 @@ class TicketCard extends StatelessWidget {
 
   Widget _buildActionButtons(BuildContext context) {
     switch (activeTab) {
-      case 'Menunggu Konfirmasi':
+      case 'ticket_tab_waiting_confirm':
         return Row(
           children: [
             Expanded(
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.close, size: 16),
-                label: const Text('Tolak'),
+                label: Text('btn_reject'.tr),
                 onPressed: () => _showActionBottomSheet(
                   context,
-                  title: 'Tolak Tiket',
-                  hint: 'Ketik alasan menolak...',
+                  title: 'sheet_reject_title'.tr,
+                  hint: 'sheet_reject_hint'.tr,
                 ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red.shade700,
@@ -385,11 +415,11 @@ class TicketCard extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.check, size: 16),
-                label: const Text('Terima'),
+                label: Text('btn_accept'.tr),
                 onPressed: () => _showActionBottomSheet(
                   context,
-                  title: 'Terima Tiket',
-                  hint: 'Ketik keterangan terima...',
+                  title: 'sheet_accept_title'.tr,
+                  hint: 'sheet_accept_hint'.tr,
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF175fa4),
@@ -403,17 +433,17 @@ class TicketCard extends StatelessWidget {
             ),
           ],
         );
-      case 'Menunggu Penugasan':
+      case 'ticket_tab_waiting_assign':
         return Row(
           children: [
             Expanded(
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.close, size: 16),
-                label: const Text('Tolak'),
+                label: Text('btn_reject'.tr),
                 onPressed: () => _showActionBottomSheet(
                   context,
-                  title: 'Tolak Tiket',
-                  hint: 'Ketik alasan tidak menyetujui tiket...',
+                  title: 'sheet_reject_title'.tr,
+                  hint: 'sheet_reject_hint'.tr,
                 ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red.shade700,
@@ -430,7 +460,7 @@ class TicketCard extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.people_alt_outlined, size: 16),
-                label: const Text('Tugaskan'),
+                label: Text('btn_assign'.tr),
                 onPressed: () {
                   Get.toNamed(Routes.ASSIGN_TICKET);
                 },
@@ -446,7 +476,7 @@ class TicketCard extends StatelessWidget {
             ),
           ],
         );
-      case 'Daftar Tiket':
+      case 'ticket_tab_list':
       default:
         return const SizedBox.shrink();
     }

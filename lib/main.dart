@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'core/l10n/messages.dart';
+import 'core/services/localization_service.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
@@ -152,7 +154,9 @@ void main() async {
   FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageNavigation);
 
   await GetStorage.init();
+  await GetStorage.init();
   Get.put(ThemeService());
+  Get.put(LocalizationService());
   runApp(MainApp());
 
   if (initialMessage != null) {
@@ -187,6 +191,9 @@ class MainApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+          translations: Messages(),
+          locale: Get.find<LocalizationService>().currentLocale,
+          fallbackLocale: LocalizationService.fallbackLocale,
         ),
       );
     });

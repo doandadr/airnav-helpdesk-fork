@@ -11,7 +11,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        titleText: 'Tugaskan Tiket',
+        titleText: 'assign_ticket_title'.tr,
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -44,15 +44,15 @@ class AssignTicketPage extends GetView<AssignTicketController> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
-        children: const [
-          CircleAvatar(child: Icon(Icons.assignment_ind)),
-          SizedBox(width: 12),
+        children: [
+          const CircleAvatar(child: Icon(Icons.assignment_ind)),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Assign Ticket',
+                  'assign_ticket_title'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -61,7 +61,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'Assign ticket ke teknisi atau staff yang tersedia',
+                  'assign_ticket_subtitle'.tr,
                   style: TextStyle(color: Colors.white70, fontSize: 12),
                 ),
               ],
@@ -81,13 +81,15 @@ class AssignTicketPage extends GetView<AssignTicketController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: const [
-                  Icon(Icons.confirmation_num),
-                  SizedBox(width: 8),
-                  Text('Pilih Ticket'),
+                children: [
+                  const Icon(Icons.confirmation_num),
+                  const SizedBox(width: 8),
+                  Text('select_ticket'.tr),
                 ],
               ),
-              Text('${controller.selectedTicketCodes.length} dipilih'),
+              Text(
+                '${controller.selectedTicketCodes.length} ${'selected_count'.tr}',
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -95,7 +97,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
             onChanged: (v) => controller.ticketSearch.value = v,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
-              hintText: 'Cari ticket...',
+              hintText: 'search_ticket_hint'.tr,
               filled: true,
               fillColor:
                   Get.theme.inputDecorationTheme.fillColor ??
@@ -147,51 +149,9 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                   const SizedBox(height: 6),
                   Text(ticket.title),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Reporter',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "Siska",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Category',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              ticket.category,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    ticket.category,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -211,10 +171,10 @@ class AssignTicketPage extends GetView<AssignTicketController> {
         children: [
           const SizedBox(height: 8),
           Row(
-            children: const [
-              Icon(Icons.person),
-              SizedBox(width: 8),
-              Text('Pilih Assignee'),
+            children: [
+              const Icon(Icons.person),
+              const SizedBox(width: 8),
+              Text('select_assignee'.tr),
             ],
           ),
           const SizedBox(height: 8),
@@ -222,7 +182,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
             onChanged: (v) => controller.assigneeSearch.value = v,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
-              hintText: 'Cari assignee...',
+              hintText: 'search_assignee_hint'.tr,
               filled: true,
               fillColor:
                   Get.theme.inputDecorationTheme.fillColor ??
@@ -286,7 +246,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                   color: Colors.green.shade50,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Available'),
+                child: Text('available'.tr),
               )
             else
               Container(
@@ -295,7 +255,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Busy'),
+                child: Text('busy'.tr),
               ),
           ],
         ),
@@ -321,7 +281,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Reset'),
+            child: Text('reset'.tr),
           ),
         ),
         const SizedBox(width: 10),
@@ -336,7 +296,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Tugaskan Tiket'),
+            child: Text('assign_button'.tr),
           ),
         ),
       ],
