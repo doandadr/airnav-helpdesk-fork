@@ -307,7 +307,7 @@ class DashboardPage extends GetView<DashboardController> {
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {Get.toNamed('/ticket/add');},
                   icon: const Icon(
                     Icons.confirmation_number_outlined,
                     size: 18,
@@ -326,7 +326,7 @@ class DashboardPage extends GetView<DashboardController> {
               const SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {Get.toNamed('/ticket');},
                   icon: const Icon(Icons.history, size: 20),
                   label: Text('my_ticket'.tr),
                   style: OutlinedButton.styleFrom(
