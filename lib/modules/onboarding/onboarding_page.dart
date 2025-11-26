@@ -91,47 +91,46 @@ class OnboardingPage extends GetView<OnboardingController> {
                       ),
                     ),
                   ),
-                    const SizedBox(height: 40),
-                    // Buttons
-                    Obx(
-                      () => SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ShadButton(
-                          backgroundColor: primaryColor,
-                          onPressed: controller.nextPage,
-                          child: Text(
-                            controller.currentPage.value ==
-                                    controller.items.length - 1
-                                ? 'start'.tr
-                                : 'next'.tr,
+                  const SizedBox(height: 40),
+                  // Buttons
+                  Obx(
+                    () => SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ShadButton(
+                        backgroundColor: primaryColor,
+                        onPressed: controller.nextPage,
+                        child: Text(
+                          controller.currentPage.value ==
+                                  controller.items.length - 1
+                              ? 'start'.tr
+                              : 'next'.tr,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Obx(
+                    () => SizedBox(
+                      height: 50,
+                      child: Visibility(
+                        visible:
+                            controller.currentPage.value !=
+                            controller.items.length - 1,
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ShadButton.ghost(
+                            onPressed: controller.skip,
+                            child: Text('skip'.tr),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => SizedBox(
-                        height: 50,
-                        child: Visibility(
-                          visible:
-                              controller.currentPage.value !=
-                              controller.items.length - 1,
-                          maintainSize: true,
-                          maintainAnimation: true,
-                          maintainState: true,
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: ShadButton.ghost(
-                              onPressed: controller.skip,
-                              child: Text('skip'.tr),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
