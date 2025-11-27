@@ -4,7 +4,6 @@ import 'package:airnav_helpdesk/core/services/theme_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'core/l10n/messages.dart';
 import 'core/services/localization_service.dart';
 import 'core/theme/app_theme.dart';
@@ -14,7 +13,6 @@ import 'l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initialMessage = await FirebaseUtils.setupFirebaseNotifications();
-  await GetStorage.init();
   await GetStorage.init();
   Get.put(ThemeService());
   Get.put(LocalizationService());

@@ -14,7 +14,19 @@ import 'package:permission_handler/permission_handler.dart';
 // Background message handler
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (Firebase.apps.isEmpty) {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      if (e.toString().contains('duplicate-app')) {
+        // Ignore duplicate app error
+      } else {
+        rethrow;
+      }
+    }
+  }
   // Handle background message (you can perform background work here)
   // Note: avoid heavy processing here.
 }
@@ -32,9 +44,20 @@ class FirebaseUtils {
   _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static Future<RemoteMessage?> setupFirebaseNotifications() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    if (Firebase.apps.isEmpty) {
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      } catch (e) {
+        if (e.toString().contains('duplicate-app')) {
+          // Ignore duplicate app error
+          print('Firebase already initialized: $e');
+        } else {
+          rethrow;
+        }
+      }
+    }
 
     final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
