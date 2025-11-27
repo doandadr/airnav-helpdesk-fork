@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SearchField extends StatelessWidget {
+class SearchField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final String? hintText;
 
   const SearchField({super.key, required this.onChanged, this.hintText});
+
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  final _controller = TextEditingController();
+  final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +40,14 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
         color: Colors.transparent,
         child: TextField(
-          onChanged: onChanged,
+          focusNode: _focusNode,
+          controller: _controller,
+          onChanged: widget.onChanged,
+          onTapOutside: (event) {
+            _focusNode.unfocus();
+          },
           decoration: InputDecoration(
-            hintText: hintText ?? 'Cari...',
+            hintText: widget.hintText ?? 'Cari...',
             hintStyle: TextStyle(
               color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[600],
             ),
@@ -28,9 +56,19 @@ class SearchField extends StatelessWidget {
               size: 20,
               color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
             ),
+            suffixIcon: _controller.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
+                    onPressed: () {
+                      _controller.clear();
+                      widget.onChanged('');
+                    },
+                  )
+                : null,
             filled: true,
             fillColor: Get.theme.cardColor,
-            contentPadding: const EdgeInsets.symmetric(vertical: 14.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide.none,

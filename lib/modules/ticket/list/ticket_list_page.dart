@@ -1,13 +1,52 @@
-// Updated Ticket List Page with filtering, sorting, and search
 import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:airnav_helpdesk/core/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'ticket_list_controller.dart';
 import '../widget/ticket_card.dart';
 
-class TicketListPage extends GetView<TicketListController> {
+class TicketListPage extends StatefulWidget {
   const TicketListPage({super.key});
+
+  @override
+  State<TicketListPage> createState() => _TicketListPageState();
+}
+
+class _TicketListPageState extends State<TicketListPage>
+    with SingleTickerProviderStateMixin {
+  late final TicketListController controller;
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.find<TicketListController>();
+    _tabController = TabController(vsync: this, length: controller.tabs.length);
+
+    // Syncs TabController (swipe/tap) -> GetX controller
+    _tabController.addListener(() {
+      final newIndex = _tabController.index;
+      if (controller.activeTab.value != controller.tabs[newIndex]) {
+        controller.changeTab(controller.tabs[newIndex]);
+      }
+    });
+
+    // Syncs GetX controller -> TabController
+    // Ensures UI updates if the state is changed from elsewhere
+    ever(controller.activeTab, (String activeTab) {
+      final newIndex = controller.tabs.indexOf(activeTab);
+      if (newIndex != -1 && _tabController.index != newIndex) {
+        _tabController.animateTo(newIndex);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +56,7 @@ class TicketListPage extends GetView<TicketListController> {
       body: Column(
         children: [
           const SizedBox(height: 8),
-          _buildTabs(),
+          _buildTabs(), // Now uses a standard TabBar for smooth animation
           const SizedBox(height: 8),
           SearchField(
             onChanged: controller.onSearch,
@@ -26,17 +65,22 @@ class TicketListPage extends GetView<TicketListController> {
           _buildFilterBar(),
           const SizedBox(height: 8),
           Expanded(
-            child: Obx(() {
-              final list = controller.tickets;
-              return ListView.builder(
-                padding: const EdgeInsets.all(12),
-                itemCount: list.length,
-                itemBuilder: (_, i) => TicketCard(
-                  ticket: list[i],
-                  activeTab: controller.activeTab.value,
-                ),
-              );
-            }),
+            child: TabBarView(
+              controller: _tabController,
+              children: controller.tabs.map((_) {
+                return Obx(() {
+                  final list = controller.tickets;
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: list.length,
+                    itemBuilder: (_, i) => TicketCard(
+                      ticket: list[i],
+                      activeTab: controller.activeTab.value,
+                    ),
+                  );
+                });
+              }).toList(),
+            ),
           ),
         ],
       ),
@@ -49,9 +93,6 @@ class TicketListPage extends GetView<TicketListController> {
     );
   }
 
-  // -----------------------------
-  // FILTER BAR (Status, Priority, Sorting)
-  // -----------------------------
   Widget _buildFilterBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -203,37 +244,23 @@ class TicketListPage extends GetView<TicketListController> {
                 .toList(),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _tabItem(String text, bool active, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 14,
-                color: active
-                    ? const Color(0xFF135CA1)
-                    : const Color(0xFF475569),
-                fontWeight: active ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-            const SizedBox(height: 4),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
-              height: 2,
-              width: active ? 30 : 0, // Stretches under the active text
-              color: const Color(0xFF135CA1),
-            ),
-          ],
+        unselectedLabelStyle: GoogleFonts.poppins(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
         ),
+        // Reduced vertical padding to decrease height
+        labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+
+        // Indicator style for smooth sliding
+        indicatorColor: const Color(0xFF135CA1),
+        indicatorWeight: 2,
+        indicatorSize: TabBarIndicatorSize.label,
+
+        // Remove splash to feel more like the original
+        splashFactory: NoSplash.splashFactory,
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+
+        tabs: controller.tabs.map((tab) => Tab(text: tab)).toList(),
       ),
     );
   }

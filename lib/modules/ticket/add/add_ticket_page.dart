@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -116,13 +118,7 @@ class AddTicketPage extends GetView<AddTicketController> {
                   controller.departments,
                   controller.onDepartmentChanged,
                 ),
-                const SizedBox(height: 16),
-                _buildDropdown(
-                  'pipeline_label'.tr,
-                  controller.selectedSubDepartment,
-                  controller.subDepartments,
-                  controller.onSubDepartmentChanged,
-                ),
+
                 const SizedBox(height: 16),
                 _buildDropdown(
                   'category_label'.tr,
@@ -136,13 +132,6 @@ class AddTicketPage extends GetView<AddTicketController> {
                   controller.selectedSubCategory,
                   controller.subCategories,
                   controller.onSubCategoryChanged,
-                ),
-                const SizedBox(height: 16),
-                _buildDropdown(
-                  'priority_label'.tr,
-                  controller.selectedPriority,
-                  controller.priorities,
-                  controller.onPriorityChanged,
                 ),
                 const SizedBox(height: 16),
                 _buildDropdown(
@@ -164,8 +153,6 @@ class AddTicketPage extends GetView<AddTicketController> {
                   maxLines: 4,
                   controller: controller.descriptionController,
                 ),
-                const SizedBox(height: 16),
-                _buildDueDatePicker(),
                 const SizedBox(height: 16),
                 _buildAttachmentPicker(),
                 const SizedBox(height: 24),
@@ -324,81 +311,92 @@ class AddTicketPage extends GetView<AddTicketController> {
     );
   }
 
-  Widget _buildDueDatePicker() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLabel('due_date_label'.tr),
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          decoration: BoxDecoration(
-            color: Get.theme.cardColor,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey.shade300),
-          ),
-          child: Row(
-            children: const [
-              Icon(
-                Icons.calendar_today_outlined,
-                color: Colors.blueGrey,
-                size: 20,
-              ),
-              SizedBox(width: 12),
-              Text(
-                '24 Nov 2025, 16.04',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'default_due_date'.tr,
-          style: const TextStyle(color: Colors.grey, fontSize: 11),
-        ),
-      ],
-    );
-  }
-
   Widget _buildAttachmentPicker() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel('attachment_label'.tr, isRequired: false),
         const SizedBox(height: 8),
-        Container(
-          height: 110,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Get.theme.cardColor,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade300),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.cloud_upload_outlined,
-                color: Get.theme.colorScheme.primary,
-                size: 32,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'click_to_upload'.tr,
-                style: TextStyle(
+        InkWell(
+          onTap: controller.pickFiles,
+          child: Container(
+            height: 110,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Get.theme.cardColor,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.cloud_upload_outlined,
                   color: Get.theme.colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
+                  size: 32,
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'file_format_hint'.tr,
-                style: const TextStyle(color: Colors.grey, fontSize: 11),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  'click_to_upload'.tr,
+                  style: TextStyle(
+                    color: Get.theme.colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'file_format_hint'.tr,
+                  style: TextStyle(color: Colors.grey, fontSize: 11),
+                ),
+              ],
+            ),
           ),
+        ),
+        Obx(
+          () =>
+              controller.selectedFiles.isNotEmpty
+                  ? Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.selectedFiles.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final file = controller.selectedFiles[index];
+                          return Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.attach_file, size: 20, color: Colors.grey.shade700),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    file.path.split('/').last,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => controller.removeFile(index),
+                                  child: const Icon(Icons.close, size: 18, color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  )
+                  : const SizedBox.shrink(),
         ),
       ],
     );
@@ -419,7 +417,7 @@ class AddTicketPage extends GetView<AddTicketController> {
             ),
             child: Text(
               'submit_ticket'.tr,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -443,7 +441,7 @@ class AddTicketPage extends GetView<AddTicketController> {
             ),
             child: Text(
               'reset_form'.tr,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ),
         ),

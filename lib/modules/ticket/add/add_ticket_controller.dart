@@ -1,42 +1,33 @@
+import 'dart:io';
+
 import 'package:airnav_helpdesk/modules/dashboard/dashboard_controller.dart';
 import 'package:airnav_helpdesk/modules/dashboard/models/help_request.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddTicketController extends GetxController {
-  // Dropdown values
   final Rxn<String> selectedDepartment = Rxn<String>();
-  final Rxn<String> selectedSubDepartment = Rxn<String>();
   final Rxn<String> selectedCategory = Rxn<String>();
   final Rxn<String> selectedSubCategory = Rxn<String>();
-  final Rxn<String> selectedPriority = Rxn<String>();
   final Rxn<String> selectedSource = Rxn<String>();
 
-  // Text Controllers
   final TextEditingController subjectController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  // Dropdown items - using dummy data for now
-  final List<String> departments = ['IT', 'HR', 'Finance', 'Teknik'];
-  final List<String> subDepartments = ['Jaringan', 'Software', 'Hardware'];
-  final List<String> categories = ['Permintaan', 'Insiden'];
+  final RxList<File> selectedFiles = <File>[].obs;
+
+  final List<String> departments = ['IT', 'SDM', 'Keuangan', 'Teknik'];
+  final List<String> categories = ['Permintaan Layanan', 'Insiden'];
   final List<String> subCategories = ['Akses Wifi', 'Kerusakan Printer'];
-  final List<String> priorities = ['Low', 'Medium', 'High', 'Urgent'];
-  final List<String> sources = ['Portal', 'Email', 'Phone', 'Direct'];
+  final List<String> sources = ['Portal', 'Email', 'Telepon', 'Langsung'];
 
   void onDepartmentChanged(String? value) {
     selectedDepartment.value = value;
-    // You might want to reset or filter sub-departments here
-    selectedSubDepartment.value = null;
-  }
-
-  void onSubDepartmentChanged(String? value) {
-    selectedSubDepartment.value = value;
   }
 
   void onCategoryChanged(String? value) {
     selectedCategory.value = value;
-    // You might want to reset or filter sub-categories here
     selectedSubCategory.value = null;
   }
 
@@ -44,64 +35,105 @@ class AddTicketController extends GetxController {
     selectedSubCategory.value = value;
   }
 
-  void onPriorityChanged(String? value) {
-    selectedPriority.value = value;
-  }
-
   void onSourceChanged(String? value) {
     selectedSource.value = value;
+  }
+
+  Future<void> pickFiles() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
+      );
+
+      if (result != null) {
+        List<File> validFiles = [];
+        bool hasLargeFile = false;
+
+        for (var path in result.paths) {
+          if (path != null) {
+            final file = File(path);
+            final int sizeInBytes = await file.length();
+            final double sizeInMB = sizeInBytes / (1024 * 1024);
+
+            if (sizeInMB <= 10) {
+              validFiles.add(file);
+            } else {
+              hasLargeFile = true;
+            }
+          }
+        }
+
+        if (validFiles.isNotEmpty) {
+          selectedFiles.addAll(validFiles);
+        }
+
+        if (hasLargeFile) {
+          Get.snackbar(
+            'file_limit_exceeded'.tr,
+            'file_limit_desc'.tr,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.orange,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 4),
+          );
+        }
+      }
+    } catch (e) {
+      Get.snackbar('error_title'.tr, 'failed_pick_files'.trParams({'error': e.toString()}));
+    }
+  }
+
+  void removeFile(int index) {
+    selectedFiles.removeAt(index);
   }
 
   void submitTicket() {
     if (selectedDepartment.value != null &&
         selectedCategory.value != null &&
-        selectedPriority.value != null &&
         subjectController.text.isNotEmpty) {
-      // Find DashboardController to add the new request
-      // In a real app, this might be handled by a repository or service
       try {
         final dashboardController = Get.find<DashboardController>();
 
         final newRequest = HelpRequest(
-          name: 'Current User', // Mock user
+          name: 'current_user'.tr,
           title: subjectController.text,
-          date: 'Just now',
-          responseDue: 'Response due in 24 hours',
+          date: 'just_now'.tr,
+          responseDue: 'response_due_24h'.tr,
           tags: [
-            selectedPriority.value!,
-            '${selectedDepartment.value} / ${selectedSubDepartment.value ?? "General"}',
+            'medium'.tr,
+            '${selectedDepartment.value} / ${'general'.tr}',
           ],
-          status: 'Open',
-          highlight: 'NEW',
+          status: 'open'.tr,
+          highlight: 'new'.tr,
           description: descriptionController.text,
         );
 
         dashboardController.requests.insert(0, newRequest);
 
         Get.snackbar(
-          'Success',
-          'Ticket submitted successfully!',
+          'success_title'.tr,
+          'ticket_submitted'.tr,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
 
-        // Clear form
         _clearForm();
 
-        // Navigate back
         Get.back();
       } catch (e) {
         Get.snackbar(
-          'Error',
-          'Could not submit ticket. Dashboard controller not found.',
+          'error_title'.tr,
+          'submit_error_desc'.tr,
           snackPosition: SnackPosition.BOTTOM,
         );
       }
     } else {
       Get.snackbar(
-        'Error',
-        'Please fill all required fields.',
+        'error_title'.tr,
+        'fill_required_fields'.tr,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -111,13 +143,12 @@ class AddTicketController extends GetxController {
 
   void _clearForm() {
     selectedDepartment.value = null;
-    selectedSubDepartment.value = null;
     selectedCategory.value = null;
     selectedSubCategory.value = null;
-    selectedPriority.value = null;
     selectedSource.value = null;
     subjectController.clear();
     descriptionController.clear();
+    selectedFiles.clear();
   }
 
   @override
