@@ -148,15 +148,16 @@ class _TicketListPageState extends State<TicketListPage>
             return items.map((itemValue) {
               return PopupMenuItem<String>(
                 value: itemValue,
-                child: Text(_getLocalizedValue(itemValue, label)),
+                child: Text(_getLocalizedValue(itemValue, label),
+                    style: GoogleFonts.montserrat()),
               );
             }).toList();
           },
           child: InputDecorator(
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: const TextStyle(fontSize: 14),
-              floatingLabelStyle: const TextStyle(fontSize: 16),
+              labelStyle: GoogleFonts.montserrat(fontSize: 14),
+              floatingLabelStyle: GoogleFonts.montserrat(fontSize: 16),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               border: OutlineInputBorder(
@@ -187,7 +188,8 @@ class _TicketListPageState extends State<TicketListPage>
                         ? ''
                         : _getLocalizedValue(reactiveValue, label),
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Get.theme.textTheme.bodyLarge?.color),
+                    style: GoogleFonts.montserrat(
+                        color: Get.theme.textTheme.bodyLarge?.color),
                   ),
                 ),
                 Icon(Icons.arrow_drop_down,
@@ -256,11 +258,11 @@ class _TicketListPageState extends State<TicketListPage>
         // TEXT STYLE
         labelColor: Get.theme.primaryColor,
         unselectedLabelColor: Get.theme.unselectedWidgetColor,
-        labelStyle: GoogleFonts.poppins(
+        labelStyle: GoogleFonts.montserrat(
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
-        unselectedLabelStyle: GoogleFonts.poppins(
+        unselectedLabelStyle: GoogleFonts.montserrat(
           fontSize: 14,
           fontWeight: FontWeight.normal,
         ),
