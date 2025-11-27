@@ -7,7 +7,7 @@ class MenuController extends GetxController {
   // User Info (bisa diambil dari auth service atau local storage)
   final RxString userName = 'Budi'.obs;
   final RxString userId = '10014377'.obs;
-  final RxString userCompany = 'AIRNAV INDONESIA'.obs;
+  final RxString userCompany = 'AirNav Indonesias'.obs;
 
   final ThemeService _themeService = Get.find<ThemeService>();
 

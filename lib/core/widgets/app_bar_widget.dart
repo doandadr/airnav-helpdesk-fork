@@ -39,7 +39,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               ),
               const SizedBox(height: 2),
               const Text(
-                'Helpdesk AIRNAV',
+                'Helpdesk AirNav',
                 style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
             ],

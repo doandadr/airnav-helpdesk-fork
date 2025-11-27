@@ -178,7 +178,7 @@ class DetailTicketPage extends GetView<DetailTicketController> {
                 const SizedBox(height: 16),
                 _buildReadOnlyField('name_label'.tr, 'M NABIL AMANI'),
                 const SizedBox(height: 16),
-                _buildReadOnlyField('department_label'.tr, 'AIRNAV INDONESIA'),
+                _buildReadOnlyField('department_label'.tr, 'AiN INDONES IA'),
                 const SizedBox(height: 16),
                 _buildReadOnlyField(
                   'sub_department_label'.tr,

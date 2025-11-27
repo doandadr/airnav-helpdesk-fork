@@ -379,7 +379,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
           ),
           const SizedBox(height: 4),
           Text(
-            '© 2025 AIRNAV Indonesia',
+            '© 2025 AirNav Indonesia',
             style: TextStyle(color: Colors.grey[400], fontSize: 11),
           ),
         ],
