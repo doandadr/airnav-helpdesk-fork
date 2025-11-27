@@ -22,7 +22,7 @@ class FaqPage extends GetView<FaqController> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 5),
+          const SizedBox(height: 1),
           // Search Bar
           SearchField(
             onChanged: controller.onSearch,
@@ -31,7 +31,7 @@ class FaqPage extends GetView<FaqController> {
           // Filter Tabs
           Container(
             color: Colors.transparent,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
             child: _buildFilterTabs(),
           ),
           // FAQ List

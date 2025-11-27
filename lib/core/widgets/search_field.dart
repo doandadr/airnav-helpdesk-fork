@@ -5,7 +5,11 @@ class SearchField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final String? hintText;
 
-  const SearchField({super.key, required this.onChanged, this.hintText});
+  const SearchField({
+    super.key,
+    required this.onChanged,
+    this.hintText,
+  });
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -33,12 +37,20 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Material(
-        elevation: 2.0,
-        shadowColor: Colors.black.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(30.0),
-        color: Colors.transparent,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Get.theme.cardColor,
+          borderRadius: BorderRadius.circular(30.0),
+          boxShadow: [
+            BoxShadow(
+              color: Get.theme.shadowColor.withOpacity(Get.isDarkMode ? 0.3 : 0.08),
+              spreadRadius: 2,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: TextField(
           focusNode: _focusNode,
           controller: _controller,
@@ -49,25 +61,25 @@ class _SearchFieldState extends State<SearchField> {
           decoration: InputDecoration(
             hintText: widget.hintText ?? 'Cari...',
             hintStyle: TextStyle(
-              color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[600],
+              color: Get.theme.hintColor,
             ),
             prefixIcon: Icon(
               Icons.search,
               size: 20,
-              color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
+              color: Get.theme.hintColor,
             ),
             suffixIcon: _controller.text.isNotEmpty
                 ? IconButton(
-              icon: const Icon(Icons.close),
-              color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
-              onPressed: () {
-                _controller.clear();
-                widget.onChanged('');
-              },
-            )
+                    icon: const Icon(Icons.close),
+                    color: Get.theme.hintColor,
+                    onPressed: () {
+                      _controller.clear();
+                      widget.onChanged('');
+                    },
+                  )
                 : null,
             filled: true,
-            fillColor: Get.theme.cardColor,
+            fillColor: Colors.transparent,
             contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
@@ -76,7 +88,7 @@ class _SearchFieldState extends State<SearchField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide(
-                color: Get.theme.colorScheme.primary,
+                color: Get.theme.primaryColor,
                 width: 1.5,
               ),
             ),
