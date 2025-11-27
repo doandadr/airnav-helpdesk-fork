@@ -58,13 +58,13 @@ class _SearchFieldState extends State<SearchField> {
             ),
             suffixIcon: _controller.text.isNotEmpty
                 ? IconButton(
-                    icon: const Icon(Icons.close),
-                    color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
-                    onPressed: () {
-                      _controller.clear();
-                      widget.onChanged('');
-                    },
-                  )
+              icon: const Icon(Icons.close),
+              color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[500],
+              onPressed: () {
+                _controller.clear();
+                widget.onChanged('');
+              },
+            )
                 : null,
             filled: true,
             fillColor: Get.theme.cardColor,

@@ -1,3 +1,4 @@
+import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:airnav_helpdesk/core/widgets/search_field.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,11 @@ class _TicketListPageState extends State<TicketListPage>
 
     // Syncs TabController (swipe/tap) -> GetX controller
     _tabController.addListener(() {
-      final newIndex = _tabController.index;
-      if (controller.activeTab.value != controller.tabs[newIndex]) {
-        controller.changeTab(controller.tabs[newIndex]);
+      if (_tabController.indexIsChanging) {
+        final newIndex = _tabController.index;
+        if (controller.activeTab.value != controller.tabs[newIndex]) {
+          controller.changeTab(controller.tabs[newIndex]);
+        }
       }
     });
 
@@ -169,10 +172,10 @@ class _TicketListPageState extends State<TicketListPage>
           items: items
               .map(
                 (e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(_getLocalizedValue(e, label)),
-                ),
-              )
+              value: e,
+              child: Text(_getLocalizedValue(e, label)),
+            ),
+          )
               .toList(),
           onChanged: (val) => onChanged(val ?? ''),
         );
@@ -226,9 +229,34 @@ class _TicketListPageState extends State<TicketListPage>
     return value;
   }
 
+  Widget _tabItem(String title, bool isActive, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0xFF135CA1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isActive ? const Color(0xFF135CA1) : Colors.grey.shade300,
+          ),
+        ),
+        child: Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 12,
+            fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+            color: isActive ? Colors.white : Colors.grey.shade600,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildTabs() {
     return Obx(
-      () => Container(
+          () => Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -236,31 +264,14 @@ class _TicketListPageState extends State<TicketListPage>
             children: controller.tabs
                 .map(
                   (tab) => _tabItem(
-                    tab.tr,
-                    controller.activeTab.value == tab,
+                tab.tr,
+                controller.activeTab.value == tab,
                     () => controller.changeTab(tab),
-                  ),
-                )
+              ),
+            )
                 .toList(),
           ),
         ),
-        unselectedLabelStyle: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-        // Reduced vertical padding to decrease height
-        labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-
-        // Indicator style for smooth sliding
-        indicatorColor: const Color(0xFF135CA1),
-        indicatorWeight: 2,
-        indicatorSize: TabBarIndicatorSize.label,
-
-        // Remove splash to feel more like the original
-        splashFactory: NoSplash.splashFactory,
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
-
-        tabs: controller.tabs.map((tab) => Tab(text: tab)).toList(),
       ),
     );
   }
