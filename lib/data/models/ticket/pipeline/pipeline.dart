@@ -7,24 +7,16 @@ part 'pipeline.g.dart';
 class Pipeline extends Equatable {
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'pipeline')
-  final String pipeline;
-  @JsonKey(name: 'stage')
-  final String stage; // new, assigned, in progress, done
-  @JsonKey(name: 'percentage')
-  final String percentage;
-  
-  const Pipeline({
-    required this.id,
-    required this.pipeline,
-    required this.stage,
-    required this.percentage,
-  });
+  @JsonKey(name: 'name')
+  final String name;
 
-  factory Pipeline.fromJson(Map<String, dynamic> json) => _$PipelineFromJson(json);
-  
+  const Pipeline({required this.id, required this.name});
+
+  factory Pipeline.fromJson(Map<String, dynamic> json) =>
+      _$PipelineFromJson(json);
+
   Map<String, dynamic> toJson() => _$PipelineToJson(this);
 
   @override
-  List<Object?> get props => [id, pipeline, stage, percentage];
+  List<Object?> get props => [id, name];
 }
