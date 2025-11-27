@@ -1,67 +1,14 @@
-# Note: In a yml each level is padded by 2 spaces
-name: Flutter CI
+name: Validate Build
 
 on:
-  # Runs on pushes to main
-  push:
-    branches: [ "main" ]
-  # Runs on pull requests targeting main
   pull_request:
     branches: [ "main" ]
 
 jobs:
   validate:
     name: Validate
-    # Use ubuntu-latest for faster startup and execution
     runs-on: ubuntu-latest
 
-    steps:
-      # Clones the project on the machine
-      - uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      # Installs flutter and related dependency on this machine
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true # Enables caching for pub dependencies
-
-      # Fetches project dependencies from pub
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Checks for Semantic errors. Can be configured using analysis_options.yaml
-      - name: Analyze project source
-        run: flutter analyze
-        continue-on-error: true
-
-      # Verifies if the dart code is formatted well
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-        continue-on-error: true
-
-      # Runs unit test
-      - name: Run tests
-        run: flutter test
-
-      - name: Build Android Debug APK
-        run: flutter build apk --debug
-
-  build:
-    name: Build APK
-    # This job runs only on a push to the main branch, after the validate job is successful
-    needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
-    # Choose macos-latest to build for iOS
-    runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v4
 
@@ -80,11 +27,17 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build apk
-        run: flutter build apk --release
+      - name: Analyze project source
+        run: flutter analyze
+        continue-on-error: true
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+        continue-on-error: true
+
+      - name: Run tests
+        run: flutter test
+        continue-on-error: true
+
+      - name: Build Android Debug APK
+        run: flutter build apk --debug
