@@ -26,6 +26,7 @@ class FaqController extends GetxController {
       answer:
           'Kategori masalah IT meliputi: Jaringan & Internet, Perangkat Keras (Hardware), Perangkat Lunak (Software), Email & Akun, dan Akses Sistem. Silakan pilih kategori yang sesuai dengan permasalahan Anda.',
       category: 'faq_cat_it',
+      fileName: 'Panduan_Kategori_IT.pdf',
     ),
     FaqItem(
       question: 'Berapa lama waktu respon dari tim IT?',
@@ -58,6 +59,7 @@ class FaqController extends GetxController {
       answer:
           'Untuk klaim reimbursement, Anda perlu melampirkan: Bukti pembayaran asli (kuitansi/invoice), Formulir klaim yang sudah diisi, dan Bukti pendukung lainnya sesuai kebijakan perusahaan. Pastikan semua dokumen lengkap agar proses lebih cepat.',
       category: 'faq_cat_hr',
+      fileName: 'Form_Reimbursement.xlsx',
     ),
 
     // Legal
@@ -72,6 +74,7 @@ class FaqController extends GetxController {
       answer:
           'Tim legal menyediakan layanan konsultasi kontrak, review dokumen legal, penanganan sengketa, perizinan, dan compliance. Semua layanan dapat diakses melalui sistem ticketing ini.',
       category: 'faq_cat_legal',
+      fileName: 'Layanan_Legal.pdf',
     ),
     FaqItem(
       question: 'Apakah konsultasi legal bersifat rahasia?',
@@ -118,6 +121,7 @@ class FaqController extends GetxController {
       answer:
           'Yang dapat di-reimburse meliputi: Biaya perjalanan dinas, Transportasi operasional, Konsumsi rapat/meeting, Pembelian supplies kantor, dan biaya lain yang telah disetujui sesuai kebijakan perusahaan.',
       category: 'faq_cat_finance',
+      fileName: 'Kebijakan_Reimbursement_2024.pdf',
     ),
 
     // Humas
@@ -196,12 +200,14 @@ class FaqItem {
   final String question;
   final String answer;
   final String category;
+  final String? fileName;
   bool isExpanded;
 
   FaqItem({
     required this.question,
     required this.answer,
     required this.category,
+    this.fileName,
     this.isExpanded = false,
   });
 }
