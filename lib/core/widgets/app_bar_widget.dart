@@ -53,15 +53,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           [
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: IconButton(
-                  splashRadius: 24,
-                  icon: const Icon(
+              child: IconButton(
+                onPressed: () => Get.toNamed(Routes.NOTIFICATION),
+                icon: Badge(
+                  label: const Text('3'),
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  child: const Icon(
                     Icons.notifications_none,
-                    color: Colors.black54,
+                    color: Colors.white,
+                    size: 28,
                   ),
-                  onPressed: () => Get.toNamed(Routes.NOTIFICATION),
                 ),
               ),
             ),
