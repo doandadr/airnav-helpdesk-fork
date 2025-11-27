@@ -98,7 +98,7 @@ class _TicketListPageState extends State<TicketListPage>
 
   Widget _buildFilterBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 1),
       child: Row(
         children: [
           _filterDropdown(
@@ -158,7 +158,7 @@ class _TicketListPageState extends State<TicketListPage>
               labelStyle: const TextStyle(fontSize: 14),
               floatingLabelStyle: const TextStyle(fontSize: 16),
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Get.theme.dividerColor),
@@ -266,7 +266,7 @@ class _TicketListPageState extends State<TicketListPage>
         ),
 
         // PADDING agar tab tidak tinggi
-        labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 1),
 
         // INDICATOR
         indicatorColor: Get.theme.primaryColor,
