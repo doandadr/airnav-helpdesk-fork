@@ -24,7 +24,8 @@ class WebviewController extends GetxController {
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('http://localhost:3000/authhelpdesk')) {
               final uri = Uri.parse(request.url);
-              Get.back(result: uri.queryParameters);
+              final token = uri.pathSegments.last;
+              Get.back(result: token);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
