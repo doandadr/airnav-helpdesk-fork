@@ -30,7 +30,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static final INITIAL = Routes.LANGUAGE_SELECTION;
+  static final INITIAL = Routes.MAIN;
 
   static final routes = [
     GetPage(
