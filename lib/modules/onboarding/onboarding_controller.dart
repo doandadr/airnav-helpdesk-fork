@@ -51,13 +51,9 @@ class OnboardingController extends GetxController {
     //     Get.put(LoginController());
     //   }),
     // );
-    Get.offNamed(
-      Routes.WEBVIEW,
-      arguments: {
-        'url':
-            'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cHM6Ly9sb2NhbGhvc3Q6MzAwMC9hdXRoaGVscGRlc2s=',
-      },
-    );
+    final url =
+        'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cDovL2xvY2FsaG9zdDozMDAwL2F1dGhoZWxwZGVzaw==';
+    Get.offNamed(Routes.WEBVIEW, arguments: {'url': url});
   }
 
   @override

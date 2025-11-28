@@ -8,12 +8,11 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arg = Get.arguments;
-    final url = arg is Map ? arg['url'] : 'https://flutter.dev';
+    final url = Get.arguments['url'];
     final controller = Get.put(WebviewController(initialUrl: url));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Simple Example')),
+      // appBar: AppBar(title: const Text('Flutter Simple Example')),
       body: WebViewWidget(controller: controller.controller),
     );
   }
