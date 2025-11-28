@@ -22,6 +22,11 @@ class WebviewController extends GetxController {
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('http://localhost:3000/authhelpdesk')) {
+              final uri = Uri.parse(request.url);
+              Get.back(result: uri.queryParameters);
+              return NavigationDecision.prevent;
+            }
             if (request.url.startsWith('https://www.youtube.com/')) {
               return NavigationDecision.prevent;
             }

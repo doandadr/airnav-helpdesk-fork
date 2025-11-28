@@ -43,7 +43,7 @@ class OnboardingController extends GetxController {
     finishOnboarding();
   }
 
-  void finishOnboarding() {
+  void finishOnboarding() async {
     // Navigate to Login Page
     // Get.off(
     //   () => const LoginPage(),
@@ -53,7 +53,10 @@ class OnboardingController extends GetxController {
     // );
     final url =
         'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cDovL2xvY2FsaG9zdDozMDAwL2F1dGhoZWxwZGVzaw==';
-    Get.offNamed(Routes.WEBVIEW, arguments: {'url': url});
+    final result = await Get.toNamed(Routes.WEBVIEW, arguments: {'url': url});
+    if (result != null) {
+      print('SSO Result: $result');
+    }
   }
 
   @override
