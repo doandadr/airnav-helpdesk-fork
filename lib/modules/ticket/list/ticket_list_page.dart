@@ -1,4 +1,3 @@
-import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:airnav_helpdesk/core/widgets/app_bar_widget.dart';
 import 'package:airnav_helpdesk/core/widgets/search_field.dart';
 import 'package:flutter/material.dart';
@@ -55,12 +54,40 @@ class _TicketListPageState extends State<TicketListPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
-      appBar: AppBarWidget(titleText: 'my_tickets'.tr),
+      appBar: AppBarWidget(
+        titleText: 'my_tickets'.tr,
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white.withOpacity(0.7),
+          labelStyle: GoogleFonts.montserrat(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: GoogleFonts.montserrat(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
+
+          labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 1),
+
+          indicatorColor: Colors.white,
+          indicatorWeight: 2,
+          indicatorSize: TabBarIndicatorSize.label,
+
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+
+          tabs: controller.tabs.map((tab) => Tab(text: tab.tr)).toList(),
+        ),
+      ),
       body: Column(
         children: [
           const SizedBox(height: 1),
-          _buildTabs(),
-          const SizedBox(height: 1),
+
           SearchField(
             onChanged: controller.onSearch,
             hintText: 'search_ticket_hint'.tr,
@@ -76,10 +103,8 @@ class _TicketListPageState extends State<TicketListPage>
                   return ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: list.length,
-                    itemBuilder: (_, i) => TicketCard(
-                      ticket: list[i],
-                      activeTab: tabName,
-                    ),
+                    itemBuilder: (_, i) =>
+                        TicketCard(ticket: list[i], activeTab: tabName),
                   );
                 });
               }).toList(),
@@ -137,8 +162,8 @@ class _TicketListPageState extends State<TicketListPage>
         final reactiveValue = (label == "filter_status".tr)
             ? controller.statusFilter.value
             : (label == "filter_priority".tr)
-                ? controller.priorityFilter.value
-                : controller.sortOption.value;
+            ? controller.priorityFilter.value
+            : controller.sortOption.value;
 
         return PopupMenuButton<String>(
           offset: const Offset(0, 50),
@@ -148,8 +173,10 @@ class _TicketListPageState extends State<TicketListPage>
             return items.map((itemValue) {
               return PopupMenuItem<String>(
                 value: itemValue,
-                child: Text(_getLocalizedValue(itemValue, label),
-                    style: GoogleFonts.montserrat()),
+                child: Text(
+                  _getLocalizedValue(itemValue, label),
+                  style: GoogleFonts.montserrat(),
+                ),
               );
             }).toList();
           },
@@ -158,8 +185,10 @@ class _TicketListPageState extends State<TicketListPage>
               labelText: label,
               labelStyle: GoogleFonts.montserrat(fontSize: 14),
               floatingLabelStyle: GoogleFonts.montserrat(fontSize: 16),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Get.theme.dividerColor),
@@ -189,11 +218,15 @@ class _TicketListPageState extends State<TicketListPage>
                         : _getLocalizedValue(reactiveValue, label),
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.montserrat(
-                        color: Get.theme.textTheme.bodyLarge?.color),
+                      color: Get.theme.textTheme.bodyLarge?.color,
+                    ),
                   ),
                 ),
-                Icon(Icons.arrow_drop_down,
-                    size: 20, color: Get.theme.hintColor),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 20,
+                  color: Get.theme.hintColor,
+                ),
               ],
             ),
           ),
@@ -243,45 +276,5 @@ class _TicketListPageState extends State<TicketListPage>
     }
     // Fallback if no match is found
     return value;
-  }
-
-  Widget _buildTabs() {
-    return Container(
-      // To make the TabBar background adapt, we color the container
-      color: Get.theme.scaffoldBackgroundColor,
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: TabBar(
-        controller: _tabController,
-        isScrollable: true,
-        tabAlignment: TabAlignment.start,
-
-        // TEXT STYLE
-        labelColor: Get.theme.primaryColor,
-        unselectedLabelColor: Get.theme.unselectedWidgetColor,
-        labelStyle: GoogleFonts.montserrat(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: GoogleFonts.montserrat(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-        ),
-
-        // PADDING agar tab tidak tinggi
-        labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 1),
-
-        // INDICATOR
-        indicatorColor: Get.theme.primaryColor,
-        indicatorWeight: 2,
-        indicatorSize: TabBarIndicatorSize.label,
-
-        // Remove ripple/splash biar smooth
-        splashFactory: NoSplash.splashFactory,
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
-
-        // MENAMPILKAN TAB SESUAI NAMA
-        tabs: controller.tabs.map((tab) => Tab(text: tab.tr)).toList(),
-      ),
-    );
   }
 }
