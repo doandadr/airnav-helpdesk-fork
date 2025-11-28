@@ -28,79 +28,74 @@ class ApiInterceptor extends Interceptor {
     final response = err.response;
     Color failColor = Colors.redAccent;
 
+    // Check if we should show error snackbars (default to true)
+    final showErrors = err.requestOptions.headers['X-Show-Errors'] != 'false';
+
     if (response != null) {
-      switch (response.statusCode) {
-        case 200:
-          Get.snackbar(
-            "Berhasil",
-            response.data["message"] ?? "Operasi berhasil",
-            backgroundColor: Colors.green,
-          );
-          break;
-        case 201:
-          Get.snackbar(
-            "Berhasil Dibuat",
-            response.data["message"] ?? "Data berhasil dibuat",
-            backgroundColor: Colors.green,
-          );
-          break;
-        case 400:
-          Get.snackbar(
-            "Permintaan Tidak Valid",
-            response.data["message"] ??
-                "Permintaan yang Anda kirim tidak valid",
-            backgroundColor: failColor,
-          );
-          break;
-        case 401:
-          Get.snackbar(
-            "Tidak Memiliki Akses",
-            response.data["message"] ?? "Kredensial tidak valid.",
-            backgroundColor: failColor,
-          );
-          break;
-        case 403:
-          Get.snackbar(
-            "Akses Ditolak",
-            response.data["message"] ??
-                "Anda tidak memiliki izin untuk melakukan aksi ini",
-            backgroundColor: failColor,
-          );
-          break;
-        case 404:
-          Get.snackbar(
-            "Tidak Ditemukan",
-            response.data["message"] ?? "Tidak ditemukan",
-            backgroundColor: failColor,
-          );
-          break;
-        case 422:
-          String message =
-              response.data["message"] ?? "Data yang dikirim tidak valid";
-          if (response.data["errors"] != null) {
-            Map<String, dynamic> errors = response.data["errors"];
-            errors.forEach((key, value) {
-              message += "\n- ${value[0]}";
-            });
-          }
-          Get.snackbar("Data Tidak Valid", message, backgroundColor: failColor);
-          break;
-        case 500:
-          Get.snackbar(
-            "Masalah Server",
-            response.data["message"] ??
-                "Terjadi masalah pada server, coba lagi nanti",
-            backgroundColor: failColor,
-          );
-          break;
-        default:
-          Get.snackbar(
-            "Terjadi Kesalahan",
-            response.data["message"] ??
-                "Telah terjadi kesalahan yang tidak diketahui",
-            backgroundColor: failColor,
-          );
-          break;
+      if (showErrors) {
+        switch (response.statusCode) {
+          case 400:
+            Get.snackbar(
+              "Permintaan Tidak Valid",
+              response.data["message"] ??
+                  "Permintaan yang Anda kirim tidak valid",
+              backgroundColor: failColor,
+            );
+            break;
+          case 401:
+            Get.snackbar(
+              "Tidak Memiliki Akses",
+              response.data["message"] ?? "Kredensial tidak valid.",
+              backgroundColor: failColor,
+            );
+            break;
+          case 403:
+            Get.snackbar(
+              "Akses Ditolak",
+              response.data["message"] ??
+                  "Anda tidak memiliki izin untuk melakukan aksi ini",
+              backgroundColor: failColor,
+            );
+            break;
+          case 404:
+            Get.snackbar(
+              "Tidak Ditemukan",
+              response.data["message"] ?? "Tidak ditemukan",
+              backgroundColor: failColor,
+            );
+            break;
+          case 422:
+            String message =
+                response.data["message"] ?? "Data yang dikirim tidak valid";
+            if (response.data["errors"] != null) {
+              Map<String, dynamic> errors = response.data["errors"];
+              errors.forEach((key, value) {
+                message += "\n- ${value[0]}";
+              });
+            }
+            Get.snackbar(
+              "Data Tidak Valid",
+              message,
+              backgroundColor: failColor,
+            );
+            break;
+          case 500:
+            Get.snackbar(
+              "Masalah Server",
+              response.data["message"] ??
+                  "Terjadi masalah pada server, coba lagi nanti",
+              backgroundColor: failColor,
+            );
+            break;
+          default:
+            Get.snackbar(
+              "Terjadi Kesalahan",
+              response.data["message"] ??
+                  "Telah terjadi kesalahan yang tidak diketahui",
+              backgroundColor: failColor,
+            );
+            break;
+        }
       }
     } else {
       final now = DateTime.now();
@@ -108,11 +103,13 @@ class ApiInterceptor extends Interceptor {
           now.difference(_lastConnectionErrorTime!) >
               _connectionErrorCooldown) {
         _lastConnectionErrorTime = now;
-        Get.snackbar(
-          "Masalah Koneksi",
-          "Tidak dapat terhubung ke server, periksa koneksi internet Anda",
-          backgroundColor: failColor,
-        );
+        if (showErrors) {
+          Get.snackbar(
+            "Masalah Koneksi",
+            "Tidak dapat terhubung ke server, periksa koneksi internet Anda",
+            backgroundColor: failColor,
+          );
+        }
       }
     }
 
