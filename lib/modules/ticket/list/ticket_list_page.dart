@@ -165,69 +165,92 @@ class _TicketListPageState extends State<TicketListPage>
             ? controller.priorityFilter.value
             : controller.sortOption.value;
 
-        return PopupMenuButton<String>(
-          offset: const Offset(0, 50),
-          color: Get.theme.cardColor, // Use theme card color
-          onSelected: onChanged,
-          itemBuilder: (context) {
-            return items.map((itemValue) {
-              return PopupMenuItem<String>(
-                value: itemValue,
-                child: Text(
-                  _getLocalizedValue(itemValue, label),
-                  style: GoogleFonts.montserrat(),
+        return Container(
+          decoration: BoxDecoration(
+            color: Get.theme.cardColor,
+            borderRadius: BorderRadius.circular(30.0),
+            boxShadow: [
+              BoxShadow(
+                color: Get.theme.shadowColor.withOpacity(
+                  Get.isDarkMode ? 0.15 : 0.04,
                 ),
-              );
-            }).toList();
-          },
-          child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: label,
-              labelStyle: GoogleFonts.montserrat(fontSize: 14),
-              floatingLabelStyle: GoogleFonts.montserrat(fontSize: 16),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Get.theme.dividerColor),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Get.theme.dividerColor),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: Get.theme.primaryColor,
-                  width: 1.5,
-                ),
-              ),
-              filled: true,
-              fillColor: Get.theme.cardColor, // Use theme card color
-            ),
-            isEmpty: reactiveValue.isEmpty,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+            ],
+          ),
+          child: PopupMenuButton<String>(
+            offset: const Offset(0, 50),
+            color: Get.theme.cardColor,
+            onSelected: onChanged,
+            itemBuilder: (context) {
+              return items.map((itemValue) {
+                return PopupMenuItem<String>(
+                  value: itemValue,
                   child: Text(
-                    reactiveValue.isEmpty
-                        ? ''
-                        : _getLocalizedValue(reactiveValue, label),
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.montserrat(
-                      color: Get.theme.textTheme.bodyLarge?.color,
-                    ),
+                    _getLocalizedValue(itemValue, label),
+                    style: GoogleFonts.montserrat(),
                   ),
-                ),
-                Icon(
-                  Icons.arrow_drop_down,
-                  size: 20,
+                );
+              }).toList();
+            },
+            child: InputDecorator(
+              decoration: InputDecoration(
+                labelText: label,
+                labelStyle: GoogleFonts.montserrat(
+                  fontSize: 12,
                   color: Get.theme.hintColor,
                 ),
-              ],
+                floatingLabelStyle: GoogleFonts.montserrat(
+                  fontSize: 14,
+                  color: Get.theme.hintColor,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide(
+                    color: Get.theme.primaryColor,
+                    width: 1.5,
+                  ),
+                ),
+                filled: true,
+                fillColor: Colors.transparent,
+              ),
+              isEmpty: reactiveValue.isEmpty,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      reactiveValue.isEmpty
+                          ? ''
+                          : _getLocalizedValue(reactiveValue, label),
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.montserrat(
+                        color: Get.theme.textTheme.bodyLarge?.color,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    size: 20,
+                    color: Get.theme.hintColor,
+                  ),
+                ],
+              ),
             ),
           ),
         );

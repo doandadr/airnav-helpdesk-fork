@@ -5,11 +5,7 @@ class SearchField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final String? hintText;
 
-  const SearchField({
-    super.key,
-    required this.onChanged,
-    this.hintText,
-  });
+  const SearchField({super.key, required this.onChanged, this.hintText});
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -44,10 +40,12 @@ class _SearchFieldState extends State<SearchField> {
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
-              color: Get.theme.shadowColor.withOpacity(Get.isDarkMode ? 0.3 : 0.08),
-              spreadRadius: 2,
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+              color: Get.theme.shadowColor.withOpacity(
+                Get.isDarkMode ? 0.15 : 0.04,
+              ),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -60,9 +58,7 @@ class _SearchFieldState extends State<SearchField> {
           },
           decoration: InputDecoration(
             hintText: widget.hintText ?? 'Cari...',
-            hintStyle: TextStyle(
-              color: Get.theme.hintColor,
-            ),
+            hintStyle: TextStyle(color: Get.theme.hintColor),
             prefixIcon: Icon(
               Icons.search,
               size: 20,
@@ -87,10 +83,7 @@ class _SearchFieldState extends State<SearchField> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(
-                color: Get.theme.primaryColor,
-                width: 1.5,
-              ),
+              borderSide: BorderSide(color: Get.theme.primaryColor, width: 1.5),
             ),
           ),
         ),
