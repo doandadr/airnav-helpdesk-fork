@@ -44,16 +44,9 @@ class OnboardingController extends GetxController {
   }
 
   void finishOnboarding() async {
-    // Navigate to Login Page
-    // Get.off(
-    //   () => const LoginPage(),
-    //   binding: BindingsBuilder(() {
-    //     Get.put(LoginController());
-    //   }),
-    // );
     final url =
         'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cDovL2xvY2FsaG9zdDozMDAwL2F1dGhoZWxwZGVzaw==';
-    final result = await Get.toNamed(Routes.WEBVIEW, arguments: {'url': url});
+    final result = await Get.offNamed(Routes.WEBVIEW, arguments: {'url': url});
     if (result != null) {
       print('SSO Result: $result');
     }

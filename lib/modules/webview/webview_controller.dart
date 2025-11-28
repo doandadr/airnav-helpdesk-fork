@@ -27,9 +27,6 @@ class WebviewController extends GetxController {
               Get.back(result: uri.queryParameters);
               return NavigationDecision.prevent;
             }
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
             return NavigationDecision.navigate;
           },
         ),
