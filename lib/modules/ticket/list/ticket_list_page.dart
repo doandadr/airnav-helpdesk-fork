@@ -84,33 +84,54 @@ class _TicketListPageState extends State<TicketListPage>
           tabs: controller.tabs.map((tab) => Tab(text: tab.tr)).toList(),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 1),
-
-          SearchField(
-            onChanged: controller.onSearch,
-            hintText: 'search_ticket_hint'.tr,
-          ),
-          _buildFilterBar(),
-          const SizedBox(height: 1),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: controller.tabs.map((tabName) {
-                return Obx(() {
-                  final list = controller.getTicketsForTab(tabName);
-                  return ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: list.length,
-                    itemBuilder: (_, i) =>
-                        TicketCard(ticket: list[i], activeTab: tabName),
-                  );
-                });
-              }).toList(),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              surfaceTintColor: Colors.transparent,
+              backgroundColor: Get.theme.scaffoldBackgroundColor,
+              automaticallyImplyLeading: false,
+              pinned: false,
+              floating: true,
+              toolbarHeight: 140,
+              flexibleSpace: SafeArea(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    SearchField(
+                      onChanged: controller.onSearch,
+                      hintText: 'search_ticket_hint'.tr,
+                    ),
+                    _buildFilterBar(),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ];
+        },
+        body: TabBarView(
+          controller: _tabController,
+          children: controller.tabs.map((tabName) {
+            return Obx(() {
+              final list = controller.getTicketsForTab(tabName);
+              // Using ListView.builder with physics that works with NestedScrollView
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: list.length,
+                itemBuilder: (_, index) => Padding(
+                  padding: EdgeInsets.only(
+                    left: 12,
+                    right: 12,
+                    top: 0,
+                    bottom: index == list.length - 1 ? 12 : 0,
+                  ),
+                  child: TicketCard(ticket: list[index], activeTab: tabName),
+                ),
+              );
+            });
+          }).toList(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: controller.goToNewTicket,
