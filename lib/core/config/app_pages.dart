@@ -2,6 +2,7 @@ import 'package:airnav_helpdesk/modules/menu/menu.binding.dart';
 import 'package:airnav_helpdesk/modules/menu/menu_page.dart';
 import 'package:airnav_helpdesk/modules/onboarding/language_selection_page.dart';
 import 'package:airnav_helpdesk/modules/onboarding/welcome_page.dart';
+import 'package:airnav_helpdesk/modules/webview/webview_page.dart';
 import 'package:get/get.dart';
 
 import '../../main_binding.dart';
@@ -90,5 +91,6 @@ class AppPages {
       page: () => const NotificationPage(),
       binding: NotificationBinding(),
     ),
+    GetPage(name: _Path.WEBVIEW, page: () => const WebViewPage()),
   ];
 }

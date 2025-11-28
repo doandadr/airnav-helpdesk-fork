@@ -1,7 +1,6 @@
+import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:airnav_helpdesk/modules/login/login_page.dart';
-import 'package:airnav_helpdesk/modules/login/login_controller.dart';
 
 class OnboardingController extends GetxController {
   final PageController pageController = PageController();
@@ -46,11 +45,18 @@ class OnboardingController extends GetxController {
 
   void finishOnboarding() {
     // Navigate to Login Page
-    Get.off(
-      () => const LoginPage(),
-      binding: BindingsBuilder(() {
-        Get.put(LoginController());
-      }),
+    // Get.off(
+    //   () => const LoginPage(),
+    //   binding: BindingsBuilder(() {
+    //     Get.put(LoginController());
+    //   }),
+    // );
+    Get.offNamed(
+      Routes.WEBVIEW,
+      arguments: {
+        'url':
+            'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cHM6Ly9sb2NhbGhvc3Q6MzAwMC9hdXRoaGVscGRlc2s=',
+      },
     );
   }
 

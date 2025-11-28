@@ -15,6 +15,7 @@ abstract class Routes {
   static const WELCOME = _Path.WELCOME;
   static const LANGUAGE_SELECTION = _Path.LANGUAGE_SELECTION;
   static const NOTIFICATION = _Path.NOTIFICATION;
+  static const WEBVIEW = _Path.WEBVIEW;
 }
 
 abstract class _Path {
@@ -32,4 +33,5 @@ abstract class _Path {
   static const WELCOME = '/welcome';
   static const LANGUAGE_SELECTION = '/language-selection';
   static const NOTIFICATION = '/notification';
+  static const WEBVIEW = '/webview';
 }
