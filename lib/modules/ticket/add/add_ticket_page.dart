@@ -222,7 +222,7 @@ class AddTicketPage extends GetView<AddTicketController> {
         const SizedBox(height: 8),
         Obx(
           () => DropdownButtonFormField<String>(
-            value: value.value,
+            initialValue: value.value,
             decoration: InputDecoration(
               filled: true,
               fillColor:

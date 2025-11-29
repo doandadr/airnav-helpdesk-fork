@@ -277,7 +277,7 @@ class _TicketListPageState extends State<TicketListPage>
 
         // Remove ripple/splash biar smooth
         splashFactory: NoSplash.splashFactory,
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
 
         // MENAMPILKAN TAB SESUAI NAMA
         tabs: controller.tabs.map((tab) => Tab(text: tab.tr)).toList(),

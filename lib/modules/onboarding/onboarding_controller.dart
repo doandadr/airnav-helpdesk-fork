@@ -1,4 +1,3 @@
-import 'package:airnav_helpdesk/data/services/storage_service.dart';
 import 'package:airnav_helpdesk/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,10 +44,7 @@ class OnboardingController extends GetxController {
   }
 
   void finishOnboarding() async {
-    final result = await AuthService.to.login();
-    if (result != null) {
-      print('SSO Result: $result');
-    }
+    await AuthService.to.login();
   }
 
   @override

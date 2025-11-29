@@ -268,7 +268,7 @@ class MenuPage extends GetView<menu_ctrl.MenuController> {
             () => Switch(
               value: themeService.isDarkModeRx.value,
               onChanged: (val) => controller.toggleTheme(),
-              activeColor: const Color(0xFF0D47A1),
+              activeThumbColor: const Color(0xFF0D47A1),
             ),
           ),
         ],

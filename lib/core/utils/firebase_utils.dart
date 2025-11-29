@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
 
 import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:airnav_helpdesk/firebase_options.dart';

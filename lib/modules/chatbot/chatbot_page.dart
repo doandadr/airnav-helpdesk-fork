@@ -9,7 +9,7 @@ class ChatbotPage extends GetView<ChatbotController> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _inputController = TextEditingController();
+    final TextEditingController inputController = TextEditingController();
 
     return Scaffold(
       appBar: AppBarWidget(
@@ -40,7 +40,7 @@ class ChatbotPage extends GetView<ChatbotController> {
               padding: EdgeInsets.all(8.0),
               child: CircularProgressIndicator(),
             ),
-          _buildInputArea(_inputController),
+          _buildInputArea(inputController),
         ],
       ),
     );
