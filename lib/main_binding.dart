@@ -1,3 +1,5 @@
+import 'package:airnav_helpdesk/data/services/auth_service.dart';
+import 'package:airnav_helpdesk/data/services/storage_service.dart';
 import 'package:airnav_helpdesk/modules/dashboard/dashboard_controller.dart';
 import 'package:airnav_helpdesk/modules/menu/menu_controller.dart' as menu_ctrl;
 import 'package:airnav_helpdesk/modules/ticket/list/ticket_list_controller.dart';
@@ -8,6 +10,8 @@ import 'main_controller.dart';
 class MainBinding extends Bindings {
   @override
   void dependencies() {
+    Get.putAsync(() async => StorageService());
+    Get.put(AuthService());
     Get.lazyPut<MainController>(() => MainController());
     Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<TicketListController>(() => TicketListController());

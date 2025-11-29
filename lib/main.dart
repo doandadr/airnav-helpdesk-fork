@@ -1,5 +1,5 @@
 import 'package:airnav_helpdesk/core/config/app_pages.dart';
-import 'package:airnav_helpdesk/data/services/storage_service.dart';
+import 'package:airnav_helpdesk/main_binding.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:airnav_helpdesk/core/services/theme_service.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initialMessage = await FirebaseUtils.setupFirebaseNotifications();
   await GetStorage.init();
-  await Get.putAsync(() async => StorageService());
   Get.put(ThemeService());
   Get.put(LocalizationService());
   runApp(MainApp());
@@ -38,6 +37,7 @@ class MainApp extends StatelessWidget {
         child: GetMaterialApp(
           key: ValueKey(key),
           title: 'Helpdesk',
+          initialBinding: MainBinding(),
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,

@@ -4,8 +4,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebviewController extends GetxController {
   final String initialUrl;
   late final WebViewController controller;
+  final RxBool isLoading = true.obs;
+  final NavigationDecision Function(NavigationRequest)? onNavigationRequest;
 
-  WebviewController({required this.initialUrl});
+  WebviewController({required this.initialUrl, this.onNavigationRequest});
 
   @override
   void onInit() {
@@ -17,16 +19,17 @@ class WebviewController extends GetxController {
           onProgress: (int progress) {
             // Update loading bar.
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageStarted: (String url) {
+            isLoading.value = true;
+          },
+          onPageFinished: (String url) {
+            isLoading.value = false;
+          },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('http://localhost:3000/authhelpdesk')) {
-              final uri = Uri.parse(request.url);
-              final token = uri.pathSegments.last;
-              Get.back(result: token);
-              return NavigationDecision.prevent;
+            if (onNavigationRequest != null) {
+              return onNavigationRequest!(request);
             }
             return NavigationDecision.navigate;
           },

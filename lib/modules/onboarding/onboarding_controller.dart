@@ -1,5 +1,5 @@
-import 'package:airnav_helpdesk/core/config/app_pages.dart';
 import 'package:airnav_helpdesk/data/services/storage_service.dart';
+import 'package:airnav_helpdesk/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,9 +45,7 @@ class OnboardingController extends GetxController {
   }
 
   void finishOnboarding() async {
-    final url =
-        'https://auth.airnavindonesia.co.id/?redirect_uri=aHR0cDovL2xvY2FsaG9zdDozMDAwL2F1dGhoZWxwZGVzaw==';
-    final result = await Get.offNamed(Routes.WEBVIEW, arguments: {'url': url});
+    final result = await AuthService.to.login();
     if (result != null) {
       print('SSO Result: $result');
     }
