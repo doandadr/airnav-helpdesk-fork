@@ -31,6 +31,8 @@ class AuthService extends GetxService {
       } catch (_) {
         // ignore errors when storage service is not available
       }
+
+      Get.offAllNamed(Routes.MAIN);
     }
 
     return result;
