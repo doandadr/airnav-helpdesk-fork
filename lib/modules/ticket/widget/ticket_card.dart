@@ -314,48 +314,49 @@ class TicketCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 16),
             // --- Progress Bar ---
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'label_progress'.tr,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Get.theme.textTheme.bodySmall?.color,
-                  ),
-                ),
-                Text(
-                  '${ticket.progress}%',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Get.theme.textTheme.bodyMedium?.color,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Container(
-              height: 6,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: FractionallySizedBox(
-                alignment: Alignment.centerLeft,
-                widthFactor: ticket.progress / 100,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ticket.progress == 100 ? Colors.green : Colors.blue,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ),
-            ),
 
-            const SizedBox(height: 14),
+            if (activeTab == 'ticket_tab_list') ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'label_progress'.tr,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Get.theme.textTheme.bodySmall?.color,
+                    ),
+                  ),
+                  Text(
+                    '${ticket.progress}%',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Container(
+                height: 6,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: FractionallySizedBox(
+                  alignment: Alignment.centerLeft,
+                  widthFactor: ticket.progress / 100,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ticket.progress == 100 ? Colors.green : Colors.blue,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+            ],
             // --- Last Update ---
             Row(
               children: [
