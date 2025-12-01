@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../core/widgets/app_bar_widget.dart';
 import '../ticket_model.dart';
 import 'assign_ticket_controller.dart';
@@ -28,6 +29,8 @@ class AssignTicketPage extends GetView<AssignTicketController> {
             _ticketSection(),
             const SizedBox(height: 16),
             _assigneeSection(),
+            const SizedBox(height: 16),
+            _detailsSection(context),
             const SizedBox(height: 20),
             _actionBar(context),
           ],
@@ -260,6 +263,64 @@ class AssignTicketPage extends GetView<AssignTicketController> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _detailsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.calendar_today),
+            const SizedBox(width: 8),
+            Text('due_date'.tr),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Obx(() {
+          final date = controller.dueDate.value;
+          return InkWell(
+            onTap: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: date ?? DateTime.now(),
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+              );
+              if (picked != null) {
+                controller.setDueDate(picked);
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(8),
+                color:
+                    Get.theme.inputDecorationTheme.fillColor ??
+                    Get.theme.cardColor,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    date != null
+                        ? DateFormat('dd MMM yyyy').format(date)
+                        : 'select_date_hint'.tr,
+                    style: TextStyle(
+                      color: date != null
+                          ? Get.theme.textTheme.bodyMedium?.color
+                          : Get.theme.hintColor,
+                    ),
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.calendar_month, color: Colors.grey),
+                ],
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 

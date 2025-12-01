@@ -192,6 +192,8 @@ class Messages extends Translations {
       'busy': 'Busy',
       'reset': 'Reset',
       'assign_button': 'Assign Ticket',
+      'due_date': 'Due Date',
+      'select_date_hint': 'Select Date',
     },
 
     'id_ID': {
@@ -385,6 +387,8 @@ class Messages extends Translations {
       'busy': 'Sibuk',
       'reset': 'Reset',
       'assign_button': 'Tugaskan Tiket',
+      'due_date': 'Batas Waktu',
+      'select_date_hint': 'Pilih Tanggal',
     },
   };
 }
