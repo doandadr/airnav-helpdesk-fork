@@ -186,9 +186,7 @@ class TicketCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Navigate to detail only for 'Daftar Tiket' tab
-        if (activeTab == 'ticket_tab_list') {
           Get.toNamed('/ticket/detail');
-        }
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(

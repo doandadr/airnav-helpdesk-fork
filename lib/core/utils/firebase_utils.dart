@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 
@@ -113,11 +114,26 @@ class FirebaseUtils {
     });
 
     // Show a local notification when a message is received while app is in foreground
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       final notification = message.notification;
       final android = message.notification?.android;
 
       if (notification != null && android != null) {
+        BigPictureStyleInformation? bigPictureStyleInformation;
+
+        if (android.imageUrl != null) {
+          final imageBytes = await _downloadImage(android.imageUrl!);
+          if (imageBytes != null) {
+            bigPictureStyleInformation = BigPictureStyleInformation(
+              ByteArrayAndroidBitmap(imageBytes),
+              largeIcon: ByteArrayAndroidBitmap(imageBytes),
+              contentTitle: notification.title,
+              summaryText: notification.body,
+              hideExpandedLargeIcon: true,
+            );
+          }
+        }
+
         _flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
@@ -128,6 +144,7 @@ class FirebaseUtils {
               _fcMChannel.name,
               channelDescription: _fcMChannel.description,
               icon: '@mipmap/ic_launcher',
+              styleInformation: bigPictureStyleInformation,
             ),
           ),
           payload: jsonEncode(message.data),
@@ -139,6 +156,19 @@ class FirebaseUtils {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageNavigation);
 
     return initialMessage;
+  }
+
+  static Future<Uint8List?> _downloadImage(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error downloading image: $e');
+    }
+    return null;
   }
 
   static Future<void> _ensureNotificationPermission() async {
