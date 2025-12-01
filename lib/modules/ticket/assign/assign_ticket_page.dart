@@ -166,8 +166,8 @@ class AssignTicketPage extends GetView<AssignTicketController> {
 
   Widget _assigneeSection() {
     return Obx(() {
-      // Make Obx reactive to selectedAssignee
-      controller.selectedAssignee.value;
+      // Make Obx reactive to selectedAssigneeIds
+      controller.selectedAssigneeIds.length;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -209,7 +209,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
   }
 
   Widget _assigneeItem(Assignee a) {
-    final selected = controller.selectedAssignee.value?.id == a.id;
+    final selected = controller.selectedAssigneeIds.contains(a.id);
     return InkWell(
       onTap: () => controller.pickAssignee(a),
       child: Container(
@@ -288,7 +288,25 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                 lastDate: DateTime.now().add(const Duration(days: 365)),
               );
               if (picked != null) {
-                controller.setDueDate(picked);
+                // Show time picker after date is selected
+                final timePicked = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(date ?? DateTime.now()),
+                );
+                if (timePicked != null) {
+                  // Combine date and time
+                  final combined = DateTime(
+                    picked.year,
+                    picked.month,
+                    picked.day,
+                    timePicked.hour,
+                    timePicked.minute,
+                  );
+                  controller.setDueDate(combined);
+                } else {
+                  // If time picker is cancelled, just use the date with current time
+                  controller.setDueDate(picked);
+                }
               }
             },
             child: Container(
@@ -304,7 +322,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                 children: [
                   Text(
                     date != null
-                        ? DateFormat('dd MMM yyyy').format(date)
+                        ? DateFormat('dd MMM yyyy, HH:mm').format(date)
                         : 'select_date_hint'.tr,
                     style: TextStyle(
                       color: date != null
@@ -329,7 +347,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
         Expanded(
           child: OutlinedButton(
             onPressed: () {
-              controller.selectedAssignee.value = null;
+              controller.selectedAssigneeIds.clear();
             },
             style: OutlinedButton.styleFrom(
               foregroundColor: Colors.red.shade700,

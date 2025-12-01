@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../ticket_model.dart';
@@ -26,7 +27,7 @@ class AssignTicketController extends GetxController {
 
   // Assignees
   RxList<Assignee> assignees = <Assignee>[].obs;
-  Rxn<Assignee> selectedAssignee = Rxn<Assignee>();
+  RxSet<String> selectedAssigneeIds = <String>{}.obs;
 
   // form fields
   RxString note = ''.obs;
@@ -80,10 +81,10 @@ class AssignTicketController extends GetxController {
 
   // selection
   void pickAssignee(Assignee a) {
-    if (selectedAssignee.value?.id == a.id) {
-      selectedAssignee.value = null;
+    if (selectedAssigneeIds.contains(a.id)) {
+      selectedAssigneeIds.remove(a.id);
     } else {
-      selectedAssignee.value = a;
+      selectedAssigneeIds.add(a.id);
     }
   }
 
@@ -92,19 +93,39 @@ class AssignTicketController extends GetxController {
 
   // action: assign (mock)
   Future<void> assignSelected() async {
-    if (selectedAssignee.value == null) {
-      Get.snackbar('Assign', 'Pilih assignee terlebih dahulu');
+    if (selectedAssigneeIds.isEmpty) {
+      Get.snackbar(
+        'assign_ticket_title'.tr,
+        'assign_error_no_assignee'.tr,
+        backgroundColor: Colors.white,
+        colorText: Colors.black,
+      );
       return;
     }
 
     // mock API latency
-    Get.snackbar('Assign', 'Assigning...');
+    Get.snackbar(
+      'assign_ticket_title'.tr,
+      'assign_progress'.tr,
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
     await Future.delayed(const Duration(seconds: 1));
+
+    // Get assignee names for display
+    final assigneeNames = assignees
+        .where((a) => selectedAssigneeIds.contains(a.id))
+        .map((a) => a.name)
+        .join(', ');
 
     // mock notification
     Get.snackbar(
-      'Assign',
-      'Assigned ticket ${selectedTicket.code} to ${selectedAssignee.value!.name}',
+      'assign_ticket_title'.tr,
+      'assign_success'.tr
+          .replaceAll('{code}', selectedTicket.code)
+          .replaceAll('{assignees}', assigneeNames),
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
     );
 
     // Go back after assigning
