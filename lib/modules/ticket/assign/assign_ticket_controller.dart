@@ -30,7 +30,6 @@ class AssignTicketController extends GetxController {
 
   // form fields
   RxString note = ''.obs;
-  RxString priority = 'Medium'.obs;
   Rxn<DateTime> dueDate = Rxn<DateTime>();
 
   // search
@@ -89,7 +88,6 @@ class AssignTicketController extends GetxController {
   }
 
   void setNote(String v) => note.value = v;
-  void setPriority(String v) => priority.value = v;
   void setDueDate(DateTime d) => dueDate.value = d;
 
   // action: assign (mock)

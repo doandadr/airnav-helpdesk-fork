@@ -30,8 +30,6 @@ class AssignTicketPage extends GetView<AssignTicketController> {
             _assigneeSection(),
             const SizedBox(height: 16),
             _detailsSection(context),
-            const SizedBox(height: 16),
-            _prioritySection(),
             const SizedBox(height: 20),
             _actionBar(context),
           ],
@@ -318,57 +316,6 @@ class AssignTicketPage extends GetView<AssignTicketController> {
                   const Icon(Icons.calendar_month, color: Colors.grey),
                 ],
               ),
-            ),
-          );
-        }),
-      ],
-    );
-  }
-
-  Widget _prioritySection() {
-    final priorities = ['Low', 'Medium', 'High', 'Critical'];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.flag),
-            const SizedBox(width: 8),
-            Text('priority_label'.tr),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Obx(() {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade400),
-              borderRadius: BorderRadius.circular(8),
-              color:
-                  Get.theme.inputDecorationTheme.fillColor ??
-                  Get.theme.cardColor,
-            ),
-            child: DropdownButton<String>(
-              value: controller.priority.value,
-              isExpanded: true,
-              underline: const SizedBox(),
-              items: priorities.map((String priority) {
-                return DropdownMenuItem<String>(
-                  value: priority,
-                  child: Text(
-                    'priority_${priority.toLowerCase()}'.tr,
-                    style: TextStyle(
-                      color: Get.theme.textTheme.bodyMedium?.color,
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  controller.setPriority(newValue);
-                }
-              },
             ),
           );
         }),
