@@ -186,7 +186,7 @@ class TicketCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Navigate to detail only for 'Daftar Tiket' tab
-          Get.toNamed('/ticket/detail');
+        Get.toNamed('/ticket/detail');
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
@@ -460,7 +460,7 @@ class TicketCard extends StatelessWidget {
                 icon: const Icon(Icons.people_alt_outlined, size: 16),
                 label: Text('btn_assign'.tr),
                 onPressed: () {
-                  Get.toNamed(Routes.ASSIGN_TICKET);
+                  Get.toNamed(Routes.ASSIGN_TICKET, arguments: ticket);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF175fa4),

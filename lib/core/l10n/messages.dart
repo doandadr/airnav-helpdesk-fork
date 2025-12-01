@@ -60,6 +60,7 @@ class Messages extends Translations {
       'search_ticket_hint': 'Search Ticket...',
 
       // ticket
+      'ticket': 'Ticket',
       'category_label': 'Category',
       'ticket_info_section': 'Ticket Information',
       'ticket_id': 'Ticket ID',
@@ -184,7 +185,6 @@ class Messages extends Translations {
       // Assign Ticket
       'assign_ticket_title': 'Assign Ticket',
       'assign_ticket_subtitle': 'Assign tickets to technicians',
-      'select_ticket': 'Select Ticket',
       'selected_count': 'Selected',
       'select_assignee': 'Select Assignee',
       'search_assignee_hint': 'Search assignee...',
@@ -253,6 +253,7 @@ class Messages extends Translations {
       'search_ticket_hint': 'Cari Tiket...',
 
       //ticket
+      'ticket': 'Tiket',
       'category_label': 'Kategori',
       'ticket_info_section': 'Informasi Tiket',
       'ticket_id': 'ID Tiket',
@@ -379,7 +380,6 @@ class Messages extends Translations {
       // Assign Ticket
       'assign_ticket_title': 'Tugaskan Tiket',
       'assign_ticket_subtitle': 'Tugaskan tiket ke teknisi',
-      'select_ticket': 'Pilih Tiket',
       'selected_count': 'Dipilih',
       'select_assignee': 'Pilih Penerima Tugas',
       'search_assignee_hint': 'Cari penerima tugas...',

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../core/widgets/app_bar_widget.dart';
-import '../ticket_model.dart';
 import 'assign_ticket_controller.dart';
 
 class AssignTicketPage extends GetView<AssignTicketController> {
@@ -26,7 +25,7 @@ class AssignTicketPage extends GetView<AssignTicketController> {
           children: [
             _header(),
             const SizedBox(height: 12),
-            _ticketSection(),
+            _ticketInfoSection(),
             const SizedBox(height: 16),
             _assigneeSection(),
             const SizedBox(height: 16),
@@ -77,93 +76,93 @@ class AssignTicketPage extends GetView<AssignTicketController> {
     );
   }
 
-  Widget _ticketSection() {
-    return Obx(
-      () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _ticketInfoSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.confirmation_num),
+            const SizedBox(width: 8),
+            Text('ticket'.tr),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Get.theme.cardColor,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.blue, width: 2),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                controller.selectedTicket.code,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                controller.selectedTicket.title,
+                style: const TextStyle(fontSize: 13),
+              ),
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(Icons.confirmation_num),
-                  const SizedBox(width: 8),
-                  Text('select_ticket'.tr),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'label_category'.tr,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Get.theme.textTheme.bodySmall?.color,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          controller.selectedTicket.category,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'priority_label'.tr,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Get.theme.textTheme.bodySmall?.color,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          controller.selectedTicket.priority,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-              ),
-              Text(
-                '${controller.selectedTicketCodes.length} ${'selected_count'.tr}',
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          TextField(
-            onChanged: (v) => controller.ticketSearch.value = v,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
-              hintText: 'search_ticket_hint'.tr,
-              filled: true,
-              fillColor:
-                  Get.theme.inputDecorationTheme.fillColor ??
-                  Get.theme.cardColor,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (_, i) => _ticketItem(controller.filteredTickets[i]),
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
-            itemCount: controller.filteredTickets.length,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _ticketItem(TicketModel ticket) {
-    final selected = controller.selectedTicketCodes.contains(ticket.code);
-    return InkWell(
-      onTap: () => controller.toggleTicketSelection(ticket.code),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Get.theme.cardColor,
-          borderRadius: BorderRadius.circular(10),
-          // Add a blue border when selected for better visual feedback
-          border: Border.all(
-            color: selected ? Colors.blue : Colors.grey.shade200,
-          ),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Checkbox is removed, the whole card is now the tap area.
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ticket.code,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(ticket.title),
-                  const SizedBox(height: 8),
-                  Text(
-                    ticket.category,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 
@@ -383,7 +382,6 @@ class AssignTicketPage extends GetView<AssignTicketController> {
         Expanded(
           child: OutlinedButton(
             onPressed: () {
-              controller.selectedTicketCodes.clear();
               controller.selectedAssignee.value = null;
             },
             style: OutlinedButton.styleFrom(
